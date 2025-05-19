@@ -112,7 +112,7 @@ public class OrderService implements IOrderService{
     public List<MoneyStatisticResponse> findTotalByYear(LocalDate date) {
         List<MoneyStatisticResponse> result = new ArrayList<>();
 
-        Integer monthOfYear = (date.getYear() < LocalDate.now().getYear()) ? 12 : date.getMonthValue();
+        Integer monthOfYear = (date.getYear() < LocalDate.now().getYear() || date.getYear() > LocalDate.now().getYear()) ? 12 : date.getMonthValue();
 
         for(Integer i = 1 ; i <= monthOfYear ; i++) {
             String monthToFind = date.getYear() + "-" + ((i < 10) ? ("0" + i) : i);
@@ -125,7 +125,7 @@ public class OrderService implements IOrderService{
 
             MoneyStatisticResponse moneyStatisticResponse = new MoneyStatisticResponse();
             moneyStatisticResponse.setRevenue(orderTotal);
-            moneyStatisticResponse.setRevenue(importTotal);
+            moneyStatisticResponse.setImportTotal(importTotal);
             moneyStatisticResponse.setDate(i.toString());
             result.add(moneyStatisticResponse);
         }

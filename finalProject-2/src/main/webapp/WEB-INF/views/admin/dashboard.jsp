@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.javaweb.util.OrderStatusCode"%>
+<%@ page import="com.javaweb.util.OrderStatusCode" %>
 <%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,8 @@
 <head>
     <title>Thống kê</title>
 
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet"
+          type="text/css"/>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -30,7 +31,7 @@
         <div class="ms-3">
             <h3 class="mb-0 h4 font-weight-bolder">Thống kê số liệu</h3>
             <p class="mb-4 text-dark">
-                Kiểm tra doanh số theo tháng, năm; các mặt hàng bán chạy
+                Kiểm tra số liệu theo tháng, năm; các mặt hàng bán chạy
             </p>
         </div>
 
@@ -159,10 +160,10 @@
         <div class="col-lg-12 col-md-6 mt-4 mb-4">
             <div class="card ">
                 <div class="card-body">
-                    <h5 class="mb-0 "> Số liệu theo tháng </h5>
-<%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
+                    <h5 class="mb-0 pb-1"> Số liệu theo tháng </h5>
+                    <%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
 
-<%--                    <input id="yearOfRevenue" type=""--%>
+                    <%--                    <input id="yearOfRevenue" type=""--%>
 
                     <div class="justify-content-xxl-end">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
@@ -172,27 +173,28 @@
                             <option value="3">Thu, chi</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
-                        <span class="text-dark">Tháng: </span><input id="monthOfRevenue" type="month" class="mt-2 mb-3"/>
+                        <span class="text-dark">Tháng: </span><input id="monthOfRevenue" type="month"
+                                                                     class="mt-2 mb-3"/>
                     </div>
-
-                    <div class="ms-3" style="color: black">
-                        - Ghi chú:
-                        &nbsp;<p id="noteOfChart"></p>
+                    <br>
+                    <div class="ms-3 pb-4" style="color: black">
+                        <span class="text-danger">- Ghi chú:</span>
+                        <p id="noteOfChart"></p>
                     </div>
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="450"></canvas>
+                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="400"></canvas>
                         </div>
 
-                        <div id="sumOfChart" class="text-dark">
+                        <div id="sumOfChart" class="text-dark pt-4">
 
                         </div>
                     </div>
                     <hr class="dark horizontal">
                     <div class="d-flex ">
                         <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-                        <p class="mb-0 text-sm"> Vừa cập nhật </p>
+                        <p class="mb-0 text-sm text-dark"> Vừa cập nhật </p>
                     </div>
                 </div>
             </div>
@@ -202,57 +204,66 @@
 
     <!-- Order status quantity, Revenue by year (bar + line chart) -->
     <div class="row">
-            <!-- Order status (pie chart) -->
-            <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="mb-0 ">Đơn hàng</h6>
-                        <p class="text-sm ">Tình trạng các đơn hàng</p>
-                        <div class="pe-2">
-                            <div class="chart">
-                                <canvas id="chart-pie-orderStatus" class="chart-canvas" height="300"></canvas>
-                            </div>
+        <!-- Order status (pie chart) -->
+        <div class="col-lg-4 col-md-6 mt-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="mb-0 ">Đơn hàng</h6>
+                    <p class="text-sm ">Tình trạng các đơn hàng</p>
+                    <div class="pe-2">
+                        <div class="chart">
+                            <canvas id="chart-pie-orderStatus" class="chart-canvas" height="300"></canvas>
                         </div>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">Vừa cập nhật</p>
-                        </div>
+                    </div>
+                    <hr class="dark horizontal">
+                    <div class="d-flex ">
+                        <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
+                        <p class="mb-0 text-sm">Vừa cập nhật</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Revenue by year (bar + line chart) -->
-            <div class="col-lg-8 col-md-6 mt-4 mb-4">
-                <div class="card ">
-                    <div class="card-body">
-                        <h6 class="mb-0 "> Doanh thu của năm </h6>
-                        <%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
-                        <br>
-                        <div class="justify-content-xxl-end">
-                            <label for="monthShowType" class="text-dark">Hiển thị: </label>
-                            <select id="yearShowType" class="text-dark">
-                                <option value="1">Doanh thu</option>
-                                <option value="2">Lợi nhuận</option>
-                                <option value="3">Thu, chi</option>
-                            </select>
-                            &nbsp;&nbsp;&nbsp;
-                            <p class="text-dark">Năm: <input type="number" id="datepicker" class="mb-1" /></p>
+        <!-- Revenue by year (bar + line chart) -->
+        <div class="col-lg-8 col-md-6 mt-4 mb-4">
+            <div class="card ">
+                <div class="card-body">
+                    <h5 class="mb-0 pb-1"> Số liệu của năm </h5>
+                    <%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
+                    <br>
+                    <div class="justify-content-xxl-end">
+                        <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
+                        <select id="yearShowType" class="text-dark">
+                            <option value="1">Doanh thu</option>
+                            <option value="2">Lợi nhuận</option>
+                            <option value="3">Thu, chi</option>
+                        </select>
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="text-dark">Năm: <input type="number" id="yearPicker" class="mb-1"/></span>
+                    </div>
+                    <br>
+                    <div class="ms-3 pb-4" style="color: black">
+                        <span class="text-danger">- Ghi chú:</span>
+                        <p id="noteOfChartYear"></p>
+                    </div>
+
+                    <div class="pe-2">
+                        <div class="chart">
+                            <canvas id="chart-line-revenueByYear" class="chart-canvas" height="400"></canvas>
                         </div>
 
-                        <div class="pe-2">
-                            <div class="chart">
-                                <canvas id="chart-line-revenueByYear" class="chart-canvas" height="400"></canvas>
-                            </div>
+                        <div id="sumOfChartYear" class="text-dark pt-4">
+
                         </div>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> Vừa cập nhật </p>
-                        </div>
+                    </div>
+                    <hr class="dark horizontal">
+                    <div class="d-flex ">
+                        <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
+                        <p class="mb-0 text-sm text-dark"> Vừa cập nhật </p>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
     <div class="row mb-4">
@@ -750,44 +761,42 @@
     let fontSizeOfChart;
     let monthAndYearToday;
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         getOrderStatusQuantities();
 
         // Set Charts's font-size base on screen's ratio
-        if(window.innerWidth >= 999){
+        if (window.innerWidth >= 999) {
             fontSizeOfChart = 18;
-        }
-        else if(window.innerWidth >= 666 && window.innerWidth < 999){
+        } else if (window.innerWidth >= 666 && window.innerWidth < 999) {
             fontSizeOfChart = 15;
-        }
-        else{
+        } else {
             fontSizeOfChart = 12;
         }
 
-        $('#datepicker').val((new Date()).getFullYear());
+        $('#yearPicker').val((new Date()).getFullYear());
 
         fillMonthOfMoneyStatistic();
         getRevenueByYear(monthAndYearToday)
     });
 
     //-------------------- Order status quantities chart (Pie chart)
-    function getOrderStatusQuantities(){
-        $.each(${orderStatusQuantities}, function(idx, it){
+    function getOrderStatusQuantities() {
+        $.each(${orderStatusQuantities}, function (idx, it) {
             let orderStatusSplit = it.split(".");
 
             orderStatus.push(orderStatusSplit[1]);
             orderStatusQuantity.push(parseInt(orderStatusSplit[2]));
 
-            if(orderStatusSplit[0] === '${OrderStatusCode.IN_PROGRESS.toString()}') orderStatusColor.push('rgb(137, 137, 137)');
-            else if(orderStatusSplit[0] === '${OrderStatusCode.DELIVERING.toString()}') orderStatusColor.push('rgb(255, 205, 86)');
-            else if(orderStatusSplit[0] === '${OrderStatusCode.CANCELED.toString()}') orderStatusColor.push('rgb(255, 0, 0)');
+            if (orderStatusSplit[0] === '${OrderStatusCode.IN_PROGRESS.toString()}') orderStatusColor.push('rgb(137, 137, 137)');
+            else if (orderStatusSplit[0] === '${OrderStatusCode.DELIVERING.toString()}') orderStatusColor.push('rgb(255, 205, 86)');
+            else if (orderStatusSplit[0] === '${OrderStatusCode.CANCELED.toString()}') orderStatusColor.push('rgb(255, 0, 0)');
             else orderStatusColor.push('rgb(60, 179, 113)');
         });
 
         drawOrderStatusChart();
     }
 
-    function drawOrderStatusChart(){
+    function drawOrderStatusChart() {
 
         new Chart(ctx, {
             type: 'pie',
@@ -815,7 +824,7 @@
 
     //-------------------- Revenue by month chart (Line chart)
     // Fill value of '#monthOfRevenue'
-    function fillMonthOfMoneyStatistic(){
+    function fillMonthOfMoneyStatistic() {
         let today = new Date();
         let monthToday = today.getMonth() + 1; // getMonth(): get month of a date (0 - 11; 0-January, 1-February...)
         monthToday = (monthToday < 10) ? ("0" + monthToday) : monthToday;
@@ -827,7 +836,7 @@
         getMoneyStatisticByMonth(monthAndYearToday);
     }
 
-    function getMoneyStatisticByMonth(monthAndYearToday){
+    function getMoneyStatisticByMonth(monthAndYearToday) {
         let moneyStatisticDays = [];
         let revenueValues = [];
         let importTotalValues = [];
@@ -837,23 +846,21 @@
             method: "GET",
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
-            success: function(result){
+            success: function (result) {
                 let option = parseInt($('#monthShowType').val());
 
-                if(option === 1){ // Revenue
-                    $.each(result.data, function(idx, it){
+                if (option === 1) { // Revenue
+                    $.each(result.data, function (idx, it) {
                         moneyStatisticDays.push(it.date.toLocaleString());
                         revenueValues.push(it.revenue);
                     });
-                }
-                else if(option === 2){ // Profit
-                    $.each(result.data, function(idx, it){
+                } else if (option === 2) { // Profit
+                    $.each(result.data, function (idx, it) {
                         moneyStatisticDays.push(it.date.toLocaleString());
                         revenueValues.push(it.revenue - it.importTotal);
                     });
-                }
-                else{ // compare of income and import total
-                    $.each(result.data, function(idx, it){
+                } else { // compare of income and import total
+                    $.each(result.data, function (idx, it) {
                         moneyStatisticDays.push(it.date.toLocaleString());
                         revenueValues.push(it.revenue);
                         importTotalValues.push(it.importTotal);
@@ -862,7 +869,7 @@
 
                 drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues);
             },
-            error: function(result){
+            error: function (result) {
                 let message = result.responseJSON.message;
 
                 $.each(result.responseJSON.details, function (idx, it) {
@@ -874,13 +881,12 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues){
+    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues) {
         // Destroy existing chart
-        try{
+        try {
             const existed_chart = Chart.getChart('chart-line-revenueByMonth');
             existed_chart.destroy();
-        }
-        catch{
+        } catch {
             console.log("#chart-line-revenueByMonth doesn't exist");
         }
 
@@ -888,97 +894,95 @@
         let chart_line_revenueByMonth = document.getElementById("chart-line-revenueByMonth").getContext("2d");
         let option = parseInt($('#monthShowType').val());
         let statisticLabel, chartTitle, chartLegend;
-        let data;
+        let chartDatasets;
         let noteOfChart, htmlCode;
 
-        if(option === 3){
-            data = {
-                labels: moneyStatisticDays, // data from database
-                datasets: [
-                    {
-                        label: "Chi",
-                        tension: 0,
-                        borderWidth: 2,
-                        pointRadius: 4,
-                        pointBackgroundColor: "#FFA500",
-                        pointBorderColor: "transparent",
-                        borderColor: "#FFA500",
-                        backgroundColor: "transparent",
-                        fill: true,
-                        data: importTotalValues, // data from database
-                        maxBarThickness: 6
-                    },
-                    {
-                        type: "bar",
-                        label: "Thu",
-                        tension: 0.4,
-                        borderWidth: 0,
-                        borderRadius: 4,
-                        borderSkipped: false,
-                        backgroundColor: "#43A047",
-                        data: revenueValues, // data from database
-                        barThickness: 'flex'
-                    },
+        if (option === 3) {
+            chartDatasets = [
+                {
+                    label: "Chi",
+                    tension: 0,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: "#FFA500",
+                    pointBorderColor: "transparent",
+                    borderColor: "#FFA500",
+                    backgroundColor: "transparent",
+                    fill: true,
+                    data: importTotalValues, // data from database
+                    maxBarThickness: 6,
+                },
+                {
+                    type: "bar",
+                    label: "Thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#43A047",
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
+                },
+            ];
 
-                ],
-            };
             chartLegend = {
-                position: 'top'
+                position: 'top',
+                maxWidth: 100,
+                maxHeight: 30,
             };
             chartTitle = {
                 display: true
             };
 
             let sumOfImport = 0;
-            $.each(importTotalValues, function(idx, it){
+            $.each(importTotalValues, function (idx, it) {
                 sumOfImport += it;
             });
 
             let sumOfRevenue = 0;
-            $.each(revenueValues, function(idx, it){
+            $.each(revenueValues, function (idx, it) {
                 sumOfRevenue += it;
             });
 
-            noteOfChart = "Thu = tiền bán hàng thu được<br> " +
-                          "Chi = tiền nhập hàng";
-            htmlCode = "<strong>Tổng thu: </strong>" + sumOfImport.toLocaleString() + " đ<br>" +
-                        "<strong>Tổng chi: </strong>" + sumOfRevenue.toLocaleString() + " đ\n";
+            noteOfChart = "&nbsp;&nbsp;Thu = tiền bán hàng thu được<br> " +
+                "&nbsp;&nbsp;Chi = tiền nhập hàng";
+            htmlCode = "&nbsp;&nbsp;<strong>Tổng thu: </strong>" + sumOfRevenue.toLocaleString() + " đ<br>" +
+                "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
             document.getElementById('sumOfChart').innerHTML = htmlCode;
-        }
-        else{
+        } else {
             let sumOfMoney = 0;
-            $.each(revenueValues, function(idx, it){
+            $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
             });
 
-            if(option === 1){
+            if (option === 1) {
                 statisticLabel = "Doanh thu";
                 noteOfChart = "Doanh thu = tiền bán hàng thu được";
-                htmlCode = "<strong>Tổng doanh thu: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
-            }
-            else{
+                htmlCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+            } else {
                 statisticLabel = "Lợi nhuận";
                 noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
-                htmlCode = "<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n"
+                if (sumOfMoney < 0) {
+                    htmlCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
+                } else {
+                    htmlCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+                }
             }
 
-            data = {
-                labels: moneyStatisticDays, // data from database
-                datasets: [{
-                    label: statisticLabel,
-                    tension: 0,
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointBackgroundColor: "#43A047",
-                    pointBorderColor: "transparent",
-                    borderColor: "#43A047",
-                    backgroundColor: "transparent",
-                    fill: true,
-                    data: revenueValues, // data from database
-                    maxBarThickness: 6
-                }],
-            };
+            chartDatasets = [{
+                label: statisticLabel,
+                tension: 0,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBackgroundColor: "#43A047",
+                pointBorderColor: "transparent",
+                borderColor: "#43A047",
+                backgroundColor: "transparent",
+                fill: true,
+                data: revenueValues, // data from database
+                maxBarThickness: 6,
+            }];
             chartLegend = {
                 display: false
             };
@@ -994,13 +998,16 @@
         // Draw chart
         new Chart(chart_line_revenueByMonth, {
             type: "line",
-            data: data,
+            data: {
+                labels: moneyStatisticDays,
+                datasets: chartDatasets,
+            },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     legend: chartLegend,
-                    tooltip:{       // Config tooltip's font-size
+                    tooltip: {       // Config tooltip's font-size
                         titleFont: {
                             size: fontSizeOfChart
                         },
@@ -1032,7 +1039,7 @@
                                 size: fontSizeOfChart,
                                 lineHeight: 2
                             },
-                            callback: function(value, index, ticks){
+                            callback: function (value, index, ticks) {
                                 return Chart.Ticks.formatters.numeric.apply(this, [value, index, ticks]) + " đ";
                             }
                         },
@@ -1060,14 +1067,13 @@
         });
     }
 
-    $('#monthOfRevenue').change(function(){
+    $('#monthOfRevenue').change(function () {
         getMoneyStatisticByMonth(this.value + "-" + (new Date()).getDate());
     });
 
-    $('#monthShowType').change(function(){
+    $('#monthShowType').change(function () {
         getMoneyStatisticByMonth($('#monthOfRevenue').val() + "-" + (new Date()).getDate());
     });
-
 
 
     //-------------------- Revenue by year chart (Line chart)
@@ -1091,28 +1097,50 @@
     //     });
     // });
 
-    $('#datepicker').change(function(){
+    $('#yearPicker').change(function () {
         let splitMonAndYearToday = monthAndYearToday.split("-");
         getRevenueByYear(this.value + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
     })
 
-    function getRevenueByYear(monthAndYearToday){
-        let revenueMonth = [];
-        let revenueValue = [];
+    $('#yearShowType').change(function () {
+        let splitMonAndYearToday = monthAndYearToday.split("-");
+        getRevenueByYear($('#yearPicker').val() + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
+    });
+
+    function getRevenueByYear(monthAndYearToday) {
+        let moneyStatisticMonths = [];
+        let revenueValues = [];
+        let importTotalValues = [];
+
         $.ajax({
             url: "${orderAPI}" + "/totalByYear?date=" + monthAndYearToday,
             method: "GET",
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
-            success: function(result){
-                $.each(result.data, function(idx, it){
-                    revenueMonth.push(it.date.toLocaleString());
-                    revenueValue.push(it.revenue);
-                });
+            success: function (result) {
+                let option = parseInt($('#yearShowType').val());
 
-                drawChartLineRevenueByYear(revenueMonth, revenueValue);
+                if (option === 1) { // Revenue
+                    $.each(result.data, function (idx, it) {
+                        moneyStatisticMonths.push(it.date.toLocaleString());
+                        revenueValues.push(it.revenue);
+                    });
+                } else if (option === 2) { // Profit
+                    $.each(result.data, function (idx, it) {
+                        moneyStatisticMonths.push(it.date.toLocaleString());
+                        revenueValues.push(it.revenue - it.importTotal);
+                    });
+                } else { // compare of income and import total
+                    $.each(result.data, function (idx, it) {
+                        moneyStatisticMonths.push(it.date.toLocaleString());
+                        revenueValues.push(it.revenue);
+                        importTotalValues.push(it.importTotal);
+                    });
+                }
+
+                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues);
             },
-            error: function(result){
+            error: function (result) {
                 let message = result.responseJSON.message;
 
                 $.each(result.responseJSON.details, function (idx, it) {
@@ -1124,53 +1152,141 @@
         });
     }
 
-    function drawChartLineRevenueByYear(revenueMonth, revenueValue){
+    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues) {
         // Destroy existing chart
-        try{
+        try {
             const existed_chart = Chart.getChart('chart-line-revenueByYear');
             existed_chart.destroy();
-        }
-        catch{
+        } catch {
             console.log("#chart-line-revenueByYear doesn't exist");
         }
 
-        // Draw new chart
+        // Prepare data
         let chart_line_revenueByYear = document.getElementById("chart-line-revenueByYear").getContext("2d");
+        let option = parseInt($('#yearShowType').val());
+        let statisticLabel, chartTitle, chartLegend;
+        let chartDatasets;
+        let noteOfChart, htmlCode;
 
-        new Chart(chart_line_revenueByYear, {
-            type: "bar",
-            data: {
-                labels: revenueMonth,
-                datasets: [{
-                    label: "Doanh thu",
+        if (option === 3) {
+            chartDatasets = [
+                {
+                    type: "line",
+                    label: "Chi",
+                    tension: 0,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointBackgroundColor: "#FFA500",
+                    pointBorderColor: "transparent",
+                    borderColor: "#FFA500",
+                    backgroundColor: "transparent",
+                    fill: true,
+                    data: importTotalValues, // data from database
+                    maxBarThickness: 6,
+                },
+                {
+                    label: "Thu",
                     tension: 0.4,
                     borderWidth: 0,
                     borderRadius: 4,
                     borderSkipped: false,
                     backgroundColor: "#43A047",
-                    data: revenueValue,
-                    barThickness: 'flex'
-                },],
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
+                },
+            ];
+            chartLegend = {
+                position: 'top',
+                maxWidth: 100,
+                maxHeight: 30,
+            };
+            chartTitle = {
+                display: true
+            };
+
+            let sumOfImport = 0;
+            $.each(importTotalValues, function (idx, it) {
+                sumOfImport += it;
+            });
+
+            let sumOfRevenue = 0;
+            $.each(revenueValues, function (idx, it) {
+                sumOfRevenue += it;
+            });
+
+            noteOfChart = "&nbsp;&nbsp;Thu = tiền bán hàng thu được<br> " +
+                "&nbsp;&nbsp;Chi = tiền nhập hàng";
+            htmlCode = "&nbsp;&nbsp;<strong>Tổng thu: </strong>" + sumOfRevenue.toLocaleString() + " đ<br>" +
+                "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+
+            document.getElementById('sumOfChart').innerHTML = htmlCode;
+        } else {
+            let sumOfMoney = 0;
+            $.each(revenueValues, function (idx, it) {
+                sumOfMoney += it;
+            });
+
+            if (option === 1) {
+                statisticLabel = "Doanh thu";
+                noteOfChart = "Doanh thu = tiền bán hàng thu được";
+                htmlCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+            } else {
+                statisticLabel = "Lợi nhuận";
+                noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
+                if (sumOfMoney < 0) {
+                    htmlCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
+                } else {
+                    htmlCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+                }
+            }
+
+            chartDatasets = [{
+                label: statisticLabel,
+                tension: 0.4,
+                borderWidth: 0,
+                borderRadius: 4,
+                borderSkipped: false,
+                backgroundColor: "#43A047",
+                data: revenueValues,
+                barThickness: 'flex',
+            }];
+            chartLegend = {
+                display: false
+            };
+            chartTitle = {
+                display: false
+            };
+        }
+
+        // Show notes near the bound of chart
+        document.getElementById('noteOfChartYear').innerHTML = noteOfChart;
+        document.getElementById('sumOfChartYear').innerHTML = htmlCode;
+
+        // Draw new chart
+        new Chart(chart_line_revenueByYear, {
+            type: "bar",
+            data: {
+                labels: moneyStatisticMonths, // data from database
+                datasets: chartDatasets,
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip:{       // Config tooltip's font-size
+                    legend: chartLegend,
+                    tooltip: {       // Config tooltip's font-size
                         titleFont: {
                             size: fontSizeOfChart
                         },
                         bodyFont: {
                             size: fontSizeOfChart
                         },
-                        callbacks:{
-                            title: function(context) {
+                        callbacks: {
+                            title: function (context) {
                                 return "Tháng " + (context[0].dataIndex + 1);
                             },
-                        }
+                        },
+                        title: chartTitle
                     },
                 },
                 interaction: {
@@ -1197,7 +1313,7 @@
                                 lineHeight: 2
                             },
                             color: "black",
-                            callback: function(value, index, ticks){
+                            callback: function (value, index, ticks) {
                                 return Chart.Ticks.formatters.numeric.apply(this, [value, index, ticks]) + " đ";
                             }
                         },
@@ -1218,7 +1334,7 @@
                                 size: fontSizeOfChart,
                                 lineHeight: 2
                             },
-                            callback: function(value){
+                            callback: function (value) {
                                 return "Tháng " + (value + 1);
                             }
                         }
