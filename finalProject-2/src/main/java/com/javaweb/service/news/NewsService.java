@@ -100,6 +100,11 @@ public class NewsService implements INewsService{
     }
 
     @Override
+    public Long countTotalViews() {
+        return newsRepository.countAllViews();
+    }
+
+    @Override
     public int countTotalItems(NewsSearchRequest newsSearchRequest) {
         return newsRepository.countTotalItems(newsSearchRequest);
     }

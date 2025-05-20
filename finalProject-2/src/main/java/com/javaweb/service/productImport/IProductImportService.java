@@ -13,7 +13,7 @@ public interface IProductImportService {
     List<SupplierSearchResponse> findAll(SupplierSearchRequest request, Pageable pageable);
     SupplierDTO findOneById(Long id);
     List<SupplyDetailsDTO> findBySupplierId(Long supplierId);
-    Long findImportTotal(String date);
+    Long findImportTotalByDate(String date);
 
     SupplierDTO createImport(SupplierDTO supplierDTO, HttpServletRequest request);
     int countTotalItems(SupplierSearchRequest request);

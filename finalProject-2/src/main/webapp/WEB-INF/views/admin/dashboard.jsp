@@ -37,7 +37,7 @@
 
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
-                <div class="card-header p-2 ps-3">
+                <div class="card-header p-3 ps-3">
                     <div class="d-flex justify-content-between">
                         <div class="text-dark">
                             <p class="text-sm mb-0 text-capitalize">Doanh thu hôm nay</p>
@@ -48,85 +48,26 @@
                         </div>
                     </div>
                 </div>
-                <hr class="dark horizontal my-0">
-                <c:if test="${revenuePercent != 100 && revenuePercent != 0}">
-                    <div class="card-footer p-2 ps-3">
-                        <p class="mb-0 text-sm">
-                            <c:choose>
-                                <c:when test="${revenuePercent > 0}">
-                                    <span class="text-danger font-weight-bolder">-${revenuePercent}%</span>
-                                </c:when>
-                                <c:when test="${revenuePercent < 0}">
-                                    <span class="text-success font-weight-bolder">+${-revenuePercent}%</span>
-                                </c:when>
-                            </c:choose>
-                            so với hôm qua
-                        </p>
-                    </div>
-                </c:if>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6">
             <div class="card">
-                <div class="card-header p-2 ps-3">
+                <div class="card-header p-3 ps-3">
                     <div class="d-flex justify-content-between">
                         <div class="text-dark">
-                            <p class="text-sm mb-0 text-capitalize">Đơn hàng hoàn thành</p>
-                            <h4 class="mb-0">${orderDelivered}</h4>
+                            <p class="text-sm mb-0 text-capitalize">Chi tiêu hôm nay</p>
+                            <h4 class="mb-0">${importToday}</h4>
                         </div>
                         <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                            <i class="material-symbols-rounded opacity-10">inventory</i>
+                            <i class="material-symbols-rounded opacity-10">warehouse</i>
                         </div>
                     </div>
                 </div>
-                <hr class="dark horizontal my-0">
-                <c:if test="${orderDeliveredPercent != 100 && orderDeliveredPercent != 0}">
-                    <div class="card-footer p-2 ps-3">
-                        <p class="mb-0 text-sm">
-                            <c:if test="${orderDeliveredPercent > 0}">
-                                <span class="text-danger font-weight-bolder">-${orderDeliveredPercent}% </span>
-                            </c:if>
-                            <c:if test="${orderDeliveredPercent < 0}">
-                                <span class="text-success font-weight-bolder">+${-orderDeliveredPercent}% </span>
-                            </c:if>
-                            so với hôm qua
-                        </p>
-                    </div>
-                </c:if>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
-                <div class="card-header p-2 ps-3">
-                    <div class="d-flex justify-content-between">
-                        <div class="text-dark">
-                            <p class="text-sm mb-0 text-capitalize">Lượng hàng bán được</p>
-                            <h4 class="mb-0"><fmt:formatNumber value="${quantitySold}" pattern="#,###"/></h4>
-                        </div>
-                        <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                            <i class="material-symbols-rounded opacity-10">inventory_2</i>
-                        </div>
-                    </div>
-                </div>
-                <hr class="dark horizontal my-0">
-                <c:if test="${quantitySoldPercent != 100 && quantitySoldPercent != 0}">
-                    <div class="card-footer p-2 ps-3">
-                        <p class="mb-0 text-sm">
-                            <c:if test="${quantitySoldPercent > 0}">
-                                <span class="text-danger font-weight-bolder">-${quantitySoldPercent}% </span>
-                            </c:if>
-                            <c:if test="${quantitySoldPercent < 0}">
-                                <span class="text-success font-weight-bolder">+${-quantitySoldPercent}% </span>
-                            </c:if>
-                            so với hôm qua
-                        </p>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-header p-2 ps-3">
+                <div class="card-header p-3 ps-3">
                     <div class="d-flex justify-content-between">
                         <div class="text-dark">
                             <p class="text-sm mb-0 text-capitalize">Nguời dùng mới</p>
@@ -137,34 +78,31 @@
                         </div>
                     </div>
                 </div>
-                <hr class="dark horizontal my-0">
-                <c:if test="${userQuantityPercent != 100 && userQuantityPercent != 0}">
-                    <div class="card-footer p-2 ps-3">
-                        <p class="mb-0 text-sm">
-                            <c:if test="${userQuantityPercent > 0}">
-                                <span class="text-danger font-weight-bolder">-${userQuantityPercent}%</span>
-                            </c:if>
-                            <c:if test="${userQuantityPercent < 0}">
-                                <span class="text-success font-weight-bolder">+${-userQuantityPercent}%</span>
-                            </c:if>
-                            so với hôm qua
-                        </p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 ps-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="text-dark">
+                            <p class="text-sm mb-0 text-capitalize">Lượt xem tin tức</p>
+                            <h4 class="mb-0"><fmt:formatNumber value="${newsViews}" pattern="#,###"/></h4>
+                        </div>
+                        <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
+                            <i class="material-symbols-rounded opacity-10">news</i>
+                        </div>
                     </div>
-                </c:if>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Revenue by month (bar + line chart) -->
     <div class="row">
+        <!-- Revenue by month (bar + line chart) -->
         <div class="col-lg-12 col-md-6 mt-4 mb-4">
             <div class="card ">
                 <div class="card-body">
                     <h5 class="mb-0 pb-1"> Số liệu theo tháng </h5>
-                    <%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
-
-                    <%--                    <input id="yearOfRevenue" type=""--%>
-
                     <div class="justify-content-xxl-end">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
                         <select id="monthShowType" class="text-dark">
@@ -178,13 +116,13 @@
                     </div>
                     <br>
                     <div class="ms-3 pb-4" style="color: black">
-                        <span class="text-danger">- Ghi chú:</span>
+                        <span style="color: blue">- Ghi chú:</span>
                         <p id="noteOfChart"></p>
                     </div>
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="400"></canvas>
+                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="350"></canvas>
                         </div>
 
                         <div id="sumOfChart" class="text-dark pt-4">
@@ -201,24 +139,33 @@
         </div>
     </div>
 
-
     <!-- Order status quantity, Revenue by year (bar + line chart) -->
     <div class="row">
         <!-- Order status (pie chart) -->
         <div class="col-lg-4 col-md-6 mt-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="mb-0 ">Đơn hàng</h6>
-                    <p class="text-sm ">Tình trạng các đơn hàng</p>
+                    <h5 class="mb-0 pb-1">Đơn hàng</h5>
+
+                    <div class="mt-2 mb-3">
+                        <label style="font-size: 16px; color: black">Hiển thị: </label>
+                        <select id="orderStatusShowType">
+                            <option value="1">Hôm nay</option>
+                            <option value="2">Tháng này</option>
+                            <option value="3">Năm nay</option>
+                            <option value="4">Tất cả</option>
+                        </select>
+                    </div>
+
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-pie-orderStatus" class="chart-canvas" height="300"></canvas>
+                            <canvas id="chart-pie-orderStatus" class="chart-canvas" height="350"></canvas>
                         </div>
                     </div>
                     <hr class="dark horizontal">
                     <div class="d-flex ">
                         <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-                        <p class="mb-0 text-sm">Vừa cập nhật</p>
+                        <p class="mb-0 text-sm text-dark">Vừa cập nhật</p>
                     </div>
                 </div>
             </div>
@@ -243,13 +190,13 @@
                     </div>
                     <br>
                     <div class="ms-3 pb-4" style="color: black">
-                        <span class="text-danger">- Ghi chú:</span>
+                        <span style="color: blue">- Ghi chú:</span>
                         <p id="noteOfChartYear"></p>
                     </div>
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByYear" class="chart-canvas" height="400"></canvas>
+                            <canvas id="chart-line-revenueByYear" class="chart-canvas" height="350"></canvas>
                         </div>
 
                         <div id="sumOfChartYear" class="text-dark pt-4">
@@ -754,16 +701,10 @@
 <script>
     <c:set var="orderAPI" value="/api/admin/orders"/>
 
-    let orderStatus = [];
-    let orderStatusQuantity = [];
-    let orderStatusColor = [];
-    let ctx = document.getElementById("chart-pie-orderStatus").getContext("2d");
     let fontSizeOfChart;
     let monthAndYearToday;
 
     $(document).ready(function () {
-        getOrderStatusQuantities();
-
         // Set Charts's font-size base on screen's ratio
         if (window.innerWidth >= 999) {
             fontSizeOfChart = 18;
@@ -773,31 +714,88 @@
             fontSizeOfChart = 12;
         }
 
-        $('#yearPicker').val((new Date()).getFullYear());
+        // Fill month and year today
+        let today = new Date();
+        let monthToday = today.getMonth() + 1; // getMonth(): get month of a date (0 - 11; 0-January, 1-February...)
+        monthToday = (monthToday < 10) ? ("0" + monthToday) : monthToday;
 
-        fillMonthOfMoneyStatistic();
+        monthAndYearToday = today.getFullYear().toString() + "-" + monthToday;
+        $('#monthOfRevenue').val(monthAndYearToday);
+
+        monthAndYearToday += "-" + today.getDate();
+
+
+        getMoneyStatisticByMonth(monthAndYearToday);
+        getOrderStatusQuantities();
+
+        $('#yearPicker').val((new Date()).getFullYear());
         getRevenueByYear(monthAndYearToday)
     });
 
     //-------------------- Order status quantities chart (Pie chart)
+    $('#orderStatusShowType').change(function(){
+        getOrderStatusQuantities();
+    });
+
     function getOrderStatusQuantities() {
-        $.each(${orderStatusQuantities}, function (idx, it) {
-            let orderStatusSplit = it.split(".");
+        let orderStatus = [];
+        let orderStatusQuantity = [];
+        let orderStatusColor = [];
 
-            orderStatus.push(orderStatusSplit[1]);
-            orderStatusQuantity.push(parseInt(orderStatusSplit[2]));
+        let option = parseInt($('#orderStatusShowType').val());
+        let monthAndYearTodaySplit = monthAndYearToday.split("-");
+        let requestURL = "${orderAPI}" + "/statusQuantityByTime";
 
-            if (orderStatusSplit[0] === '${OrderStatusCode.IN_PROGRESS.toString()}') orderStatusColor.push('rgb(137, 137, 137)');
-            else if (orderStatusSplit[0] === '${OrderStatusCode.DELIVERING.toString()}') orderStatusColor.push('rgb(255, 205, 86)');
-            else if (orderStatusSplit[0] === '${OrderStatusCode.CANCELED.toString()}') orderStatusColor.push('rgb(255, 0, 0)');
-            else orderStatusColor.push('rgb(60, 179, 113)');
+        if(option === 1){ // Today
+            requestURL += "?date=" + monthAndYearToday;
+        }
+        else if(option === 2){ // This month
+            requestURL += "?date=" + (monthAndYearTodaySplit[0] + "-" + monthAndYearTodaySplit[1]);
+        }
+        else if(option === 3){ // This year
+            requestURL += "?date=" + (monthAndYearTodaySplit[0]);
+        }
+
+        $.ajax({
+            url: requestURL,
+            method: "GET",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "JSON",
+            success: function(result){
+                $.each(result.data, function (idx, it) {
+                    orderStatus.push(it.name);
+                    orderStatusQuantity.push(parseInt(it.quantity));
+
+                    if (it.status === '${OrderStatusCode.IN_PROGRESS.toString()}') orderStatusColor.push('rgb(137, 137, 137)');
+                    else if (it.status === '${OrderStatusCode.DELIVERING.toString()}') orderStatusColor.push('rgb(255, 205, 86)');
+                    else if (it.status === '${OrderStatusCode.CANCELED.toString()}') orderStatusColor.push('rgb(255, 0, 0)');
+                    else orderStatusColor.push('rgb(60, 179, 113)');
+                });
+
+                drawOrderStatusChart(orderStatus, orderStatusQuantity, orderStatusColor);
+            },
+            error: function(result){
+                let message = result.responseJSON.message;
+
+                $.each(result.responseJSON.details, function (idx, it) {
+                    message += it + '\n';
+                });
+
+                alert(message);
+            }
         });
-
-        drawOrderStatusChart();
     }
 
-    function drawOrderStatusChart() {
+    function drawOrderStatusChart(orderStatus, orderStatusQuantity, orderStatusColor) {
+        try{
+            let existing_chart = Chart.getChart('chart-pie-orderStatus');
+            existing_chart.destroy();
+        }
+        catch{
+            console.log("#chart-pie-orderStatus doesn't exist, can't destroy!");
+        }
 
+        let ctx = document.getElementById("chart-pie-orderStatus").getContext("2d");
         new Chart(ctx, {
             type: 'pie',
             data: {
@@ -815,6 +813,19 @@
                 plugins: {
                     legend: {       // Name of elements in chart (Ex: red rectangle - revenue, blue rectangle - profit)
                         position: 'top',
+                        labels: {
+                            font:{
+                                size: fontSizeOfChart,
+                            },
+                        },
+                    },
+                    tooltip: {
+                        titleFont: {
+                            size: fontSizeOfChart,
+                        },
+                        bodyFont: {
+                            size: fontSizeOfChart,
+                        },
                     }
                 },
             },
@@ -823,19 +834,6 @@
 
 
     //-------------------- Revenue by month chart (Line chart)
-    // Fill value of '#monthOfRevenue'
-    function fillMonthOfMoneyStatistic() {
-        let today = new Date();
-        let monthToday = today.getMonth() + 1; // getMonth(): get month of a date (0 - 11; 0-January, 1-February...)
-        monthToday = (monthToday < 10) ? ("0" + monthToday) : monthToday;
-
-        monthAndYearToday = today.getFullYear().toString() + "-" + monthToday;
-        $('#monthOfRevenue').val(monthAndYearToday);
-
-        monthAndYearToday += "-" + today.getDate();
-        getMoneyStatisticByMonth(monthAndYearToday);
-    }
-
     function getMoneyStatisticByMonth(monthAndYearToday) {
         let moneyStatisticDays = [];
         let revenueValues = [];
@@ -893,12 +891,23 @@
         // Prepare data
         let chart_line_revenueByMonth = document.getElementById("chart-line-revenueByMonth").getContext("2d");
         let option = parseInt($('#monthShowType').val());
-        let statisticLabel, chartTitle, chartLegend;
+        let statisticLabel, chartTitle, chartLegend, chartTooltipCallbacks;
         let chartDatasets;
         let noteOfChart, htmlCode;
 
         if (option === 3) {
             chartDatasets = [
+                {
+                    type: "bar",
+                    label: "Thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#43A047",
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
+                },
                 {
                     label: "Chi",
                     tension: 0,
@@ -912,27 +921,42 @@
                     data: importTotalValues, // data from database
                     maxBarThickness: 6,
                 },
-                {
-                    type: "bar",
-                    label: "Thu",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "#43A047",
-                    data: revenueValues, // data from database
-                    barThickness: 'flex',
-                },
             ];
 
             chartLegend = {
                 position: 'top',
-                maxWidth: 100,
-                maxHeight: 30,
+                labels: {
+                    font: {
+                        size: fontSizeOfChart,
+                    },
+                }
             };
+
             chartTitle = {
                 display: true
             };
+
+            chartTooltipCallbacks = {
+                label: function (context) {
+                    let label = context.dataset.label || '';
+
+                    if (label) {
+                        label += ': ';
+                    }
+
+                    let yValue = context.parsed.y;
+
+                    if (yValue !== null) {
+                        if (yValue < 0) {
+                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
+                        } else {
+                            label += yValue.toLocaleString() + " đ";
+                        }
+                    }
+
+                    return label;
+                },
+            }
 
             let sumOfImport = 0;
             $.each(importTotalValues, function (idx, it) {
@@ -950,7 +974,8 @@
                 "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
             document.getElementById('sumOfChart').innerHTML = htmlCode;
-        } else {
+        }
+        else {
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -989,11 +1014,48 @@
             chartTitle = {
                 display: false
             };
+            chartTooltipCallbacks = {
+                label: function (context) {
+                    let label = context.dataset.label || '';
+
+                    if (label) {
+                        label += ': ';
+                    }
+
+                    let yValue = context.parsed.y;
+
+                    if (yValue !== null) {
+                        if (yValue < 0) {
+                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
+                        } else {
+                            label += yValue.toLocaleString() + " đ";
+                        }
+                    }
+
+                    return label;
+                },
+                labelColor: function(context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
+                    if(context.parsed.y < 0){
+                        return {
+                            backgroundColor: 'rgb(255, 0, 0)',
+                            borderWidth: 0,
+                            borderRadius: 4,
+                        };
+                    }
+
+                    return{
+                        backgroundColor: '#43A047',
+                        borderWidth: 0,
+                        borderRadius: 4,
+                    };
+                },
+            }
         }
 
         // Show notes near the bound of chart
         document.getElementById('noteOfChart').innerHTML = noteOfChart;
         document.getElementById('sumOfChart').innerHTML = htmlCode;
+
 
         // Draw chart
         new Chart(chart_line_revenueByMonth, {
@@ -1007,13 +1069,14 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: chartLegend,
-                    tooltip: {       // Config tooltip's font-size
+                    tooltip: {       // Config tooltip's font-size, and text show (Ex: 1.000.000 đ, $3.00...)
                         titleFont: {
                             size: fontSizeOfChart
                         },
                         bodyFont: {
                             size: fontSizeOfChart
-                        }
+                        },
+                        callbacks: chartTooltipCallbacks,
                     },
                     title: chartTitle,
                 },
@@ -1164,12 +1227,22 @@
         // Prepare data
         let chart_line_revenueByYear = document.getElementById("chart-line-revenueByYear").getContext("2d");
         let option = parseInt($('#yearShowType').val());
-        let statisticLabel, chartTitle, chartLegend;
+        let statisticLabel, chartTitle, chartLegend, chartTooltipCallbacks;
         let chartDatasets;
         let noteOfChart, htmlCode;
 
         if (option === 3) {
             chartDatasets = [
+                {
+                    label: "Thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#43A047",
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
+                },
                 {
                     type: "line",
                     label: "Chi",
@@ -1184,25 +1257,60 @@
                     data: importTotalValues, // data from database
                     maxBarThickness: 6,
                 },
-                {
-                    label: "Thu",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "#43A047",
-                    data: revenueValues, // data from database
-                    barThickness: 'flex',
-                },
             ];
+
             chartLegend = {
                 position: 'top',
-                maxWidth: 100,
-                maxHeight: 30,
+                labels: {
+                    font: {
+                        size: fontSizeOfChart,
+                    },
+                }
             };
+
             chartTitle = {
                 display: true
             };
+
+            chartTooltipCallbacks = {
+                title: function (context) {
+                    return "Tháng " + (context[0].dataIndex + 1);
+                },
+                label: function (context) {
+                    let label = context.dataset.label || '';
+
+                    if (label !== null) {
+                        label += ": ";
+                    }
+
+                    let yValue = context.parsed.y;
+
+                    if (yValue !== null) {
+                        if (yValue < 0) {
+                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
+                        } else {
+                            label += yValue.toLocaleString() + " đ";
+                        }
+                    }
+
+                    return label;
+                },
+                labelColor: function(context) {
+                    if(context.parsed.y < 0){
+                        return {
+                            backgroundColor: 'rgb(255, 0, 0)',
+                            borderWidth: 0,
+                            borderRadius: 4,
+                        };
+                    }
+
+                    return{
+                        backgroundColor: '#43A047',
+                        borderWidth: 0,
+                        borderRadius: 4,
+                    };
+                },
+            }
 
             let sumOfImport = 0;
             $.each(importTotalValues, function (idx, it) {
@@ -1220,7 +1328,8 @@
                 "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
             document.getElementById('sumOfChart').innerHTML = htmlCode;
-        } else {
+        }
+        else {
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -1250,17 +1359,45 @@
                 data: revenueValues,
                 barThickness: 'flex',
             }];
+
             chartLegend = {
                 display: false
             };
+
             chartTitle = {
                 display: false
             };
+
+            chartTooltipCallbacks = {
+                title: function (context) {
+                    return "Tháng " + (context[0].dataIndex + 1);
+                },
+                label: function (context) {
+                    let label = context.dataset.label || '';
+
+                    if (label !== null) {
+                        label += ": ";
+                    }
+
+                    let yValue = context.parsed.y;
+
+                    if (yValue !== null) {
+                        if (yValue < 0) {
+                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
+                        } else {
+                            label += yValue.toLocaleString() + " đ";
+                        }
+                    }
+
+                    return label;
+                },
+            }
         }
 
         // Show notes near the bound of chart
         document.getElementById('noteOfChartYear').innerHTML = noteOfChart;
         document.getElementById('sumOfChartYear').innerHTML = htmlCode;
+
 
         // Draw new chart
         new Chart(chart_line_revenueByYear, {
@@ -1281,11 +1418,7 @@
                         bodyFont: {
                             size: fontSizeOfChart
                         },
-                        callbacks: {
-                            title: function (context) {
-                                return "Tháng " + (context[0].dataIndex + 1);
-                            },
-                        },
+                        callbacks: chartTooltipCallbacks,
                         title: chartTitle
                     },
                 },
@@ -1344,153 +1477,6 @@
         });
     }
 
-
-    // var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
-    // new Chart(ctx3, {
-    //     type: "line",
-    //     data: {
-    //         labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    //         datasets: [{
-    //             label: "Tasks",
-    //             tension: 0,
-    //             borderWidth: 2,
-    //             pointRadius: 3,
-    //             pointBackgroundColor: "#43A047",
-    //             pointBorderColor: "transparent",
-    //             borderColor: "#43A047",
-    //             backgroundColor: "transparent",
-    //             fill: true,
-    //             data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-    //             maxBarThickness: 6
-    //
-    //         }],
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         plugins: {
-    //             legend: {
-    //                 display: false,
-    //             }
-    //         },
-    //         interaction: {
-    //             intersect: false,
-    //             mode: 'index',
-    //         },
-    //         scales: {
-    //             y: {
-    //                 grid: {
-    //                     drawBorder: false,
-    //                     display: true,
-    //                     drawOnChartArea: true,
-    //                     drawTicks: false,
-    //                     borderDash: [4, 4],
-    //                     color: '#e5e5e5'
-    //                 },
-    //                 ticks: {
-    //                     display: true,
-    //                     padding: 10,
-    //                     color: '#737373',
-    //                     font: {
-    //                         size: 14,
-    //                         lineHeight: 2
-    //                     },
-    //                 }
-    //             },
-    //             x: {
-    //                 grid: {
-    //                     drawBorder: false,
-    //                     display: false,
-    //                     drawOnChartArea: false,
-    //                     drawTicks: false,
-    //                     borderDash: [4, 4]
-    //                 },
-    //                 ticks: {
-    //                     display: true,
-    //                     color: '#737373',
-    //                     padding: 10,
-    //                     font: {
-    //                         size: 14,
-    //                         lineHeight: 2
-    //                     },
-    //                 }
-    //             },
-    //         },
-    //     },
-    // });
-
-    //-------------------- Revenue by year chart (Line chart)
-    // let ctx = document.getElementById("chart-bars").getContext("2d");
-    // new Chart(ctx, {
-    //     type: "bar",
-    //     data: {
-    //         labels: ["Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy", "CN"],
-    //         datasets: [{
-    //             label: "Doanh thu",
-    //             tension: 0.4,
-    //             borderWidth: 0,
-    //             borderRadius: 4,
-    //             borderSkipped: false,
-    //             backgroundColor: "#43A047",
-    //             data: [1, 2, 3, 4, 5, 6, 7],
-    //             barThickness: 'flex'
-    //         },],
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         plugins: {
-    //             legend: {
-    //                 display: false,
-    //             }
-    //         },
-    //         interaction: {
-    //             intersect: false,
-    //             mode: 'index',
-    //         },
-    //         scales: {
-    //             y: {
-    //                 grid: {
-    //                     drawBorder: false,
-    //                     display: true,
-    //                     drawOnChartArea: true,
-    //                     drawTicks: false,
-    //                     borderDash: [5, 5],
-    //                     color: '#e5e5e5'
-    //                 },
-    //                 ticks: {
-    //                     suggestedMin: 0,
-    //                     suggestedMax: 500,
-    //                     beginAtZero: true,
-    //                     padding: 10,
-    //                     font: {
-    //                         size: 14,
-    //                         lineHeight: 2
-    //                     },
-    //                     color: "#737373"
-    //                 },
-    //             },
-    //             x: {
-    //                 grid: {
-    //                     drawBorder: false,
-    //                     display: false,
-    //                     drawOnChartArea: false,
-    //                     drawTicks: false,
-    //                     borderDash: [5, 5]
-    //                 },
-    //                 ticks: {
-    //                     display: true,
-    //                     color: '#737373',
-    //                     padding: 10,
-    //                     font: {
-    //                         size: 14,
-    //                         lineHeight: 2
-    //                     },
-    //                 }
-    //             },
-    //         },
-    //     },
-    // });
 </script>
 </body>
 

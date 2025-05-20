@@ -2,6 +2,7 @@ package com.javaweb.api.admin;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.model.dto.OrderDTO;
+import com.javaweb.model.response.OrderStatusQuantityResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.MoneyStatisticResponse;
 import com.javaweb.service.order.OrderService;
@@ -66,6 +67,25 @@ public class OrderAPI_Admin {
             List<MoneyStatisticResponse> moneyStatisticRespons = orderService.findTotalByYear(LocalDate.parse(date));
 
             responseDTO.setData(moneyStatisticRespons);
+            return ResponseEntity.ok(responseDTO);
+        }
+        catch(Exception e){
+            responseDTO.setMessage("Lỗi máy chủ! Vui lòng thử lại!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
+        }
+    }
+
+    @GetMapping("/statusQuantityByTime")
+    public ResponseEntity<?> getStatusQuantityByTime(@RequestParam(name = "date", required = false) String date){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        try{
+            List<OrderStatusQuantityResponse> orderStatusQuantity;
+
+            if(date != null) orderStatusQuantity = orderService.findQuantityByStatus_Time(date);
+            else orderStatusQuantity = orderService.findQuantityByStatus_All();
+
+            responseDTO.setData(orderStatusQuantity);
             return ResponseEntity.ok(responseDTO);
         }
         catch(Exception e){

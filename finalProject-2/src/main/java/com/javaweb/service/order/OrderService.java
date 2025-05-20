@@ -10,8 +10,9 @@ import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.OrderDTO;
 import com.javaweb.model.dto.OrderDetailsDTO;
 import com.javaweb.model.request.OrderSearchRequest;
-import com.javaweb.model.response.OrderSearchResponse;
 import com.javaweb.model.response.MoneyStatisticResponse;
+import com.javaweb.model.response.OrderSearchResponse;
+import com.javaweb.model.response.OrderStatusQuantityResponse;
 import com.javaweb.repository.*;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.util.OrderStatusCode;
@@ -72,7 +73,7 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public Long findTotal(String date) {
+    public Long findTotalByDate(String date) {
         Long total = orderRepository.findTotalByDate(date);
         if(total == null) return 0L;
         else return total;
@@ -156,13 +157,38 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public List<String> findQuantityByStatus(String date) {
-        List<String> quantities = new ArrayList<>();
+    public List<OrderStatusQuantityResponse> findQuantityByStatus_Time(String date) {
+        List<OrderStatusQuantityResponse> quantities = new ArrayList<>();
+        List<OrderEntity> orderEntities = orderRepository.findAllByTime(date);
+
+        for(OrderStatusCode item : OrderStatusCode.values()){
+            OrderStatusQuantityResponse orderStatusQuantityResponse = new OrderStatusQuantityResponse();
+            Long statusQuantity = 1L * orderEntities.stream().filter(x -> x.getStatus().equals(item.toString())).collect(Collectors.toList()).size();
+
+            orderStatusQuantityResponse.setStatus(item.toString());
+            orderStatusQuantityResponse.setName(item.getName());
+            orderStatusQuantityResponse.setQuantity(statusQuantity);
+
+            quantities.add(orderStatusQuantityResponse);
+        }
+
+        return quantities;
+    }
+
+    @Override
+    public List<OrderStatusQuantityResponse> findQuantityByStatus_All() {
+        List<OrderStatusQuantityResponse> quantities = new ArrayList<>();
         List<OrderEntity> orderEntities = orderRepository.findAll();
 
         for(OrderStatusCode item : OrderStatusCode.values()){
+            OrderStatusQuantityResponse orderStatusQuantityResponse = new OrderStatusQuantityResponse();
             Long statusQuantity = 1L * orderEntities.stream().filter(x -> x.getStatus().equals(item.toString())).collect(Collectors.toList()).size();
-            quantities.add("'" + item.toString() + "." + item.getName() + "." + statusQuantity + "'");
+
+            orderStatusQuantityResponse.setStatus(item.toString());
+            orderStatusQuantityResponse.setName(item.getName());
+            orderStatusQuantityResponse.setQuantity(statusQuantity);
+
+            quantities.add(orderStatusQuantityResponse);
         }
 
         return quantities;

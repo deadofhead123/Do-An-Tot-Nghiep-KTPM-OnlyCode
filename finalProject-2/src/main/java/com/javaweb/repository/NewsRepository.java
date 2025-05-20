@@ -10,4 +10,7 @@ import java.util.List;
 public interface NewsRepository extends JpaRepository<NewsEntity, Long>, NewsRepositoryCustom {
     @Query(value = "SELECT n.* FROM news n WHERE n.hot = 'YES' ORDER BY n.createdat DESC LIMIT 3 ", nativeQuery = true)
     List<NewsEntity> findHotWithLimit();
+
+    @Query(value = "SELECT SUM(views) FROM news", nativeQuery = true)
+    Long countAllViews();
 }

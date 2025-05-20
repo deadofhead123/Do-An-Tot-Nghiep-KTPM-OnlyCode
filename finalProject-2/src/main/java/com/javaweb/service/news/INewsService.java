@@ -17,6 +17,7 @@ public interface INewsService {
     void editNews(NewsDTO newsDTO);
     void deleteAllNewsSelected(List<Long> ids);
 
+    Long countTotalViews();
     int countTotalItems(NewsSearchRequest newsSearchRequest);
 
     Page<NewsSearchResponse> findAll_Web(NewsSearchRequest newsSearchRequest, Pageable pageable);

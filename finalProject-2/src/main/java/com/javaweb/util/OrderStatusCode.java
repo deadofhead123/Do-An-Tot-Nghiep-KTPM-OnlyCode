@@ -5,8 +5,8 @@ import java.util.Map;
 
 public enum OrderStatusCode {
     IN_PROGRESS("Chờ xử lý"),
-    DELIVERING("Đang giao hàng"),
     CANCELED("Đã hủy"),
+    DELIVERING("Đang giao hàng"),
     DELIVERED("Đã hoàn thành");
 
     private final String name;
