@@ -84,19 +84,29 @@ public class OrderService implements IOrderService{
         List<MoneyStatisticResponse> result = new ArrayList<>();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-
         String formattedDate = date.format(formatter);
+        Integer dateOfToday;
+        String monthToCompare;
 
-        Integer dateOfToday = (date.isBefore(LocalDate.now())) ? date.lengthOfMonth() : date.getDayOfMonth();
+        LocalDate now = LocalDate.now();
+        if(!date.isEqual(now)){ // Random month, compare with current year
+            dateOfToday = date.lengthOfMonth();
+            monthToCompare = now.format(formatter);
+        }
+        else{ // Random month, compare with current year
+            dateOfToday = date.getDayOfMonth();
+            monthToCompare = now.minusMonths(1).format(formatter);
+        }
+
         Integer monthOfToday = date.getMonthValue();
 
         for(Integer i = 1 ; i <= dateOfToday ; i++) {
-            String dayToFind = formattedDate + "-" + i;
+            String dayToFind = formattedDate + "-" + ((i < 10) ? ("0" + i) : i);
 
             Long orderTotal = orderRepository.findTotalByDate(dayToFind);
             orderTotal = orderTotal == null ? 0 : orderTotal;
 
-            Long importTotal = supplierRepository.findImportTotalByDate(dayToFind);
+            Long importTotal = supplierRepository.findImportTotalByTime(dayToFind);
             importTotal = importTotal == null ? 0 : importTotal;
 
             MoneyStatisticResponse moneyStatisticResponse = new MoneyStatisticResponse();
@@ -106,22 +116,44 @@ public class OrderService implements IOrderService{
             result.add(moneyStatisticResponse);
         }
 
+        Long orderTotal = orderRepository.findTotalByMonth(monthToCompare);
+        orderTotal = orderTotal == null ? 0 : orderTotal;
+
+        Long importTotal = supplierRepository.findImportTotalByTime(monthToCompare);
+        importTotal = importTotal == null ? 0 : importTotal;
+
+        MoneyStatisticResponse moneyStatisticResponse = new MoneyStatisticResponse();
+        moneyStatisticResponse.setRevenue(orderTotal);
+        moneyStatisticResponse.setImportTotal(importTotal);
+        result.add(moneyStatisticResponse);
+
         return result;
     }
 
     @Override
     public List<MoneyStatisticResponse> findTotalByYear(LocalDate date) {
         List<MoneyStatisticResponse> result = new ArrayList<>();
+        Integer monthOfYear;
+        Integer yearOfDateProvided = date.getYear();
+        String yearToCompare;
 
-        Integer monthOfYear = (date.getYear() < LocalDate.now().getYear() || date.getYear() > LocalDate.now().getYear()) ? 12 : date.getMonthValue();
+        Integer yearNow = LocalDate.now().getYear();
+        if(!yearOfDateProvided.equals(yearNow)){
+            monthOfYear = 12;
+            yearToCompare = yearNow + "";
+        }
+        else{ // Compare with previous year
+            monthOfYear = date.getMonthValue();
+            yearToCompare = (yearOfDateProvided - 1) + "";
+        }
 
         for(Integer i = 1 ; i <= monthOfYear ; i++) {
-            String monthToFind = date.getYear() + "-" + ((i < 10) ? ("0" + i) : i);
+            String monthToFind = yearOfDateProvided + "-" + ((i < 10) ? ("0" + i) : i);
 
             Long orderTotal = orderRepository.findTotalByMonth(monthToFind);
             orderTotal = orderTotal == null ? 0 : orderTotal;
 
-            Long importTotal = supplierRepository.findImportTotalByMonth(monthToFind);
+            Long importTotal = supplierRepository.findImportTotalByTime(monthToFind);
             importTotal = importTotal == null ? 0 : importTotal;
 
             MoneyStatisticResponse moneyStatisticResponse = new MoneyStatisticResponse();
@@ -130,6 +162,17 @@ public class OrderService implements IOrderService{
             moneyStatisticResponse.setDate(i.toString());
             result.add(moneyStatisticResponse);
         }
+
+        Long orderTotal = orderRepository.findTotalByYear(yearToCompare);
+        orderTotal = orderTotal == null ? 0 : orderTotal;
+
+        Long importTotal = supplierRepository.findImportTotalByTime(yearToCompare);
+        importTotal = importTotal == null ? 0 : importTotal;
+
+        MoneyStatisticResponse moneyStatisticResponse = new MoneyStatisticResponse();
+        moneyStatisticResponse.setRevenue(orderTotal);
+        moneyStatisticResponse.setImportTotal(importTotal);
+        result.add(moneyStatisticResponse);
 
         return result;
     }

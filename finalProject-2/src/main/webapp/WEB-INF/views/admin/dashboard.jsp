@@ -56,7 +56,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="text-dark">
                             <p class="text-sm mb-0 text-capitalize">Chi tiêu hôm nay</p>
-                            <h4 class="mb-0">${importToday}</h4>
+                            <h4 class="mb-0"><fmt:formatNumber value="${importToday}" pattern="#,###"/> đ</h4>
                         </div>
                         <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
                             <i class="material-symbols-rounded opacity-10">warehouse</i>
@@ -106,9 +106,8 @@
                     <div class="justify-content-xxl-end">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
                         <select id="monthShowType" class="text-dark">
-                            <option value="1">Doanh thu</option>
+                            <option value="1">Doanh thu, chi tiêu</option>
                             <option value="2">Lợi nhuận</option>
-                            <option value="3">Thu, chi</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
                         <span class="text-dark">Tháng: </span><input id="monthOfRevenue" type="month"
@@ -122,7 +121,7 @@
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="350"></canvas>
+                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="400"></canvas>
                         </div>
 
                         <div id="sumOfChart" class="text-dark pt-4">
@@ -147,7 +146,7 @@
                 <div class="card-body">
                     <h5 class="mb-0 pb-1">Đơn hàng</h5>
 
-                    <div class="mt-2 mb-3">
+                    <div class="justify-content-xxl-end mt-4 mb-3">
                         <label style="font-size: 16px; color: black">Hiển thị: </label>
                         <select id="orderStatusShowType">
                             <option value="1">Hôm nay</option>
@@ -181,9 +180,8 @@
                     <div class="justify-content-xxl-end">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
                         <select id="yearShowType" class="text-dark">
-                            <option value="1">Doanh thu</option>
+                            <option value="1">Doanh thu, chi tiêu</option>
                             <option value="2">Lợi nhuận</option>
-                            <option value="3">Thu, chi</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
                         <span class="text-dark">Năm: <input type="number" id="yearPicker" class="mb-1"/></span>
@@ -196,7 +194,7 @@
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByYear" class="chart-canvas" height="350"></canvas>
+                            <canvas id="chart-line-revenueByYear" class="chart-canvas" height="400"></canvas>
                         </div>
 
                         <div id="sumOfChartYear" class="text-dark pt-4">
@@ -729,7 +727,7 @@
         getOrderStatusQuantities();
 
         $('#yearPicker').val((new Date()).getFullYear());
-        getRevenueByYear(monthAndYearToday)
+        getMoneyStatisticByYear(monthAndYearToday)
     });
 
     //-------------------- Order status quantities chart (Pie chart)
@@ -839,6 +837,10 @@
         let revenueValues = [];
         let importTotalValues = [];
 
+        let monthToCompare = {};
+        monthToCompare["revenueComparing"] = 0;
+        monthToCompare["importTotalComparing"] = 0;
+
         $.ajax({
             url: "${orderAPI}" + "/totalByMonth?date=" + monthAndYearToday,
             method: "GET",
@@ -847,25 +849,35 @@
             success: function (result) {
                 let option = parseInt($('#monthShowType').val());
 
-                if (option === 1) { // Revenue
+                if (option === 1) { // compare of income and import total
                     $.each(result.data, function (idx, it) {
-                        moneyStatisticDays.push(it.date.toLocaleString());
+                        if(it.date != null) moneyStatisticDays.push(it.date.toLocaleString());
+
                         revenueValues.push(it.revenue);
-                    });
-                } else if (option === 2) { // Profit
-                    $.each(result.data, function (idx, it) {
-                        moneyStatisticDays.push(it.date.toLocaleString());
-                        revenueValues.push(it.revenue - it.importTotal);
-                    });
-                } else { // compare of income and import total
-                    $.each(result.data, function (idx, it) {
-                        moneyStatisticDays.push(it.date.toLocaleString());
-                        revenueValues.push(it.revenue);
+                        monthToCompare["revenueComparing"] += parseInt(it.revenue);
+
                         importTotalValues.push(it.importTotal);
+                        monthToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                    });
+
+                    monthToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
+                    monthToCompare["importTotalComparing"] -= parseInt(importTotalValues[importTotalValues.length - 1]);
+                    importTotalValues.pop();
+                }
+                else { // Profit
+                    $.each(result.data, function (idx, it) {
+                        if(it.date != null) moneyStatisticDays.push(it.date.toLocaleString());
+                        let profit = parseInt(it.revenue) - parseInt(it.importTotal);
+                        revenueValues.push(profit);
+                        monthToCompare["revenueComparing"] += profit;
                     });
                 }
 
-                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues);
+                monthToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
+                monthToCompare["revenueComparing"] -= parseInt(revenueValues[revenueValues.length - 1]);
+                revenueValues.pop();
+
+                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompare);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -879,7 +891,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues) {
+    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompareObject) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByMonth');
@@ -893,13 +905,13 @@
         let option = parseInt($('#monthShowType').val());
         let statisticLabel, chartTitle, chartLegend, chartTooltipCallbacks;
         let chartDatasets;
-        let noteOfChart, htmlCode;
+        let noteOfChart, sumOfChartHTMLCode;
 
-        if (option === 3) {
+        if (option === 1) { // Compare income, importTotal
             chartDatasets = [
                 {
                     type: "bar",
-                    label: "Thu",
+                    label: "Doanh thu",
                     tension: 0.4,
                     borderWidth: 0,
                     borderRadius: 4,
@@ -909,7 +921,7 @@
                     barThickness: 'flex',
                 },
                 {
-                    label: "Chi",
+                    label: "Chi tiêu",
                     tension: 0,
                     borderWidth: 2,
                     pointRadius: 4,
@@ -947,11 +959,7 @@
                     let yValue = context.parsed.y;
 
                     if (yValue !== null) {
-                        if (yValue < 0) {
-                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
-                        } else {
-                            label += yValue.toLocaleString() + " đ";
-                        }
+                        label += yValue.toLocaleString() + " đ";
                     }
 
                     return label;
@@ -968,12 +976,50 @@
                 sumOfRevenue += it;
             });
 
-            noteOfChart = "&nbsp;&nbsp;Thu = tiền bán hàng thu được<br> " +
-                "&nbsp;&nbsp;Chi = tiền nhập hàng";
-            htmlCode = "&nbsp;&nbsp;<strong>Tổng thu: </strong>" + sumOfRevenue.toLocaleString() + " đ<br>" +
-                "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+            noteOfChart = "&nbsp;&nbsp;Doanh thu = tiền bán hàng thu được<br> " +
+                "&nbsp;&nbsp;Chi tiêu = tiền nhập hàng";
 
-            document.getElementById('sumOfChart').innerHTML = htmlCode;
+
+            let percentOfRevenue = (monthToCompareObject.revenue === 0) ? 0 : (100 - parseInt(Math.round(monthToCompareObject.revenueComparing / monthToCompareObject.revenue * 100)));
+            let percentOfImportTotal = (monthToCompareObject.importTotal === 0) ? 0 : (100 - parseInt(Math.round(monthToCompareObject.importTotalComparing / monthToCompareObject.importTotal * 100)));
+            let monthAndYearTodaySplit = monthAndYearToday.split("-");
+
+            sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfRevenue.toLocaleString() + " đ";
+            if($('#monthOfRevenue').val() !== monthAndYearTodaySplit[0] + "-" + monthAndYearTodaySplit[1]){ // Random month, compare with current mon
+                if(percentOfRevenue > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với tháng hiện tại)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với tháng hiện tại)";
+                }
+                sumOfChartHTMLCode += "<br>";
+                sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+
+                if(percentOfImportTotal > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với tháng hiện tại)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với tháng hiện tại)";
+                }
+            }
+            else{ // Current month, compare with previous month
+                if(percentOfRevenue > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với tháng trước)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với tháng trước)";
+                }
+                sumOfChartHTMLCode += "<br>";
+                sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+
+                if(percentOfImportTotal > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với tháng trước)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với tháng trước)";
+                }
+            }
+
         }
         else {
             let sumOfMoney = 0;
@@ -981,18 +1027,13 @@
                 sumOfMoney += it;
             });
 
-            if (option === 1) {
-                statisticLabel = "Doanh thu";
-                noteOfChart = "Doanh thu = tiền bán hàng thu được";
-                htmlCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+            statisticLabel = "Lợi nhuận";
+            noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
+
+            if (sumOfMoney < 0) {
+                sumOfChartHTMLCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
             } else {
-                statisticLabel = "Lợi nhuận";
-                noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
-                if (sumOfMoney < 0) {
-                    htmlCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
-                } else {
-                    htmlCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
-                }
+                sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
             }
 
             chartDatasets = [{
@@ -1054,8 +1095,7 @@
 
         // Show notes near the bound of chart
         document.getElementById('noteOfChart').innerHTML = noteOfChart;
-        document.getElementById('sumOfChart').innerHTML = htmlCode;
-
+        document.getElementById('sumOfChart').innerHTML = sumOfChartHTMLCode;
 
         // Draw chart
         new Chart(chart_line_revenueByMonth, {
@@ -1162,18 +1202,22 @@
 
     $('#yearPicker').change(function () {
         let splitMonAndYearToday = monthAndYearToday.split("-");
-        getRevenueByYear(this.value + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
+        getMoneyStatisticByYear(this.value + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
     })
 
     $('#yearShowType').change(function () {
         let splitMonAndYearToday = monthAndYearToday.split("-");
-        getRevenueByYear($('#yearPicker').val() + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
+        getMoneyStatisticByYear($('#yearPicker').val() + "-" + splitMonAndYearToday[1] + "-" + splitMonAndYearToday[2]);
     });
 
-    function getRevenueByYear(monthAndYearToday) {
+    function getMoneyStatisticByYear(monthAndYearToday) {
         let moneyStatisticMonths = [];
         let revenueValues = [];
         let importTotalValues = [];
+
+        let yearToCompare = {};
+        yearToCompare["revenueComparing"] = 0;
+        yearToCompare["importTotalComparing"] = 0;
 
         $.ajax({
             url: "${orderAPI}" + "/totalByYear?date=" + monthAndYearToday,
@@ -1183,25 +1227,35 @@
             success: function (result) {
                 let option = parseInt($('#yearShowType').val());
 
-                if (option === 1) { // Revenue
+                if (option === 1) { // compare of income and import total
                     $.each(result.data, function (idx, it) {
-                        moneyStatisticMonths.push(it.date.toLocaleString());
+                        if(it.date != null) moneyStatisticMonths.push(it.date.toLocaleString());
+
                         revenueValues.push(it.revenue);
-                    });
-                } else if (option === 2) { // Profit
-                    $.each(result.data, function (idx, it) {
-                        moneyStatisticMonths.push(it.date.toLocaleString());
-                        revenueValues.push(it.revenue - it.importTotal);
-                    });
-                } else { // compare of income and import total
-                    $.each(result.data, function (idx, it) {
-                        moneyStatisticMonths.push(it.date.toLocaleString());
-                        revenueValues.push(it.revenue);
+                        yearToCompare["revenueComparing"] += parseInt(it.revenue);
+
                         importTotalValues.push(it.importTotal);
+                        yearToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                    });
+
+                    yearToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
+                    yearToCompare["importTotalComparing"] -= parseInt(importTotalValues[importTotalValues.length - 1]);
+                    importTotalValues.pop();
+                }
+                else { // Profit
+                    $.each(result.data, function (idx, it) {
+                        if(it.date != null) moneyStatisticMonths.push(it.date.toLocaleString());
+                        let profit = parseInt(it.revenue) - parseInt(it.importTotal);
+                        revenueValues.push(profit);
+                        yearToCompare["revenueComparing"] += profit;
                     });
                 }
 
-                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues);
+                yearToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
+                yearToCompare["revenueComparing"] -= parseInt(revenueValues[revenueValues.length - 1]);
+                revenueValues.pop();
+
+                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompare);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -1215,7 +1269,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues) {
+    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompareObject) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByYear');
@@ -1224,17 +1278,17 @@
             console.log("#chart-line-revenueByYear doesn't exist");
         }
 
-        // Prepare data
-        let chart_line_revenueByYear = document.getElementById("chart-line-revenueByYear").getContext("2d");
+        let chart_line_revenueByYear = document.getElementById('chart-line-revenueByYear').getContext("2d");
         let option = parseInt($('#yearShowType').val());
         let statisticLabel, chartTitle, chartLegend, chartTooltipCallbacks;
         let chartDatasets;
-        let noteOfChart, htmlCode;
+        let noteOfChart, sumOfChartHTMLCode;
 
-        if (option === 3) {
+        if (option === 1) { // Compare income, importTotal
             chartDatasets = [
                 {
-                    label: "Thu",
+                    type: "bar",
+                    label: "Doanh thu",
                     tension: 0.4,
                     borderWidth: 0,
                     borderRadius: 4,
@@ -1244,8 +1298,7 @@
                     barThickness: 'flex',
                 },
                 {
-                    type: "line",
-                    label: "Chi",
+                    label: "Chi tiêu",
                     tension: 0,
                     borderWidth: 2,
                     pointRadius: 4,
@@ -1273,14 +1326,120 @@
             };
 
             chartTooltipCallbacks = {
-                title: function (context) {
-                    return "Tháng " + (context[0].dataIndex + 1);
-                },
                 label: function (context) {
                     let label = context.dataset.label || '';
 
-                    if (label !== null) {
-                        label += ": ";
+                    if (label) {
+                        label += ': ';
+                    }
+
+                    let yValue = context.parsed.y;
+
+                    if (yValue !== null) {
+                        label += yValue.toLocaleString() + " đ";
+                    }
+
+                    return label;
+                },
+                title: function(context){
+                    return "Tháng " + context[0].dataIndex;
+                }
+            }
+
+            let sumOfImport = 0;
+            $.each(importTotalValues, function (idx, it) {
+                sumOfImport += it;
+            });
+
+            let sumOfRevenue = 0;
+            $.each(revenueValues, function (idx, it) {
+                sumOfRevenue += it;
+            });
+
+            noteOfChart = "&nbsp;&nbsp;Doanh thu = tiền bán hàng thu được<br> " +
+                "&nbsp;&nbsp;Chi tiêu = tiền nhập hàng";
+
+            let percentOfRevenue = (yearToCompareObject.revenue === 0) ? 0 : (100 - parseInt(Math.round(yearToCompareObject.revenueComparing / yearToCompareObject.revenue * 100)));
+            let percentOfImportTotal = (yearToCompareObject.importTotal === 0) ? 0 : (100 - parseInt(Math.round(yearToCompareObject.importTotalComparing / yearToCompareObject.importTotal * 100)));
+            let monthAndYearTodaySplit = monthAndYearToday.split("-");
+
+            sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfRevenue.toLocaleString() + " đ";
+            if($('#yearPicker').val() !== monthAndYearTodaySplit[0]){ // Random month, compare with current mon
+                if(percentOfRevenue > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với năm hiện tại)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với năm hiện tại)";
+                }
+                sumOfChartHTMLCode += "<br>";
+                sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+
+                if(percentOfImportTotal > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với năm hiện tại)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với năm hiện tại)";
+                }
+            }
+            else{ // Current month, compare with previous month
+                if(percentOfRevenue > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với năm trước)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với năm trước)";
+                }
+                sumOfChartHTMLCode += "<br>";
+                sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
+
+                if(percentOfImportTotal > 0){
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với năm trước)";
+                }
+                else{
+                    sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với năm trước)";
+                }
+            }
+
+        }
+        else { // Profit
+            let sumOfMoney = 0;
+            $.each(revenueValues, function (idx, it) {
+                sumOfMoney += it;
+            });
+
+            statisticLabel = "Lợi nhuận";
+            noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
+
+            if (sumOfMoney < 0) {
+                sumOfChartHTMLCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
+            } else {
+                sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
+            }
+
+            chartDatasets = [{
+                label: statisticLabel,
+                tension: 0,
+                borderWidth: 2,
+                pointRadius: 4,
+                pointBackgroundColor: "#43A047",
+                pointBorderColor: "transparent",
+                borderColor: "#43A047",
+                backgroundColor: "transparent",
+                fill: true,
+                data: revenueValues, // data from database
+                maxBarThickness: 6,
+            }];
+            chartLegend = {
+                display: false
+            };
+            chartTitle = {
+                display: false
+            };
+            chartTooltipCallbacks = {
+                label: function (context) {
+                    let label = context.dataset.label || '';
+
+                    if (label) {
+                        label += ': ';
                     }
 
                     let yValue = context.parsed.y;
@@ -1295,7 +1454,7 @@
 
                     return label;
                 },
-                labelColor: function(context) {
+                labelColor: function(context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
                     if(context.parsed.y < 0){
                         return {
                             backgroundColor: 'rgb(255, 0, 0)',
@@ -1311,97 +1470,16 @@
                     };
                 },
             }
-
-            let sumOfImport = 0;
-            $.each(importTotalValues, function (idx, it) {
-                sumOfImport += it;
-            });
-
-            let sumOfRevenue = 0;
-            $.each(revenueValues, function (idx, it) {
-                sumOfRevenue += it;
-            });
-
-            noteOfChart = "&nbsp;&nbsp;Thu = tiền bán hàng thu được<br> " +
-                "&nbsp;&nbsp;Chi = tiền nhập hàng";
-            htmlCode = "&nbsp;&nbsp;<strong>Tổng thu: </strong>" + sumOfRevenue.toLocaleString() + " đ<br>" +
-                "&nbsp;&nbsp;<strong>Tổng chi: </strong>" + sumOfImport.toLocaleString() + " đ\n";
-
-            document.getElementById('sumOfChart').innerHTML = htmlCode;
-        }
-        else {
-            let sumOfMoney = 0;
-            $.each(revenueValues, function (idx, it) {
-                sumOfMoney += it;
-            });
-
-            if (option === 1) {
-                statisticLabel = "Doanh thu";
-                noteOfChart = "Doanh thu = tiền bán hàng thu được";
-                htmlCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
-            } else {
-                statisticLabel = "Lợi nhuận";
-                noteOfChart = "Lợi nhuận = tiền bán hàng thu được - tiền nhập hàng";
-                if (sumOfMoney < 0) {
-                    htmlCode = "&nbsp;&nbsp;<strong class='text-danger'>Thua lỗ: </strong>" + (-sumOfMoney).toLocaleString() + " đ\n";
-                } else {
-                    htmlCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
-                }
-            }
-
-            chartDatasets = [{
-                label: statisticLabel,
-                tension: 0.4,
-                borderWidth: 0,
-                borderRadius: 4,
-                borderSkipped: false,
-                backgroundColor: "#43A047",
-                data: revenueValues,
-                barThickness: 'flex',
-            }];
-
-            chartLegend = {
-                display: false
-            };
-
-            chartTitle = {
-                display: false
-            };
-
-            chartTooltipCallbacks = {
-                title: function (context) {
-                    return "Tháng " + (context[0].dataIndex + 1);
-                },
-                label: function (context) {
-                    let label = context.dataset.label || '';
-
-                    if (label !== null) {
-                        label += ": ";
-                    }
-
-                    let yValue = context.parsed.y;
-
-                    if (yValue !== null) {
-                        if (yValue < 0) {
-                            label = "Thua lỗ: " + (-yValue).toLocaleString() + " đ";
-                        } else {
-                            label += yValue.toLocaleString() + " đ";
-                        }
-                    }
-
-                    return label;
-                },
-            }
         }
 
         // Show notes near the bound of chart
         document.getElementById('noteOfChartYear').innerHTML = noteOfChart;
-        document.getElementById('sumOfChartYear').innerHTML = htmlCode;
+        document.getElementById('sumOfChartYear').innerHTML = sumOfChartHTMLCode;
 
 
         // Draw new chart
         new Chart(chart_line_revenueByYear, {
-            type: "bar",
+            type: "line",
             data: {
                 labels: moneyStatisticMonths, // data from database
                 datasets: chartDatasets,
@@ -1411,7 +1489,7 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: chartLegend,
-                    tooltip: {       // Config tooltip's font-size
+                    tooltip: {       // Config tooltip's font-size, and text show (Ex: 1.000.000 đ, $3.00...)
                         titleFont: {
                             size: fontSizeOfChart
                         },
@@ -1419,8 +1497,8 @@
                             size: fontSizeOfChart
                         },
                         callbacks: chartTooltipCallbacks,
-                        title: chartTitle
                     },
+                    title: chartTitle,
                 },
                 interaction: {
                     intersect: false,

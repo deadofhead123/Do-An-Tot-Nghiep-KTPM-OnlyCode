@@ -28,6 +28,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long>, Order
     @Query(value = "SELECT SUM(total - discount) FROM orders WHERE status='DELIVERED' AND modifiedat LIKE CONCAT(:date, '%');", nativeQuery = true)
     Long findTotalByMonth(@Param("date") String date);
 
+    @Query(value = "SELECT SUM(total - discount) FROM orders WHERE status='DELIVERED' AND modifiedat LIKE CONCAT(:year, '%');", nativeQuery = true)
+    Long findTotalByYear(@Param("year") String year);
+
     @Query(value = "SELECT COUNT(*) FROM (SELECT id FROM orders WHERE status='DELIVERED' AND DATE(modifiedat) = DATE(:date) )od_rec ", nativeQuery = true)
     Long countOrderDelivered(String date);
 }

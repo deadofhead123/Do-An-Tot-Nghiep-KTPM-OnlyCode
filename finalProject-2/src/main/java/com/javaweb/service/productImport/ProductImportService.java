@@ -58,7 +58,7 @@ public class ProductImportService implements IProductImportService{
 
     @Override
     public Long findImportTotalByDate(String date) {
-        Long importTotal = supplierRepository.findImportTotalByDate(date);
+        Long importTotal = supplierRepository.findImportTotalByTime(date);
         if(importTotal == null) return 0L;
         return importTotal;
     }
