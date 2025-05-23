@@ -75,15 +75,16 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
 
         sqlFix = new StringBuilder(sql);
 
-        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
+//        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), CategoryEntity.class);
 
         realSize = query.getResultList().size();
 
         if(realSize == 0 && pageable.getOffset() > 0){
-            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-                                                                   .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), CategoryEntity.class);
+//            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
+//                                                                   .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), CategoryEntity.class);
+            Query queryFix = entityManager.createNativeQuery(sqlFix.toString(), CategoryEntity.class);
             return queryFix.getResultList();
         }
 

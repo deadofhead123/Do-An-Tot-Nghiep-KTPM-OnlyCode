@@ -88,7 +88,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .append(" GROUP BY od.id ")
                 .append(" ORDER BY od." + sortName.toLowerCase() + " " + sortOrder + " ");
 
-        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
+//        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), OrderEntity.class);
 

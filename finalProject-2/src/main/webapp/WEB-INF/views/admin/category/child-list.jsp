@@ -96,12 +96,12 @@
 
                         <display:table name="categorySearchResponseList.listResult" cellspacing="0"
                                        cellpadding="0"
-                                       requestURI="${formURL}" partialList="true"
+                                       requestURI="${formURL}" partialList="false"
                                        sort="external"
                                        size="${categorySearchResponseList.totalItems}" defaultsort="2"
                                        defaultorder="ascending"
                                        id="tableList" pagesize="${categorySearchResponseList.maxPageItems}"
-                                       export="false"
+                                       export="true"
                                        class="table table-striped table-bordered table-hover aligns-item-center"
                                        style="margin: 0 1.5em;">
                             <display:column
@@ -181,6 +181,8 @@
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='infos'>Không tìm thấy danh mục nào.</div></div>"/>
                             <display:setProperty name="paging.banner.some_items_found"
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='info-horizontal'>Tìm thấy <b>{0}</b> danh mục, hiển thị từ {2} đến {3}.</div></div>"/>
+                            <display:setProperty name="export.banner"
+                                                 value="<br/><div class='ms-4 col-sm-6 align-left'><div class='infos'>Xuất {0}</div></div>"/>
                         </display:table>
 
                     </div>

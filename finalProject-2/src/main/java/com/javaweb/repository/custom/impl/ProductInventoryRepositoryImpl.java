@@ -113,9 +113,9 @@ public class ProductInventoryRepositoryImpl implements ProductInventoryRepositor
 
         sql.append(join).append(where)
                 .append(" GROUP BY pi.id ")
-                .append(" ORDER BY pi." + sortName.toLowerCase() + " " + sortOrder + " ")
-                .append(" LIMIT ").append(pageable.getPageSize())
-                .append(" OFFSET ").append(pageable.getOffset());
+                .append(" ORDER BY pi." + sortName.toLowerCase() + " " + sortOrder + " ");
+//                .append(" LIMIT ").append(pageable.getPageSize())
+//                .append(" OFFSET ").append(pageable.getOffset());
         System.out.println(sql);
 
         Query query = entityManager.createNativeQuery(sql.toString(), ProductInventoryEntity.class);

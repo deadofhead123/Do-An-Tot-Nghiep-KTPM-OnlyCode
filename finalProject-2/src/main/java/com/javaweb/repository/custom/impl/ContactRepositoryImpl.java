@@ -68,9 +68,9 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
             sortOrder = item.getDirection().toString();
         }
 
-        sql.append(where).append(" ORDER BY ct." + sortName.toLowerCase() + " " + sortOrder + " ")
-                         .append(" LIMIT " + pageable.getPageSize())
-                         .append(" OFFSET " + pageable.getOffset());
+        sql.append(where).append(" ORDER BY ct." + sortName.toLowerCase() + " " + sortOrder + " ");
+//                         .append(" LIMIT " + pageable.getPageSize())
+//                         .append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), ContactEntity.class);
 

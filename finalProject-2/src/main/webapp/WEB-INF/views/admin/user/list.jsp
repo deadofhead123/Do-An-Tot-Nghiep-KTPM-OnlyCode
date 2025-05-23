@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
-                                    <label for="fullName">Họ tên</label>
+                                    <label for="fullName"><strong class="text-dark">Họ tên</strong></label>
                                     <form:input path="fullName" type="text" name="fullName" id="fullName"
                                                 class="form-control px-2"
                                                 style="border: 1px solid black"/>
@@ -147,14 +147,13 @@
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
 
-                        <display:table name="userSearchResponse.listResult" cellspacing="0"
-                                       cellpadding="0"
-                                       requestURI="${formURL}" partialList="true"
+                        <display:table name="userSearchResponse.listResult" cellspacing="0" cellpadding="0"
+                                       requestURI="${formURL}" partialList="false"
                                        sort="external"
                                        size="${userSearchResponse.totalItems}" defaultsort="4"
                                        defaultorder="ascending"
                                        id="tableList" pagesize="${userSearchResponse.maxPageItems}"
-                                       export="false"
+                                       export="true"
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
@@ -251,6 +250,8 @@
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='infos'>Không tìm thấy tài khoản nào.</div></div>"/>
                             <display:setProperty name="paging.banner.some_items_found"
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='info-horizontal'>Tìm thấy <b>{0}</b> tài khoản, hiển thị từ {2} đến {3}.</div></div>"/>
+                            <display:setProperty name="export.banner"
+                                                 value="<br/><div class='ms-4 col-sm-6 align-left'><div class='infos'>Xuất {0}</div></div>"/>
                         </display:table>
 
                     </div>
@@ -269,7 +270,7 @@
 
     //----------------------------- Clear search form
     $('#btnDeleteParams').click(function () {
-        window.location.href("/admin/user-list");
+        window.location.href = "/admin/user-list";
     });
 
     // Check or uncheck all

@@ -24,7 +24,6 @@ public class DisplayTagUtils {
             }
             dto.setPage(page);
 
-
             // Sort follow name of head column
             String sortName = request.getParameter(new ParamEncoder(dto.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_SORT));
             if(StringUtils.isNotBlank(sortName)){

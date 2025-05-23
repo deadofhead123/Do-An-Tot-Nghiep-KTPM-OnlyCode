@@ -99,12 +99,12 @@
 
                         <display:table name="supplierSearchResponse.listResult" cellspacing="0"
                                        cellpadding="0"
-                                       requestURI="${formURI}" partialList="true"
+                                       requestURI="${formURI}" partialList="false"
                                        sort="external"
                                        size="${supplierSearchResponse.totalItems}" defaultsort="2"
                                        defaultorder="ascending"
                                        id="tableList" pagesize="${supplierSearchResponse.maxPageItems}"
-                                       export="false"
+                                       export="true"
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
@@ -166,6 +166,8 @@
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='infos'>Không tìm thấy lần nhập hàng nào.</div></div>"/>
                             <display:setProperty name="paging.banner.some_items_found"
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='info-horizontal'>Tìm thấy <b>{0}</b> lần nhập hàng, hiển thị từ {2} đến {3}.</div></div>"/>
+                            <display:setProperty name="export.banner"
+                                                 value="<br/><div class='ms-4 col-sm-6 align-left'><div class='infos'>Xuất {0}</div></div>"/>
                         </display:table>
 
                     </div>

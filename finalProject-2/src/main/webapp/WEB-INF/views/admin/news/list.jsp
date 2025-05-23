@@ -13,17 +13,6 @@
 <body class="g-sidenav-show  bg-gray-100">
 
 <div class="container-fluid py-2">
-    <c:if test="${not empty messageResponse}">
-        <div class="row">
-            <div class="col-12 col-xl-5"></div>
-            <div class="col-12 col-xl-4">
-                <div id="alertResult" class="alert alert-block alert-${alert} text-white w-lg-50 text-xxl-center">
-                        ${messageResponse}
-                </div>
-            </div>
-        </div>
-    </c:if>
-
     <!-- User list -->
     <div class="row">
         <div class="col-12">
@@ -136,12 +125,13 @@
 
                         <display:table name="newsSearchResponse.listResult" cellspacing="0"
                                        cellpadding="0"
-                                       requestURI="${formURI}" partialList="true"
+                                       requestURI="${formURI}" partialList="false"
                                        sort="external"
-                                       size="${newsSearchResponse.totalItems}" defaultsort="2"
-                                       defaultorder="ascending"
-                                       id="tableList" pagesize="${newsSearchResponse.maxPageItems}"
-                                       export="false"
+                                       size="${newsSearchResponse.totalItems}"
+                                       defaultsort="2" defaultorder="ascending"
+                                       id="tableList"
+                                       pagesize="${newsSearchResponse.maxPageItems}"
+                                       export="true"
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
@@ -248,6 +238,8 @@
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='infos'>Không tìm thấy tin tức nào.</div></div>"/>
                             <display:setProperty name="paging.banner.some_items_found"
                                                  value="<br/><div class='ms-3 col-sm-6 align-left'><div class='info-horizontal'>Tìm thấy <b>{0}</b> tin tức, hiển thị từ {2} đến {3}.</div></div>"/>
+                            <display:setProperty name="export.banner"
+                                                 value="<br/><div class='ms-4 col-sm-6 align-left'><div class='infos'>Xuất {0}</div></div>"/>
                         </display:table>
 
                     </div>
@@ -333,12 +325,11 @@
             dataType: "JSON",
             success: function (result) {
                 console.log(result);
-
-                // if (result.data === "delete_success") {
-                //     window.location.href = "/admin/news-list?message=delete_success";
-                // }
                 alert(result.message);
-                location.reload();
+
+                // When delete, back to previous page if this isn't page 1
+                let currentURL = window.location.href;
+                window.location.href = currentURL;
             },
             error: function (result) {
                 console.log(result);

@@ -84,9 +84,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
             sortOrder = item.getDirection().toString();
         }
 
-        sql.append(" ORDER BY u." + sortName.toLowerCase() + " " + sortOrder + " ")
-                .append(" LIMIT ").append(pageable.getPageSize())
-                .append(" OFFSET ").append(pageable.getOffset());
+        sql.append(" ORDER BY u." + sortName.toLowerCase() + " " + sortOrder + " ");
+//                .append(" LIMIT ").append(pageable.getPageSize())
+//                .append(" OFFSET ").append(pageable.getOffset());
         System.out.println(sql);
 
         Query query = entityManager.createNativeQuery(sql.toString(), UserEntity.class);

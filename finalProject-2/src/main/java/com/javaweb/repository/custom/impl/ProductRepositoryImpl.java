@@ -101,15 +101,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         sqlFix = new StringBuilder(sql);
 
-        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
+//        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), ProductEntity.class);
 
         realSize = query.getResultList().size();
 
         if(realSize == 0 && pageable.getOffset() > 0){
-            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), ProductEntity.class);
+//            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
+//                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), ProductEntity.class);
+            Query queryFix = entityManager.createNativeQuery(sqlFix.toString(), ProductEntity.class);
             return queryFix.getResultList();
         }
 
