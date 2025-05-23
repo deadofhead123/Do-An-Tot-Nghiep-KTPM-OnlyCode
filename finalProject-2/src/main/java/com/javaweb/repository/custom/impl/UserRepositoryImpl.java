@@ -6,6 +6,7 @@ import com.javaweb.repository.custom.UserRepositoryCustom;
 import com.javaweb.security.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -75,10 +76,17 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         queryWhereSpecial(userSearchRequest, where);
 
         sql.append(join).append(where).append(" AND u.email NOT LIKE '%" + SecurityUtils.getPrincipal().getUsername() + "%' ")
-                                      .append(" GROUP BY u.id ")
-                                        .append(" ORDER BY u.createdat DESC ")
-                                        .append(" LIMIT ").append(pageable.getPageSize())
-                                      .append(" OFFSET ").append(pageable.getOffset());
+                                      .append(" GROUP BY u.id ");
+
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
+        sql.append(" ORDER BY u." + sortName.toLowerCase() + " " + sortOrder + " ")
+                .append(" LIMIT ").append(pageable.getPageSize())
+                .append(" OFFSET ").append(pageable.getOffset());
         System.out.println(sql);
 
         Query query = entityManager.createNativeQuery(sql.toString(), UserEntity.class);

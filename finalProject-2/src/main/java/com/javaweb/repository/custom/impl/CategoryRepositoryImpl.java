@@ -6,6 +6,7 @@ import com.javaweb.model.request.CategorySearchRequest;
 import com.javaweb.repository.custom.CategoryRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -64,7 +65,13 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
         queryWhereNormal(categorySearchRequest, where);
         queryWhereSpecial(categorySearchRequest, where);
 
-        sql.append(where).append(" AND c.isactive=1 ").append(" ORDER BY c.createdat DESC ");
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
+        sql.append(where).append(" AND c.isactive=1 ").append(" ORDER BY c." + sortName.toLowerCase() + " " + sortOrder + " ");
 
         sqlFix = new StringBuilder(sql);
 
@@ -76,7 +83,7 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
 
         if(realSize == 0 && pageable.getOffset() > 0){
             Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-                                                                .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), CategoryEntity.class);
+                                                                   .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), CategoryEntity.class);
             return queryFix.getResultList();
         }
 

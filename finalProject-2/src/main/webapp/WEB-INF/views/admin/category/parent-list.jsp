@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="formURL" value="/admin/category-child-list"/>
+<c:url var="formURL" value="/admin/category-parent-list"/>
 <c:url var="formAPI" value="/api/admin/categories"/>
 
 <!DOCTYPE html>
@@ -89,7 +89,7 @@
                                 </fieldset>
                             </display:column>
 
-                            <display:column headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                            <display:column headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="name"
                                     title="Tên danh mục">
                                 <div class="align-middle">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.name}</span>
@@ -104,7 +104,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
                                     title="Ngày tạo">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
@@ -112,7 +112,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
                                     title="Ngày sửa">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>

@@ -150,7 +150,7 @@
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="id"
                                     title="Mã sản phẩm">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.id}</span>
@@ -183,7 +183,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="priceInImport"
                                     title="Giá nhập">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -193,7 +193,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="status"
                                     title="Trạng thái">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -217,7 +217,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
                                     title="Ngày nhập">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
@@ -225,7 +225,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
                                     title="Ngày sửa">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>

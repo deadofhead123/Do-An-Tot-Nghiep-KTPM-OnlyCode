@@ -11,6 +11,11 @@ import java.util.List;
 public interface OrderDetailsRepository extends JpaRepository<OrderDetailsEntity, Long> {
     List<OrderDetailsEntity> findAllByProductEntity(ProductEntity productEntity);
 
-    @Query(value = "SELECT od.* FROM order_details od WHERE DATE(od.createdat) = DATE(:date) ", nativeQuery = true)
+    @Query(value = "SELECT * FROM order_details WHERE createdat LIKE CONCAT(:date, '%') ", nativeQuery = true)
     List<OrderDetailsEntity> findAllByCreatedAtModified(@Param("date") String date);
+
+    @Query(value = "SELECT DISTINCT(orderid) FROM order_details", nativeQuery = true)
+    List<String> findAllDistinct();
+
+    List<OrderDetailsEntity> findAllByOrderIdEquals(String orderId);
 }

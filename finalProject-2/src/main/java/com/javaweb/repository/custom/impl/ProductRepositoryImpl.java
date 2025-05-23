@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -88,9 +89,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         queryWhereNormal(productSearchRequest, where);
         queryWhereSpecial(productSearchRequest, where);
 
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
         sql.append(join).append(where).append(" AND p.isactive=1 ")
                 .append(" GROUP BY p.id ")
-                .append(" ORDER BY p.createdat DESC ");
+                .append(" ORDER BY p." + sortName.toLowerCase() + " " + sortOrder + " ");
 
         sqlFix = new StringBuilder(sql);
 
@@ -102,7 +109,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         if(realSize == 0 && pageable.getOffset() > 0){
             Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), ProductEntity.class);
+                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), ProductEntity.class);
             return queryFix.getResultList();
         }
 

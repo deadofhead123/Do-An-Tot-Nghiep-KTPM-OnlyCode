@@ -5,6 +5,7 @@ import com.javaweb.model.request.SupplierSearchRequest;
 import com.javaweb.repository.custom.SupplierRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -68,9 +69,15 @@ public class SupplierRepositoryImpl implements SupplierRepositoryCustom {
         queryWhereNormal(supplierSearchRequest, where);
         queryWhereSpecial(supplierSearchRequest, where);
 
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
         sql.append(join).append(where)
                 .append(" GROUP BY sp.id ")
-                .append(" ORDER BY sp.createdat DESC ")
+                .append(" ORDER BY sp." + sortName.toLowerCase() + " " + sortOrder + " ")
                 .append(" LIMIT ").append(pageable.getPageSize())
                 .append(" OFFSET ").append(pageable.getOffset());
         System.out.println(sql);

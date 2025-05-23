@@ -12,6 +12,7 @@ import com.javaweb.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,8 @@ public class ProductImportController {
 
         DisplayTagUtils.of(request, supplierSearchResponse);
         supplierSearchResponse.setListResult
-                (productImportService.findAll(supplierSearchRequest, PageRequest.of(supplierSearchResponse.getPage() - 1, supplierSearchResponse.getMaxPageItems())));
+                (productImportService.findAll(supplierSearchRequest,
+                                                PageRequest.of(supplierSearchResponse.getPage() - 1, supplierSearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(supplierSearchResponse.getSortOrder()), supplierSearchResponse.getSortName()))));
         supplierSearchResponse.setTotalItems(productImportService.countTotalItems(supplierSearchRequest));
 
         mav.addObject("supplierSearchResponse", supplierSearchResponse);

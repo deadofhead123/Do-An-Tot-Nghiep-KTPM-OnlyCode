@@ -27,5 +27,7 @@ public class AbstractDTO<T> implements Serializable {
     private Integer limit;
     private Integer totalPage;
     private Integer totalItem;
+    private String sortName = "createdAt";
+    private String sortOrder = "DESC";
     private String searchValue;
 }

@@ -33,15 +33,15 @@ public class UserController {
         ModelAndView mav = new ModelAndView("/admin/user/list");
 
         UserSearchResponse userSearchResponse = new UserSearchResponse();
-        Sort sort = Sort.by("fullName").ascending();
-        Map<String, String> role = RoleCode.getListCode();
 
         DisplayTagUtils.of(request, userSearchResponse);
+//        Sort sort = Sort.by(userSearchResponse.getSortName()).ascending();
+        Sort sort = Sort.by(Sort.Direction.valueOf(userSearchResponse.getSortOrder()), userSearchResponse.getSortName());
         userSearchResponse.setListResult(IUserService.findAll(userSearchRequest, PageRequest.of(userSearchResponse.getPage() - 1, userSearchResponse.getMaxPageItems(), sort)));
         userSearchResponse.setTotalItems(IUserService.countTotalItems(userSearchRequest));
 
         mav.addObject("userSearchResponse", userSearchResponse);
-        mav.addObject("role", role);
+        mav.addObject("role", RoleCode.getListCode());
 
         return mav;
     }

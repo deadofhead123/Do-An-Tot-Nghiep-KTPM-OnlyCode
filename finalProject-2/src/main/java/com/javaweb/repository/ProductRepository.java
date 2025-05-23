@@ -18,4 +18,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>, P
 
     @Query(value = "SELECT p.* FROM products p WHERE p.quantity <= :quantity AND p.isactive = 1", nativeQuery = true)
     List<ProductEntity> findAllNearOutOfQuantity(@Param("quantity") Integer quantity);
+
+    List<ProductEntity> findAllByIsActive(Integer isActive);
 }

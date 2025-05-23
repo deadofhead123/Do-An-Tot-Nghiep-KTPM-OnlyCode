@@ -7,6 +7,7 @@ import com.javaweb.repository.custom.ProductInventoryRepositoryCustom;
 import com.javaweb.util.ProductInventoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -104,9 +105,15 @@ public class ProductInventoryRepositoryImpl implements ProductInventoryRepositor
         queryWhereNormal(productInventorySearchRequest, where);
         queryWhereSpecial(productInventorySearchRequest, where);
 
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
         sql.append(join).append(where)
                 .append(" GROUP BY pi.id ")
-                .append(" ORDER BY pi.id DESC ")
+                .append(" ORDER BY pi." + sortName.toLowerCase() + " " + sortOrder + " ")
                 .append(" LIMIT ").append(pageable.getPageSize())
                 .append(" OFFSET ").append(pageable.getOffset());
         System.out.println(sql);

@@ -23,6 +23,24 @@ public class DisplayTagUtils {
                 }
             }
             dto.setPage(page);
+
+
+            // Sort follow name of head column
+            String sortName = request.getParameter(new ParamEncoder(dto.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_SORT));
+            if(StringUtils.isNotBlank(sortName)){
+                dto.setSortName(sortName);
+            }
+
+            String sortOrder = request.getParameter(new ParamEncoder(dto.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_ORDER));
+            if(StringUtils.isNotBlank(sortOrder)){
+                if(sortOrder.equals("1")){
+                    sortOrder = "ASC";
+                }
+                else{
+                    sortOrder = "DESC";
+                }
+                dto.setSortOrder(sortOrder);
+            }
         }
     }
 }

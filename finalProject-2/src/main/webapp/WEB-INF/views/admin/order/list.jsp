@@ -95,7 +95,7 @@
                                        style="margin: 0 1.5em;">
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="id"
                                     title="Mã đơn hàng">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.id}</span>
@@ -103,16 +103,15 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="total - od.discount"
                                     title="Tổng tiền">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatNumber
-                                            value='${tableList.totalFinal}' pattern='#,###'/>₫</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatNumber value='${tableList.totalFinal}' pattern='#,###'/>₫</span>
                                 </div>
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="address"
                                     title="Địa chỉ giao hàng">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.address}</span>
@@ -120,7 +119,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="status"
                                     title="Trạng thái">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -150,7 +149,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
                                     title="Thời gian đặt">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -160,7 +159,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
                                     title="Thời gian giao">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">

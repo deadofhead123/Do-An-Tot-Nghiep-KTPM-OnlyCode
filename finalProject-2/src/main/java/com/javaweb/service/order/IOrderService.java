@@ -21,8 +21,7 @@ public interface IOrderService {
     Long findTotalByDate(String date);
     List<MoneyStatisticResponse> findTotalByMonth(LocalDate date);
     List<MoneyStatisticResponse> findTotalByYear(LocalDate date);
-    Long findQuantityDelivered(String date);
-    Long findOrderDelivered(String date);
+    List<OrderStatusQuantityResponse> findHighestQuantityByTime(String date);
 
     List<OrderStatusQuantityResponse> findQuantityByStatus_Time(String date);
     List<OrderStatusQuantityResponse> findQuantityByStatus_All();

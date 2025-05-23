@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -70,7 +71,13 @@ public class NewsRepositoryImpl implements NewsRepositoryCustom {
         queryWhereNormal(newsSearchRequest, where);
         queryWhereSpecial(newsSearchRequest, where);
 
-        sql.append(where).append(" AND n.isactive=1 ").append(" ORDER BY n.createdat DESC ");
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
+        sql.append(where).append(" AND n.isactive=1 ").append(" ORDER BY n." + sortName.toLowerCase() + " " + sortOrder + " ");
 
         sqlFix = new StringBuilder(sql);
 
@@ -82,7 +89,7 @@ public class NewsRepositoryImpl implements NewsRepositoryCustom {
 
         if(realSize == 0 && pageable.getOffset() > 0){
             Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), NewsEntity.class);
+                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), NewsEntity.class);
             return queryFix.getResultList();
         }
 

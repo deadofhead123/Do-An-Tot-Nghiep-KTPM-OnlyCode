@@ -103,7 +103,7 @@
             <div class="card ">
                 <div class="card-body">
                     <h5 class="mb-0 pb-1"> Số liệu theo tháng </h5>
-                    <div class="justify-content-xxl-end">
+                    <div class="justify-content-xxl-end ms-2">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
                         <select id="monthShowType" class="text-dark">
                             <option value="1">Doanh thu, chi tiêu</option>
@@ -146,7 +146,7 @@
                 <div class="card-body">
                     <h5 class="mb-0 pb-1">Đơn hàng</h5>
 
-                    <div class="justify-content-xxl-end mt-4 mb-3">
+                    <div class="justify-content-xxl-end ms-2 mt-4 mb-3">
                         <label style="font-size: 16px; color: black">Hiển thị: </label>
                         <select id="orderStatusShowType">
                             <option value="1">Hôm nay</option>
@@ -161,6 +161,11 @@
                             <canvas id="chart-pie-orderStatus" class="chart-canvas" height="350"></canvas>
                         </div>
                     </div>
+
+                    <div class="mt-3">
+                        <p id="highestOrderStatusQuantityNote" class="text-dark"></p>
+                    </div>
+
                     <hr class="dark horizontal">
                     <div class="d-flex ">
                         <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
@@ -177,7 +182,7 @@
                     <h5 class="mb-0 pb-1"> Số liệu của năm </h5>
                     <%--                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>--%>
                     <br>
-                    <div class="justify-content-xxl-end">
+                    <div class="justify-content-xxl-end ms-2">
                         <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
                         <select id="yearShowType" class="text-dark">
                             <option value="1">Doanh thu, chi tiêu</option>
@@ -211,386 +216,100 @@
         </div>
     </div>
 
+    <!-- Products with highest quantity sold -->
     <div class="row mb-4">
-        <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
+        <div class="col-lg-6 col-md-6 mb-md-0 mb-4">
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-lg-6 col-7">
-                            <h6>Projects</h6>
-                            <p class="text-sm mb-0">
-                                <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                <span class="font-weight-bold ms-1">30 done</span> this month
-                            </p>
-                        </div>
-                        <div class="col-lg-6 col-5 my-auto text-end">
-                            <div class="dropdown float-lg-end pe-4">
-                                <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="fa fa-ellipsis-v text-secondary"></i>
-                                </a>
-                                <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
-                                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a>
-                                    </li>
-                                    <li><a class="dropdown-item border-radius-md" href="javascript:;">Something else
-                                        here</a></li>
-                                </ul>
-                            </div>
+                            <h5>Các sản phẩm bán chạy nhất tháng</h5>
                         </div>
                     </div>
                 </div>
+
+                <div class="ms-4 mt-3 mb-3">
+                    <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
+                    <input id="monthOfHotProduct" type="month"/>
+                </div>
+
                 <div class="card-body px-0 pb-2">
-                    <div class="table-responsive">
-                        <table class="table align-items-center mb-0">
+                    <div class="table-container">
+                        <table id="hotProductTable" class="table align-items-center ms-1 me-1 text-dark">
                             <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Companies
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Ảnh đại diện
                                 </th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Members
+                                <th class="text-center font-weight-bolder ps-2" style="font-size: 16px;">
+                                    Tên sản phẩm
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Budget
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Số lượng bán
                                 </th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Completion
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Tổng tiền bán
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-xd.svg"
-                                                 class="avatar avatar-sm me-3" alt="xd">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Material XD Version</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../admin/img/team-1.jpg" alt="team1">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../admin/img/team-2.jpg" alt="team2">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                                            <img src="../admin/img/team-3.jpg" alt="team3">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../admin/img/team-4.jpg" alt="team4">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $14,000 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-60" role="progressbar"
-                                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-atlassian.svg"
-                                                 class="avatar avatar-sm me-3" alt="atlassian">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Add Progress Track</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../admin/img/team-2.jpg" alt="team5">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../admin/img/team-4.jpg" alt="team6">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $3,000 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">10%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-10" role="progressbar"
-                                                 aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-slack.svg"
-                                                 class="avatar avatar-sm me-3" alt="team7">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Fix Platform Errors</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../admin/img/team-3.jpg" alt="team8">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../admin/img/team-1.jpg" alt="team9">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> Not set </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">100%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success w-100" role="progressbar"
-                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-spotify.svg"
-                                                 class="avatar avatar-sm me-3" alt="spotify">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Launch our Mobile App</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../admin/img/team-4.jpg" alt="user1">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../admin/img/team-3.jpg" alt="user2">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                                            <img src="../admin/img/team-4.jpg" alt="user3">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../admin/img/team-1.jpg" alt="user4">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $20,500 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">100%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success w-100" role="progressbar"
-                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-jira.svg"
-                                                 class="avatar avatar-sm me-3" alt="jira">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Add the New Pricing Page</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../admin/img/team-4.jpg" alt="user5">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $500 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">25%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-25" role="progressbar"
-                                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="25"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../admin/img/small-logos/logo-invision.svg"
-                                                 class="avatar avatar-sm me-3" alt="invision">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Redesign New Online Shop</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../admin/img/team-1.jpg" alt="user6">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../admin/img/team-4.jpg" alt="user7">
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $2,000 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">40%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-40" role="progressbar"
-                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+
+                            <tbody id="hotProductTable-body">
+
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+                <div class="ms-4 mt-2 mb-2">
+                    <p id="noteOfHotProduct" class="text-dark"></p>
+                </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card h-100">
+
+        <div class="col-lg-6 col-md-6 mb-md-0 mb-4">
+            <div class="card">
                 <div class="card-header pb-0">
-                    <h6>Orders overview</h6>
-                    <p class="text-sm">
-                        <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                        <span class="font-weight-bold">24%</span> this month
-                    </p>
-                </div>
-                <div class="card-body p-3">
-                    <div class="timeline timeline-one-side">
-                        <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-success text-gradient">notifications</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">$2400, Design changes</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-danger text-gradient">code</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">New order #1832412</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 11 PM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-info text-gradient">shopping_cart</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Server payments for April</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-warning text-gradient">credit_card</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">New card added for order
-                                    #4395133</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">20 DEC 2:20 AM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-primary text-gradient">key</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Unlock packages for development</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block">
-                  <span class="timeline-step">
-                    <i class="material-symbols-rounded text-dark text-gradient">payments</i>
-                  </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">New order #9583120</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">17 DEC</p>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-7">
+                            <h5>Các sản phẩm bán chậm của tháng</h5>
                         </div>
                     </div>
+                </div>
+
+                <div class="ms-4 mt-3 mb-3">
+                    <label class="text-dark" style="font-size: 16px;">Hiển thị: </label>
+                    <input id="monthOfExcessProduct" type="month"/>
+                </div>
+
+                <div class="card-body px-0 pb-2">
+                    <div class="table-container">
+                        <table id="excessProductTable" class="table align-items-center ms-1 me-1 text-dark">
+                            <thead>
+                            <tr>
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Ảnh đại diện
+                                </th>
+                                <th class="text-center font-weight-bolder ps-2" style="font-size: 16px;">
+                                    Tên sản phẩm
+                                </th>
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Số lượng bán
+                                </th>
+                                <th class="text-center font-weight-bolder" style="font-size: 16px;">
+                                    Tổng tiền bán
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="excessProductTable-body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="ms-4 mt-2 mb-2">
+                    <p id="noteOfExcessProduct" class="text-dark"></p>
                 </div>
             </div>
         </div>
@@ -698,6 +417,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 <script>
     <c:set var="orderAPI" value="/api/admin/orders"/>
+    <c:set var="statisticAPI" value="/api/admin/statistic"/>
 
     let fontSizeOfChart;
     let monthAndYearToday;
@@ -719,20 +439,34 @@
 
         monthAndYearToday = today.getFullYear().toString() + "-" + monthToday;
         $('#monthOfRevenue').val(monthAndYearToday);
+        $('#monthOfHotProduct').val(monthAndYearToday);
+        $('#monthOfExcessProduct').val(monthAndYearToday);
 
         monthAndYearToday += "-" + today.getDate();
 
+        getHotProduct(monthAndYearToday);
+        getExcessProduct(monthAndYearToday);
 
-        getMoneyStatisticByMonth(monthAndYearToday);
         getOrderStatusQuantities();
 
+        getMoneyStatisticByMonth(monthAndYearToday);
         $('#yearPicker').val((new Date()).getFullYear());
         getMoneyStatisticByYear(monthAndYearToday)
     });
 
     //-------------------- Order status quantities chart (Pie chart)
-    $('#orderStatusShowType').change(function(){
+    $('#orderStatusShowType').change(function () {
         getOrderStatusQuantities();
+
+        let option = parseInt(this.value);
+        let highestOrderStatusQuantityNoteHTML = "";
+        if (option === 2) {
+            highestOrderStatusQuantityNoteHTML += "- Ngày có nhiều đơn hàng nhất trong tháng này: ${highestQuantityOfMonthAndYear.get(0).date} &nbsp;(${highestQuantityOfMonthAndYear.get(0).quantity} đơn hàng)<br>";
+        } else if (option === 3) {
+            highestOrderStatusQuantityNoteHTML += "- Tháng có nhiều đơn hàng nhất trong năm nay: Tháng ${highestQuantityOfMonthAndYear.get(1).date} &nbsp;(${highestQuantityOfMonthAndYear.get(1).quantity} đơn hàng)";
+        }
+
+        document.getElementById('highestOrderStatusQuantityNote').innerHTML = highestOrderStatusQuantityNoteHTML;
     });
 
     function getOrderStatusQuantities() {
@@ -744,13 +478,11 @@
         let monthAndYearTodaySplit = monthAndYearToday.split("-");
         let requestURL = "${orderAPI}" + "/statusQuantityByTime";
 
-        if(option === 1){ // Today
+        if (option === 1) { // Today
             requestURL += "?date=" + monthAndYearToday;
-        }
-        else if(option === 2){ // This month
+        } else if (option === 2) { // This month
             requestURL += "?date=" + (monthAndYearTodaySplit[0] + "-" + monthAndYearTodaySplit[1]);
-        }
-        else if(option === 3){ // This year
+        } else if (option === 3) { // This year
             requestURL += "?date=" + (monthAndYearTodaySplit[0]);
         }
 
@@ -759,7 +491,7 @@
             method: "GET",
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
-            success: function(result){
+            success: function (result) {
                 $.each(result.data, function (idx, it) {
                     orderStatus.push(it.name);
                     orderStatusQuantity.push(parseInt(it.quantity));
@@ -772,7 +504,7 @@
 
                 drawOrderStatusChart(orderStatus, orderStatusQuantity, orderStatusColor);
             },
-            error: function(result){
+            error: function (result) {
                 let message = result.responseJSON.message;
 
                 $.each(result.responseJSON.details, function (idx, it) {
@@ -785,11 +517,10 @@
     }
 
     function drawOrderStatusChart(orderStatus, orderStatusQuantity, orderStatusColor) {
-        try{
+        try {
             let existing_chart = Chart.getChart('chart-pie-orderStatus');
             existing_chart.destroy();
-        }
-        catch{
+        } catch {
             console.log("#chart-pie-orderStatus doesn't exist, can't destroy!");
         }
 
@@ -812,7 +543,7 @@
                     legend: {       // Name of elements in chart (Ex: red rectangle - revenue, blue rectangle - profit)
                         position: 'top',
                         labels: {
-                            font:{
+                            font: {
                                 size: fontSizeOfChart,
                             },
                         },
@@ -841,6 +572,10 @@
         monthToCompare["revenueComparing"] = 0;
         monthToCompare["importTotalComparing"] = 0;
 
+        let highestMoney = {};
+        highestMoney["revenue"] = -1;
+        highestMoney["importTotal"] = -1;
+
         $.ajax({
             url: "${orderAPI}" + "/totalByMonth?date=" + monthAndYearToday,
             method: "GET",
@@ -851,33 +586,48 @@
 
                 if (option === 1) { // compare of income and import total
                     $.each(result.data, function (idx, it) {
-                        if(it.date != null) moneyStatisticDays.push(it.date.toLocaleString());
+                        if (it.date != null) {
+                            moneyStatisticDays.push(it.date.toLocaleString());
 
-                        revenueValues.push(it.revenue);
-                        monthToCompare["revenueComparing"] += parseInt(it.revenue);
+                            if (highestMoney["revenue"] < parseInt(it.revenue)) {
+                                highestMoney["revenue"] = parseInt(it.revenue);
+                                highestMoney["revenueDate"] = it.date;
+                            }
+                            if (highestMoney["importTotal"] < parseInt(it.importTotal)) {
+                                highestMoney["importTotal"] = parseInt(it.importTotal);
+                                highestMoney["importTotalDate"] = it.date;
+                            }
 
-                        importTotalValues.push(it.importTotal);
-                        monthToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                            revenueValues.push(it.revenue);
+                            monthToCompare["revenueComparing"] += parseInt(it.revenue);
+
+                            importTotalValues.push(it.importTotal);
+                            monthToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                        }
                     });
 
                     monthToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
-                    monthToCompare["importTotalComparing"] -= parseInt(importTotalValues[importTotalValues.length - 1]);
-                    importTotalValues.pop();
-                }
-                else { // Profit
+                } else { // Profit
                     $.each(result.data, function (idx, it) {
-                        if(it.date != null) moneyStatisticDays.push(it.date.toLocaleString());
                         let profit = parseInt(it.revenue) - parseInt(it.importTotal);
-                        revenueValues.push(profit);
-                        monthToCompare["revenueComparing"] += profit;
+
+                        if (it.date != null) {
+                            moneyStatisticDays.push(it.date.toLocaleString());
+
+                            if (highestMoney["revenue"] < profit) {
+                                highestMoney["revenue"] = parseInt(it.revenue);
+                                highestMoney["revenueDate"] = it.date;
+                            }
+
+                            revenueValues.push(profit);
+                            monthToCompare["revenueComparing"] += profit;
+                        }
                     });
                 }
 
                 monthToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
-                monthToCompare["revenueComparing"] -= parseInt(revenueValues[revenueValues.length - 1]);
-                revenueValues.pop();
 
-                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompare);
+                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompare, highestMoney);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -891,7 +641,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompareObject) {
+    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompareObject, highestMoney) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByMonth');
@@ -964,6 +714,10 @@
 
                     return label;
                 },
+                title: function (context) {
+                    let titleSplit = context[0].label.split("/");
+                    return titleSplit[0] + " tháng " + titleSplit[1];
+                },
             }
 
             let sumOfImport = 0;
@@ -985,43 +739,38 @@
             let monthAndYearTodaySplit = monthAndYearToday.split("-");
 
             sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfRevenue.toLocaleString() + " đ";
-            if($('#monthOfRevenue').val() !== monthAndYearTodaySplit[0] + "-" + monthAndYearTodaySplit[1]){ // Random month, compare with current mon
-                if(percentOfRevenue > 0){
+            if ($('#monthOfRevenue').val() !== monthAndYearTodaySplit[0] + "-" + monthAndYearTodaySplit[1]) { // Random month, compare with current mon
+                if (percentOfRevenue > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với tháng hiện tại)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với tháng hiện tại)";
                 }
                 sumOfChartHTMLCode += "<br>";
                 sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
-                if(percentOfImportTotal > 0){
+                if (percentOfImportTotal > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với tháng hiện tại)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với tháng hiện tại)";
                 }
-            }
-            else{ // Current month, compare with previous month
-                if(percentOfRevenue > 0){
+            } else { // Current month, compare with previous month
+                if (percentOfRevenue > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với tháng trước)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với tháng trước)";
                 }
                 sumOfChartHTMLCode += "<br>";
                 sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
-                if(percentOfImportTotal > 0){
+                if (percentOfImportTotal > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với tháng trước)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với tháng trước)";
                 }
             }
-
-        }
-        else {
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>doanh thu</strong> cao nhất: &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>" +
+                "&nbsp;&nbsp;Ngày có <strong>chi tiêu</strong> cao nhất: &nbsp;" + highestMoney.importTotalDate + "&nbsp; (" + (highestMoney.importTotal).toLocaleString() + " đ).<br>";
+        } else {
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -1035,6 +784,7 @@
             } else {
                 sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
             }
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>lợi nhuận</strong> cao nhất: &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>";
 
             chartDatasets = [{
                 label: statisticLabel,
@@ -1075,8 +825,8 @@
 
                     return label;
                 },
-                labelColor: function(context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
-                    if(context.parsed.y < 0){
+                labelColor: function (context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
+                    if (context.parsed.y < 0) {
                         return {
                             backgroundColor: 'rgb(255, 0, 0)',
                             borderWidth: 0,
@@ -1084,11 +834,15 @@
                         };
                     }
 
-                    return{
+                    return {
                         backgroundColor: '#43A047',
                         borderWidth: 0,
                         borderRadius: 4,
                     };
+                },
+                title: function (context) {
+                    let titleSplit = context[0].label.split("/");
+                    return titleSplit[0] + " tháng " + titleSplit[1];
                 },
             }
         }
@@ -1219,6 +973,10 @@
         yearToCompare["revenueComparing"] = 0;
         yearToCompare["importTotalComparing"] = 0;
 
+        let highestMoney = {};
+        highestMoney["revenue"] = -1;
+        highestMoney["importTotal"] = -1;
+
         $.ajax({
             url: "${orderAPI}" + "/totalByYear?date=" + monthAndYearToday,
             method: "GET",
@@ -1229,33 +987,48 @@
 
                 if (option === 1) { // compare of income and import total
                     $.each(result.data, function (idx, it) {
-                        if(it.date != null) moneyStatisticMonths.push(it.date.toLocaleString());
+                        if (it.date != null) {
+                            moneyStatisticMonths.push(it.date.toLocaleString());
 
-                        revenueValues.push(it.revenue);
-                        yearToCompare["revenueComparing"] += parseInt(it.revenue);
+                            if (highestMoney["revenue"] < parseInt(it.revenue)) {
+                                highestMoney["revenue"] = parseInt(it.revenue);
+                                highestMoney["revenueDate"] = it.date;
+                            }
+                            if (highestMoney["importTotal"] < parseInt(it.importTotal)) {
+                                highestMoney["importTotal"] = parseInt(it.importTotal);
+                                highestMoney["importTotalDate"] = it.date;
+                            }
 
-                        importTotalValues.push(it.importTotal);
-                        yearToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                            revenueValues.push(it.revenue);
+                            yearToCompare["revenueComparing"] += parseInt(it.revenue);
+
+                            importTotalValues.push(it.importTotal);
+                            yearToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                        }
                     });
 
                     yearToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
-                    yearToCompare["importTotalComparing"] -= parseInt(importTotalValues[importTotalValues.length - 1]);
-                    importTotalValues.pop();
-                }
-                else { // Profit
+                } else { // Profit
                     $.each(result.data, function (idx, it) {
-                        if(it.date != null) moneyStatisticMonths.push(it.date.toLocaleString());
                         let profit = parseInt(it.revenue) - parseInt(it.importTotal);
-                        revenueValues.push(profit);
-                        yearToCompare["revenueComparing"] += profit;
+
+                        if (it.date != null) {
+                            moneyStatisticMonths.push(it.date.toLocaleString());
+
+                            if (highestMoney["revenue"] < profit) {
+                                highestMoney["revenue"] = parseInt(it.revenue);
+                                highestMoney["revenueDate"] = it.date;
+                            }
+
+                            revenueValues.push(profit);
+                            yearToCompare["revenueComparing"] += profit;
+                        }
                     });
                 }
 
                 yearToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
-                yearToCompare["revenueComparing"] -= parseInt(revenueValues[revenueValues.length - 1]);
-                revenueValues.pop();
 
-                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompare);
+                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompare, highestMoney);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -1269,7 +1042,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompareObject) {
+    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompareObject, highestMoney) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByYear');
@@ -1341,8 +1114,8 @@
 
                     return label;
                 },
-                title: function(context){
-                    return "Tháng " + context[0].dataIndex;
+                title: function (context) {
+                    return "Tháng " + context[0].label;
                 }
             }
 
@@ -1364,43 +1137,38 @@
             let monthAndYearTodaySplit = monthAndYearToday.split("-");
 
             sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng doanh thu: </strong>" + sumOfRevenue.toLocaleString() + " đ";
-            if($('#yearPicker').val() !== monthAndYearTodaySplit[0]){ // Random month, compare with current mon
-                if(percentOfRevenue > 0){
+            if ($('#yearPicker').val() !== monthAndYearTodaySplit[0]) { // Random month, compare with current mon
+                if (percentOfRevenue > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với năm hiện tại)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với năm hiện tại)";
                 }
                 sumOfChartHTMLCode += "<br>";
                 sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
-                if(percentOfImportTotal > 0){
+                if (percentOfImportTotal > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với năm hiện tại)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với năm hiện tại)";
                 }
-            }
-            else{ // Current month, compare with previous month
-                if(percentOfRevenue > 0){
+            } else { // Current month, compare with previous month
+                if (percentOfRevenue > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>giảm</span>&nbsp;" + percentOfRevenue + "% so với năm trước)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>tăng</span>&nbsp;" + (-percentOfRevenue) + "% so với năm trước)";
                 }
                 sumOfChartHTMLCode += "<br>";
                 sumOfChartHTMLCode += "&nbsp;&nbsp;<strong>Tổng chi tiêu: </strong>" + sumOfImport.toLocaleString() + " đ\n";
 
-                if(percentOfImportTotal > 0){
+                if (percentOfImportTotal > 0) {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: green'>giảm</span>&nbsp;" + percentOfImportTotal + "% so với năm trước)";
-                }
-                else{
+                } else {
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với năm trước)";
                 }
             }
-
-        }
-        else { // Profit
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>doanh thu</strong> cao nhất: &nbsp;tháng&nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>" +
+                "&nbsp;&nbsp;Tháng có <strong>chi tiêu</strong> cao nhất: &nbsp;tháng&nbsp;" + highestMoney.importTotalDate + "&nbsp; (" + (highestMoney.importTotal).toLocaleString() + " đ).<br>";
+        } else { // Profit
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -1414,6 +1182,7 @@
             } else {
                 sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
             }
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>lợi nhuận</strong> cao nhất: &nbsp; tháng &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>";
 
             chartDatasets = [{
                 label: statisticLabel,
@@ -1454,8 +1223,8 @@
 
                     return label;
                 },
-                labelColor: function(context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
-                    if(context.parsed.y < 0){
+                labelColor: function (context) {     // All the time data array is not empty so "context.parsed.y" cannot be null, don't have to check
+                    if (context.parsed.y < 0) {
                         return {
                             backgroundColor: 'rgb(255, 0, 0)',
                             borderWidth: 0,
@@ -1463,11 +1232,14 @@
                         };
                     }
 
-                    return{
+                    return {
                         backgroundColor: '#43A047',
                         borderWidth: 0,
                         borderRadius: 4,
                     };
+                },
+                title: function (context) {
+                    return "Tháng " + context[0].label;
                 },
             }
         }
@@ -1555,6 +1327,117 @@
         });
     }
 
+
+    // Find product with the highest quantity sold
+    $('#monthOfHotProduct').change(function(){
+        getHotProduct(this.value);
+    });
+
+    function getHotProduct(monthAndYearPicked){
+        let monthAndYearSplit = monthAndYearPicked.split("-");
+
+        $.ajax({
+           url: "${statisticAPI}" + "/hotProduct?month=" + (monthAndYearSplit[0] + "-" + monthAndYearSplit[1]),
+            method: "GET",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "JSON",
+            success: function (result) {
+                let row = "";
+
+                $.each(result.data, function(idx, it) {
+                    row += "<tr>\n";
+
+                    // Image
+                    if(it.image != null){
+                        row += "<td class='align-middle'> <img src='/repository" + it.image + "' id='viewImage' width='40' height='40' style='margin-top: 5px; margin-bottom: 5px' alt='Không tìm thấy ảnh'></td>\n";
+                    }
+                    else {
+                        row += "<td class='align-middle'><img src='/admin/image/default.png' id='viewImage' width='40' height='40' alt='Chưa có ảnh'/></td>\n";
+                    }
+
+                    // Name
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + it.name + "</td>\n";
+
+                    // Quantity sold
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + it.quantitySold + "</td>\n";
+
+                    // Revenue
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + (it.revenue).toLocaleString() + " đ</td>\n";
+
+                    row += "</tr>\n";
+                });
+
+                $('#hotProductTable-body').html(row);
+                $('#noteOfHotProduct').html("- Có " + result.data.length + " sản phẩm.");
+            },
+            error: function (result) {
+                let message = result.responseJSON.message;
+
+                $.each(result.responseJSON.details, function (idx, it) {
+                    message += it + '\n';
+                });
+
+                alert(message);
+            }
+
+        });
+    }
+
+
+    // Find product with the lowest quantity sold
+    $('#monthOfExcessProduct').change(function(){
+        getExcessProduct(this.value);
+    });
+
+    function getExcessProduct(monthAndYearPicked){
+        let monthAndYearSplit = monthAndYearPicked.split("-");
+
+        $.ajax({
+            url: "${statisticAPI}" + "/excessProduct?month=" + (monthAndYearSplit[0] + "-" + monthAndYearSplit[1]),
+            method: "GET",
+            contentType: "application/json; charset=UTF-8",
+            dataType: "JSON",
+            success: function (result) {
+                let row = "";
+
+                $.each(result.data, function(idx, it) {
+                    row += "<tr>\n";
+
+                    // Image
+                    if(it.image != null){
+                        row += "<td class='align-middle'> <img src='/repository" + it.image + "' id='viewImage' width='40' height='40' style='margin-top: 5px; margin-bottom: 5px' alt='Không tìm thấy ảnh'></td>\n";
+                    }
+                    else {
+                        row += "<td class='align-middle'><img src='/admin/image/default.png' id='viewImage' width='40' height='40' alt='Chưa có ảnh'/></td>\n";
+                    }
+
+                    // Name
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + it.name + "</td>\n";
+
+                    // Quantity sold
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + it.quantitySold + "</td>\n";
+
+                    // Revenue
+                    row += "<td class='align-middle text-center text-dark' style='font-size: 16px;'>" + (it.revenue).toLocaleString() + " đ</td>\n";
+
+                    row += "</tr>\n";
+                });
+
+                $('#excessProductTable-body').html(row);
+                $('#noteOfExcessProduct').html("- Có " + result.data.length + " sản phẩm.");
+            },
+            error: function (result) {
+                let message = result.responseJSON.message;
+
+                $.each(result.responseJSON.details, function (idx, it) {
+                    message += it + '\n';
+                });
+
+                alert(message);
+            }
+
+        });
+    }
 </script>
 </body>
 

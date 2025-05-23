@@ -5,7 +5,6 @@ import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.news.INewsService;
 import com.javaweb.service.order.IOrderService;
 import com.javaweb.service.productImport.IProductImportService;
-import com.javaweb.service.productInventory.IProductInventoryService;
 import com.javaweb.service.user.IUserService;
 import com.javaweb.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ public class HomeController {
     private final IOrderService orderService;
     private final INewsService newsService;
     private final IProductImportService productImportService;
-    private final IProductInventoryService productInventoryService;
     private final UserService userService;
 
     @GetMapping(value = "/admin/home")
@@ -44,6 +42,7 @@ public class HomeController {
         mav.addObject("importToday", productImportService.findImportTotalByDate(todayInString));
         mav.addObject("userQuantity", userService.countTotalItemsByDate(todayInString));
         mav.addObject("newsViews", newsService.countTotalViews());
+        mav.addObject("highestQuantityOfMonthAndYear", orderService.findHighestQuantityByTime(todayInString));
 
         return mav;
     }

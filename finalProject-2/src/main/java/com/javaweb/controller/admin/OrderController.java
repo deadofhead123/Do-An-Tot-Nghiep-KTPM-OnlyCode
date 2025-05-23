@@ -12,6 +12,7 @@ import com.javaweb.util.PaymentMethodCode;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,8 @@ public class OrderController {
         OrderSearchResponse orderSearchResponse = new OrderSearchResponse();
 
         DisplayTagUtils.of(request, orderSearchResponse);
-        orderSearchResponse.setListResult(orderService.findAll(orderSearchRequest, PageRequest.of(orderSearchResponse.getPage() - 1, orderSearchResponse.getMaxPageItems())));
+        orderSearchResponse.setListResult(orderService.findAll(orderSearchRequest,
+                                                                PageRequest.of(orderSearchResponse.getPage() - 1, orderSearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(orderSearchResponse.getSortOrder()), orderSearchResponse.getSortName()))));
         orderSearchResponse.setTotalItems(orderService.countTotalItems(orderSearchRequest));
 
         initMessageResponse(mav, request);

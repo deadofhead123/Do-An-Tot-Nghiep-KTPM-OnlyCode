@@ -12,6 +12,7 @@ import com.javaweb.util.NewsType;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,8 @@ public class NewsController {
         NewsSearchResponse newsSearchResponse = new NewsSearchResponse();
 
         DisplayTagUtils.of(request, newsSearchResponse);
-        newsSearchResponse.setListResult(newsService.findAll(newsSearchRequest, PageRequest.of(newsSearchResponse.getPage() - 1, newsSearchResponse.getMaxPageItems())));
+        newsSearchResponse.setListResult(newsService.findAll(newsSearchRequest,
+                                            PageRequest.of(newsSearchResponse.getPage() - 1, newsSearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(newsSearchResponse.getSortOrder()), newsSearchResponse.getSortName()))));
         newsSearchResponse.setTotalItems(newsService.countTotalItems(newsSearchRequest));
 
         initMessageResponse(mav, request);

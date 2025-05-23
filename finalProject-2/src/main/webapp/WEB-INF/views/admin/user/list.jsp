@@ -151,7 +151,7 @@
                                        cellpadding="0"
                                        requestURI="${formURL}" partialList="true"
                                        sort="external"
-                                       size="${userSearchResponse.totalItems}" defaultsort="2"
+                                       size="${userSearchResponse.totalItems}" defaultsort="4"
                                        defaultorder="ascending"
                                        id="tableList" pagesize="${userSearchResponse.maxPageItems}"
                                        export="false"
@@ -169,7 +169,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="fullName"
                                     title="Họ tên">
                                 <div class="align-middle">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.fullName}</span>
@@ -177,7 +177,7 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="isActive"
                                     title="Trạng thái">
                                 <div class="align-middle text-center">
                             <span class="text-secondary text-md font-weight-bold">
@@ -188,18 +188,18 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
                                     title="Ngày tạo">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.createdAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
                                     title="Ngày sửa">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.modifiedAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 

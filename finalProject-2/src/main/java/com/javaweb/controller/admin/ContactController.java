@@ -11,6 +11,7 @@ import com.javaweb.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,8 @@ public class ContactController {
 
         DisplayTagUtils.of(request, contactResponseList);
         contactResponseList.setListResult
-                (IContactService.findAll(contactSearchRequest, PageRequest.of(contactResponseList.getPage() - 1, contactResponseList.getMaxPageItems())));
+                (IContactService.findAll(contactSearchRequest,
+                        PageRequest.of(contactResponseList.getPage() - 1, contactResponseList.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(contactResponseList.getSortOrder()), contactResponseList.getSortName()))));
         contactResponseList.setTotalItems(IContactService.countTotalItems(contactSearchRequest));
 
         mav.addObject("listType", ContactStatus.typeContact());

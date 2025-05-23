@@ -10,6 +10,7 @@ import com.javaweb.util.MessageUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,8 @@ public class CategoryController {
 
         DisplayTagUtils.of(request, categorySearchResponse);
         categorySearchResponse.setListResult
-                (categoryService.findAll(categorySearchRequest, PageRequest.of(categorySearchResponse.getPage() - 1, categorySearchResponse.getMaxPageItems())));
+                (categoryService.findAll(categorySearchRequest,
+                        PageRequest.of(categorySearchResponse.getPage() - 1, categorySearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(categorySearchResponse.getSortOrder()), categorySearchResponse.getSortName()))));
         categorySearchResponse.setTotalItems(categoryService.countTotalItems(categorySearchRequest));
 
         mav.addObject("categorySearchResponseList", categorySearchResponse);
@@ -56,7 +58,8 @@ public class CategoryController {
 
         DisplayTagUtils.of(request, categorySearchResponse);
         categorySearchResponse.setListResult
-                (categoryService.findAll(categorySearchRequest, PageRequest.of(categorySearchResponse.getPage() - 1, categorySearchResponse.getMaxPageItems())));
+                (categoryService.findAll(categorySearchRequest,
+                                        PageRequest.of(categorySearchResponse.getPage() - 1, categorySearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(categorySearchResponse.getSortOrder()), categorySearchResponse.getSortName()))));
         categorySearchResponse.setTotalItems(categoryService.countTotalItems(categorySearchRequest));
 
         mav.addObject("categorySearchResponseList", categorySearchResponse);

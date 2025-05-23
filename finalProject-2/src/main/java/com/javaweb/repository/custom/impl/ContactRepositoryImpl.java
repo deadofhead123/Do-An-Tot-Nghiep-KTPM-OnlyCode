@@ -6,6 +6,7 @@ import com.javaweb.model.request.ContactSearchRequest;
 import com.javaweb.repository.custom.ContactRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
 
@@ -61,7 +62,13 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         queryWhereNormal(contactSearchRequest, where);
         queryWhereSpecial(contactSearchRequest, where);
 
-        sql.append(where).append(" ORDER BY ct.createdat DESC ")
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
+        sql.append(where).append(" ORDER BY ct." + sortName.toLowerCase() + " " + sortOrder + " ")
                          .append(" LIMIT " + pageable.getPageSize())
                          .append(" OFFSET " + pageable.getOffset());
 

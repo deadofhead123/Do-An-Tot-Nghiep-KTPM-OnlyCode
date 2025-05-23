@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/css/**", "/admin/js/**", "/other/**").permitAll() // decorators of admin (using in frontend)
+                .antMatchers("/api/admin/statistic**").hasRole("ADMIN")
                 .antMatchers("/admin/user**", "/api/admin/users**").hasRole("ADMIN")
                 .antMatchers("/admin/category**", "/api/admin/categories**").hasRole("ADMIN")
                 .antMatchers("/admin/news**", "/api/admin/news**").hasRole("ADMIN")

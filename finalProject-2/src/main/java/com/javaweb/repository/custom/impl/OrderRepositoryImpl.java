@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -77,9 +78,15 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         queryWhereNormal(orderSearchRequest, where);
         queryWhereSpecial(orderSearchRequest, where);
 
+        String sortName = "", sortOrder = "";
+        for(Sort.Order item : pageable.getSort()){
+            sortName = item.getProperty();
+            sortOrder = item.getDirection().toString();
+        }
+
         sql.append(where)
                 .append(" GROUP BY od.id ")
-                .append(" ORDER BY od.createdat DESC ");
+                .append(" ORDER BY od." + sortName.toLowerCase() + " " + sortOrder + " ");
 
         sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 

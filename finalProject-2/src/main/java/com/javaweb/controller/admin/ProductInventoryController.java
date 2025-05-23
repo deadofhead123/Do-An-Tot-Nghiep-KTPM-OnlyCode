@@ -12,6 +12,7 @@ import com.javaweb.util.ProductInventoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,8 @@ public class ProductInventoryController {
 
         DisplayTagUtils.of(request, productInventorySearchResponse);
         productInventorySearchResponse.setListResult
-                (productInventoryService.findAll(productInventorySearchRequest, PageRequest.of(productInventorySearchResponse.getPage() - 1, productInventorySearchResponse.getMaxPageItems())));
+                (productInventoryService.findAll(productInventorySearchRequest,
+                                                PageRequest.of(productInventorySearchResponse.getPage() - 1, productInventorySearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(productInventorySearchResponse.getSortOrder()), productInventorySearchResponse.getSortName()))));
         productInventorySearchResponse.setTotalItems(productInventoryService.countTotalItems(productInventorySearchRequest));
 
         mav.addObject("productInventorySearchResponse", productInventorySearchResponse);

@@ -178,25 +178,37 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public Long findQuantityDelivered(String date) {
-        List<OrderEntity> orderEntities = orderRepository.findAllDeliveredByDateModified(date);
-        List<OrderDetailsEntity> orderDetailsEntities = new ArrayList<>();
-        Long quantityOrdered = 0L;
+    public List<OrderStatusQuantityResponse> findHighestQuantityByTime(String date) {
+        List<OrderStatusQuantityResponse> highestOfMonthAndYear = new ArrayList<>();
+        OrderStatusQuantityResponse highestOfMonth = new OrderStatusQuantityResponse();
+        OrderStatusQuantityResponse highestOfYear = new OrderStatusQuantityResponse();
 
-        for(OrderEntity item : orderEntities){
-            orderDetailsEntities.addAll(filterOrderDetails(item));
+        highestOfMonth.setQuantity(-1L);
+        highestOfYear.setQuantity(-1L);
+
+        String[] dateSplitted = date.split("-");
+        Integer thisDay = Integer.parseInt(dateSplitted[2]);
+        Integer thisMonth = Integer.parseInt(dateSplitted[1]);
+
+        for(Integer i = 1 ; i <= thisDay ; i++){
+            Long quantity = 1L * orderRepository.findAllByTime(dateSplitted[0] + "-" + dateSplitted[1] + "-" + ((i < 10) ? ("0" + i) : i)).size();
+            if(highestOfMonth.getQuantity() < quantity){
+                highestOfMonth.setQuantity(quantity);
+                highestOfMonth.setDate(i + " tháng " + dateSplitted[1]);
+            }
+        }
+        for(Integer i = 1 ; i <= thisMonth ; i++){
+            Long quantity = 1L * orderRepository.findAllByTime(dateSplitted[0] + "-" + ((i < 10) ? ("0" + i) : i)).size();
+            if(highestOfYear.getQuantity() < quantity){
+                highestOfYear.setQuantity(quantity);
+                highestOfYear.setDate(i + "");
+            }
         }
 
-        for(OrderDetailsEntity item : orderDetailsEntities){
-            quantityOrdered += item.getQuantity();
-        }
+        highestOfMonthAndYear.add(highestOfMonth);
+        highestOfMonthAndYear.add(highestOfYear);
 
-        return quantityOrdered;
-    }
-
-    @Override
-    public Long findOrderDelivered(String date) {
-        return orderRepository.countOrderDelivered(date);
+        return highestOfMonthAndYear;
     }
 
     @Override
@@ -314,7 +326,7 @@ public class OrderService implements IOrderService{
 //    }
 
     public List<OrderDetailsEntity> filterOrderDetails(OrderEntity orderEntity){
-        List<OrderDetailsEntity> orderDetailsEntities = orderDetailsRepository.findAllByCreatedAtModified(orderEntity.getCreatedAt().toString());
+        List<OrderDetailsEntity> orderDetailsEntities = orderDetailsRepository.findAllByCreatedAtModified(orderEntity.getCreatedAt().toString().split(" ")[0]);
         String orderIdString = orderEntity.getId().toString();
 
         return orderDetailsEntities.stream()
