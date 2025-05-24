@@ -8,6 +8,8 @@ import com.javaweb.service.category.ICategoryService;
 import com.javaweb.util.DisplayTagUtils;
 import com.javaweb.util.MessageUtils;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.tags.TableTagParameters;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -43,7 +45,7 @@ public class CategoryController {
 
         mav.addObject("categorySearchResponseList", categorySearchResponse);
         mav.addObject("parentCategories", categoryService.findCategories(null));
-        initMessageResponse(mav, request);
+        mav.addObject("tableId", new ParamEncoder(categorySearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
 
         return mav;
     }
@@ -63,7 +65,7 @@ public class CategoryController {
         categorySearchResponse.setTotalItems(categoryService.countTotalItems(categorySearchRequest));
 
         mav.addObject("categorySearchResponseList", categorySearchResponse);
-        initMessageResponse(mav, request);
+        mav.addObject("tableId", new ParamEncoder(categorySearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
 
         return mav;
     }

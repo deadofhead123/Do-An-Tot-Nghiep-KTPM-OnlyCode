@@ -89,7 +89,8 @@
 
                                 <div class="col-lg-2 px-xxl-3">
                                     <label for="statusTimeFrom"><strong class="text-dark">Thời gian từ</strong></label>
-                                    <form:input path="statusTimeFrom" type="date" name="statusTimeFrom" id="statusTimeFrom"
+                                    <form:input path="statusTimeFrom" type="date" name="statusTimeFrom"
+                                                id="statusTimeFrom"
                                                 class="form-control px-2"
                                                 style="border: 1px solid black"/>
                                 </div>
@@ -136,6 +137,34 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${productInventorySearchResponse.totalItems % productInventorySearchResponse.maxPageItems != 0}">
+                            <c:set var="finalPage"
+                                   value="${productInventorySearchResponse.totalItems / productInventorySearchResponse.maxPageItems + 1}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="finalPage"
+                                   value="${productInventorySearchResponse.totalItems / productInventorySearchResponse.maxPageItems}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="col-lg-12 mx-3 my-3">
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3 py-3">
+                                <label style="color: black; font-size: 16px;"><strong>Trang:</strong></label>&nbsp;
+                                <span style="max-height: 70px; overflow-y: auto;">
+                                    <select id="pageSelect">
+                                        <c:forEach var="singlePage" begin="1" end="${finalPage}" step="1">
+                                            <option value="${singlePage}">${singlePage}</option>
+                                        </c:forEach>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
 
@@ -150,7 +179,8 @@
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="id"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="id"
                                     title="Mã sản phẩm">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.id}</span>
@@ -183,7 +213,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="priceInImport"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="priceInImport"
                                     title="Giá nhập">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -193,7 +224,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="status"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="status"
                                     title="Trạng thái">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -217,7 +249,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="createdAt"
                                     title="Ngày nhập">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
@@ -225,7 +258,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="modifiedAt"
                                     title="Ngày sửa">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>
@@ -270,10 +304,17 @@
 </div>
 
 <script>
+    let currentURL = window.location.href;
+    let currentPageString = "", page = 1;
+
     $(document).ready(function () {
         setTimeout(function () {
             $('#alertResult').hide();
         }, 2000);
+
+        getPageOnURL();
+
+        $('#pageSelect').val(page);
     });
 
     function openImage(input, imageView) {
@@ -285,6 +326,43 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    function getPageOnURL() {
+        // Set page for page choosing select
+        let startPageIdxString;
+
+        let endPageIdxString = currentURL.indexOf("p=");
+        if (endPageIdxString !== -1) {
+            startPageIdxString = endPageIdxString;
+            page = "";
+
+            // find page's value (a string)
+            for (endPageIdxString = endPageIdxString + 2; endPageIdxString < currentURL.length; endPageIdxString++) {
+                let currentChar = currentURL[endPageIdxString];
+
+                if (currentChar >= "0" && currentChar <= "9") page += currentChar;
+                else break;
+            }
+
+            page = parseInt(page);
+            currentPageString = currentURL.substring(startPageIdxString, endPageIdxString);
+        }
+    }
+
+    //----------------------------- Direct to page selected with page choosen in #pageSelect
+    $('#pageSelect').change(function () {
+        // When deleting, back to previous page if this isn't page 1
+        let pageToDirect = parseInt(this.value);
+
+        // Get current page
+        if (currentPageString !== "") {
+            currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
+        } else {
+            currentURL += "?${tableId}=" +pageToDirect;
+        }
+
+        window.location.href = currentURL;
+    });
 
     //----------------------------- Search
     $('#btnSeach').click(function () {

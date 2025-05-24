@@ -11,6 +11,8 @@ import com.javaweb.service.product.IProductService;
 import com.javaweb.util.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.tags.TableTagParameters;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -42,11 +44,11 @@ public class ProductController {
                                                             PageRequest.of(productSearchResponse.getPage() - 1, productSearchResponse.getMaxPageItems(), Sort.by(Sort.Direction.valueOf(productSearchResponse.getSortOrder()), productSearchResponse.getSortName()))));
         productSearchResponse.setTotalItems(productService.countTotalItems(productSearchRequest));
 
-        initMessageResponse(mav, request);
         mav.addObject("productSearchResponse", productSearchResponse);
         mav.addObject("categories", categoryService.findAllNotPaging());
         mav.addObject("hotType", HotType.getType());
         mav.addObject("isOutOfQuantity", IsOutOfQuantity.getType());
+        mav.addObject("tableId", new ParamEncoder(productSearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE)); // Ex: d-(id encoded)-p-(number of page if exists)
 
         return mav;
     }

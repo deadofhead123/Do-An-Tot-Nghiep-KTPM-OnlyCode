@@ -65,8 +65,6 @@ public class NewsRepositoryImpl implements NewsRepositoryCustom {
     public List<NewsEntity> findAll(NewsSearchRequest newsSearchRequest, Pageable pageable) {
         StringBuilder sql = new StringBuilder(buildSelectQuery());
         StringBuilder where = new StringBuilder(SystemConstant.ONE_EQUAL_ONE);
-        Integer realSize;
-        StringBuilder sqlFix;
 
         queryWhereNormal(newsSearchRequest, where);
         queryWhereSpecial(newsSearchRequest, where);
@@ -79,20 +77,9 @@ public class NewsRepositoryImpl implements NewsRepositoryCustom {
 
         sql.append(where).append(" AND n.isactive=1 ").append(" ORDER BY n." + sortName.toLowerCase() + " " + sortOrder + " ");
 
-        sqlFix = new StringBuilder(sql);
-
 //        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), NewsEntity.class);
-
-        realSize = query.getResultList().size();
-
-        if(realSize == 0 && pageable.getOffset() > 0){
-//            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-//                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), NewsEntity.class);
-            Query queryFix = entityManager.createNativeQuery(sqlFix.toString(), NewsEntity.class);
-            return queryFix.getResultList();
-        }
 
         return query.getResultList();
     }

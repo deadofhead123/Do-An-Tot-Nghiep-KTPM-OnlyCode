@@ -59,8 +59,6 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
     public List<CategoryEntity> findAll(CategorySearchRequest categorySearchRequest, Pageable pageable) {
         StringBuilder sql = new StringBuilder(buildSelectQuery());
         StringBuilder where = new StringBuilder(SystemConstant.ONE_EQUAL_ONE);
-        Integer realSize;
-        StringBuilder sqlFix;
 
         queryWhereNormal(categorySearchRequest, where);
         queryWhereSpecial(categorySearchRequest, where);
@@ -71,22 +69,13 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
             sortOrder = item.getDirection().toString();
         }
 
-        sql.append(where).append(" AND c.isactive=1 ").append(" ORDER BY c." + sortName.toLowerCase() + " " + sortOrder + " ");
-
-        sqlFix = new StringBuilder(sql);
+        sql.append(where).append(" AND c.isactive = 1 ")
+                .append(" GROUP BY c.id ")
+                .append(" ORDER BY c." + sortName.toLowerCase() + " " + sortOrder + " ");
 
 //        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), CategoryEntity.class);
-
-        realSize = query.getResultList().size();
-
-        if(realSize == 0 && pageable.getOffset() > 0){
-//            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-//                                                                   .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), CategoryEntity.class);
-            Query queryFix = entityManager.createNativeQuery(sqlFix.toString(), CategoryEntity.class);
-            return queryFix.getResultList();
-        }
 
         return query.getResultList();
     }

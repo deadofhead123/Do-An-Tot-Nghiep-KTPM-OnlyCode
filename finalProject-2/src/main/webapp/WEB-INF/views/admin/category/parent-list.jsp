@@ -7,21 +7,10 @@
 <html lang="en">
 
 <head>
-    <title>Danh mục sản phẩm</title>
+    <title>Danh mục sản phẩm (cha)</title>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-
-<c:if test="${not empty messageResponse}">
-    <div class="row">
-        <div class="col-12 col-xl-5"></div>
-        <div class="col-12 col-xl-4">
-            <div id="alertResult" class="alert alert-block alert-${alert} text-white w-lg-50 text-xxl-center">
-                    ${messageResponse}
-            </div>
-        </div>
-    </div>
-</c:if>
 
 <div class="container-fluid py-2">
 
@@ -61,7 +50,50 @@
                                     <button type="reset" class="btn btn-warning" id="btnDeleteParams">Xóa</button>
                                 </div>
                             </div>
+
+                            <div class="input-group py-3">
+                                <div class="col-lg-10 px-4"></div>
+                                <div class="col-lg-2 px-4">
+                                    &nbsp; &nbsp;
+                                    <button type="reset" class="btn btn-danger" id="btnDeleteAllCategory"
+                                            title="Xóa các danh mục được chọn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
+                                        </svg>
+                                        Xóa hết
+                                    </button>
+                                </div>
+                            </div>
                         </form:form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${categorySearchResponseList.totalItems % categorySearchResponseList.maxPageItems != 0}">
+                            <c:set var="finalPage"
+                                   value="${categorySearchResponseList.totalItems / categorySearchResponseList.maxPageItems + 1}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="finalPage"
+                                   value="${categorySearchResponseList.totalItems / categorySearchResponseList.maxPageItems}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="col-lg-12 mx-3 my-3">
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3 py-3">
+                                <label style="color: black; font-size: 16px;"><strong>Trang:</strong></label>&nbsp;
+                                <span style="max-height: 70px; overflow-y: auto;">
+                                    <select id="pageSelect">
+                                        <c:forEach var="singlePage" begin="1" end="${finalPage}" step="1">
+                                            <option value="${singlePage}">${singlePage}</option>
+                                        </c:forEach>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -76,12 +108,12 @@
                                        defaultorder="ascending"
                                        id="tableList" pagesize="${categorySearchResponseList.maxPageItems}"
                                        export="true"
-                                       class="table table-striped table-bordered table-hover aligns-item-center"
+                                       class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
-                                    title="<fieldset class='input-group'> <input type='checkbox' id='checkAll'> </fieldset>"
+                                    title="<fieldset class='input-group justify-content-xxl-center align-items-xxl-center'> <input type='checkbox' id='checkAll'> </fieldset>"
                                     class="center select-cell"
-                                    headerClass="center selected-cell">
+                                    headerClass="justify-content-xxl-center align-items-xxl-center">
                                 <fieldset>
                                     <input type="checkbox" name="checkList"
                                            value="${tableList.id}"
@@ -166,13 +198,54 @@
 </div>
 
 <script>
-    //----------------------------- Search category
-    $(document).ready(function(){
-        setTimeout(function (){
-            $('#alertResult').hide();
-        }, 2000);
+    let currentURL = window.location.href;
+    let currentPageString = "", page = 1;
+
+    $(document).ready(function (){
+        getPageOnURL();
+
+        $('#pageSelect').val(page);
     });
 
+    function getPageOnURL() {
+        // Set page for page choosing select
+        let startPageIdxString;
+
+        let endPageIdxString = currentURL.indexOf("p=");
+        if (endPageIdxString !== -1) {
+            startPageIdxString = endPageIdxString;
+            page = "";
+
+            // find page's value (a string)
+            for (endPageIdxString = endPageIdxString + 2; endPageIdxString < currentURL.length; endPageIdxString++) {
+                let currentChar = currentURL[endPageIdxString];
+
+                if (currentChar >= "0" && currentChar <= "9") page += currentChar;
+                else break;
+            }
+
+            page = parseInt(page);
+            currentPageString = currentURL.substring(startPageIdxString, endPageIdxString);
+        }
+    }
+
+    //----------------------------- Direct to page selected with page choosen in #pageSelect
+    $('#pageSelect').change(function () {
+        // When deleting, back to previous page if this isn't page 1
+        let pageToDirect = parseInt(this.value);
+
+        // Get current page
+        if (currentPageString !== "") {
+            currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
+        } else {
+            currentURL += "?${tableId}=" +pageToDirect;
+        }
+
+        window.location.href = currentURL;
+    });
+
+
+    //----------------------------- Search category
     $('#btnSearch').click(function () {
         $('#form-search').submit();
     });
@@ -200,9 +273,26 @@
 
     function deleteSingleCategory(categoryId){
         if(confirm("Bạn chắc chắn muốn xóa danh mục này?")){
-            deleteCategory(categoryId);
+            deleteCategory([categoryId]);
         }
     }
+
+    $('#btnDeleteAllCategory').click(function(){
+        let categoryIds = $('#tableList').find("tbody td input[type=checkbox]:checked").map(function(){
+            return this.value;
+        }).get();
+
+        console.log(categoryIds);
+
+        if(categoryIds.length === 0){
+            alert('Bạn chưa chọn danh mục cha nào để xóa!');
+        }
+        else{
+            if(confirm("Bạn chắc chắn muốn xóa các danh mục được chọn?")){
+                deleteCategory(categoryIds);
+            }
+        }
+    });
 
     function deleteCategory(categoryIds) {
         $.ajax({
@@ -211,9 +301,6 @@
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
             success: function (result) {
-                <%--if(result.data === "delete_success"){--%>
-                <%--    window.location.href = "<c:url value='/admin/category-parent-list?message=delete_success'/>";--%>
-                <%--}--%>
                 alert(result.message);
                 location.reload();
             },

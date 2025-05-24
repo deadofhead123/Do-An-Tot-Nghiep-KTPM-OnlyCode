@@ -120,6 +120,34 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${newsSearchResponse.totalItems % newsSearchResponse.maxPageItems != 0}">
+                            <c:set var="finalPage"
+                                   value="${newsSearchResponse.totalItems / newsSearchResponse.maxPageItems + 1}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="finalPage"
+                                   value="${newsSearchResponse.totalItems / newsSearchResponse.maxPageItems}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="col-lg-12 mx-3 my-3">
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3 py-3">
+                                <label style="color: black; font-size: 16px;"><strong>Trang:</strong></label>&nbsp;
+                                <span style="max-height: 70px; overflow-y: auto;">
+                                    <select id="pageSelect">
+                                        <c:forEach var="singlePage" begin="1" end="${finalPage}" step="1">
+                                            <option value="${singlePage}">${singlePage}</option>
+                                        </c:forEach>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
 
@@ -135,9 +163,9 @@
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
-                                    title="<fieldset class='input-group'> <input type='checkbox' id='checkAll'> </fieldset>"
+                                    title="<fieldset class='input-group justify-content-xxl-center align-items-xxl-center'> <input type='checkbox' id='checkAll'> </fieldset>"
                                     class="center select-cell"
-                                    headerClass="center select-cell">
+                                    headerClass="justify-content-xxl-center align-items-xxl-center">
                                 <fieldset>
                                     <input type="checkbox" name="checkList"
                                            value="${tableList.id}"
@@ -251,10 +279,50 @@
 </div>
 
 <script>
+    let currentURL = window.location.href;
+    let currentPageString = "", page = 1;
+
     $(document).ready(function () {
-        setTimeout(function () {
-            $('#alertResult').hide();
-        }, 2000);
+        getPageOnURL();
+
+        $('#pageSelect').val(page);
+    });
+
+    function getPageOnURL() {
+        // Set page for page choosing select
+        let startPageIdxString;
+
+        let endPageIdxString = currentURL.indexOf("p=");
+        if (endPageIdxString !== -1) {
+            startPageIdxString = endPageIdxString;
+            page = "";
+
+            // find page's value (a string)
+            for (endPageIdxString = endPageIdxString + 2; endPageIdxString < currentURL.length; endPageIdxString++) {
+                let currentChar = currentURL[endPageIdxString];
+
+                if (currentChar >= "0" && currentChar <= "9") page += currentChar;
+                else break;
+            }
+
+            page = parseInt(page);
+            currentPageString = currentURL.substring(startPageIdxString, endPageIdxString);
+        }
+    }
+
+    //----------------------------- Direct to page selected with page choosen in #pageSelect
+    $('#pageSelect').change(function () {
+        // When deleting, back to previous page if this isn't page 1
+        let pageToDirect = parseInt(this.value);
+
+        // Get current page
+        if (currentPageString !== "") {
+            currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
+        } else {
+            currentURL += "?${tableId}=" +pageToDirect;
+        }
+
+        window.location.href = currentURL;
     });
 
     //----------------------------- Search user
@@ -296,7 +364,7 @@
     //----------------------------- Delete single news
     function deleteSingleNews(newsId) {
         if (confirm("Bạn chắc chắn muốn XÓA TIN TỨC này?")) {
-            deleteNews(newsId);
+            deleteNews([newsId]);
         }
     }
 
@@ -318,22 +386,30 @@
     }
 
     function deleteNews(newsIds) {
+        // Find last page
+        let totalItems = ${newsSearchResponse.totalItems};
+        let maxPageItems = ${newsSearchResponse.maxPageItems};
+        let finalPage = Math.ceil(totalItems / maxPageItems);
+
         $.ajax({
             url: "${formAPI}/" + newsIds,
             method: "PATCH",
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
-                alert(result.message);
+                // When deleting, back to previous page if this isn't page 1
+                if (currentPageString !== "") {
+                    // If current page is final; and you delete all record in this page, create an URL with previous page of this page
+                    if (page !== 1 && page === finalPage && (newsIds.length) === (document.querySelectorAll('#id').length)) {
+                        page--;
+                        currentURL = currentURL.replace(currentPageString, "p=" + page); // replace old page string
+                    }
+                }
 
-                // When delete, back to previous page if this isn't page 1
-                let currentURL = window.location.href;
+                alert(result.message);
                 window.location.href = currentURL;
             },
             error: function (result) {
-                console.log(result);
-
                 let message = result.responseJSON.message;
 
                 $.each(result.responseJSON.details, function (idx, it) {

@@ -10,6 +10,8 @@ import com.javaweb.util.MessageUtils;
 import com.javaweb.util.RoleCode;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.tags.TableTagParameters;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -42,6 +44,7 @@ public class UserController {
 
         mav.addObject("userSearchResponse", userSearchResponse);
         mav.addObject("role", RoleCode.getListCode());
+        mav.addObject("tableId", new ParamEncoder(userSearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
 
         return mav;
     }

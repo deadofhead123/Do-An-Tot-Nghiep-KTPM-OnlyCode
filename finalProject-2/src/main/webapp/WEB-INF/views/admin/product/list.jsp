@@ -14,17 +14,6 @@
 <body class="g-sidenav-show  bg-gray-100">
 
 <div class="container-fluid py-2">
-    <c:if test="${not empty messageResponse}">
-        <div class="row">
-            <div class="col-12 col-xl-5"></div>
-            <div class="col-12 col-xl-4">
-                <div id="alertResult" class="alert alert-block alert-${alert} text-white w-lg-50 text-xxl-center">
-                        ${messageResponse}
-                </div>
-            </div>
-        </div>
-    </c:if>
-
     <!-- User list -->
     <div class="row">
         <div class="col-12">
@@ -50,12 +39,13 @@
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
                                     <label for="type"><strong class="text-dark">Danh mục</strong></label>
-                                    <form:select path="categoryId" name="type" id="type" class="form-select px-2" style="border: 1px solid black">
+                                    <form:select path="categoryId" name="type" id="type" class="form-select px-2"
+                                                 style="border: 1px solid black">
                                         <form:option value="" label="----------Chọn danh mục----------"/>
                                         <form:options items="${categories}"/>
                                     </form:select>
                                 </div>
-<div class="col-lg-1 px-3"></div>
+                                <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
                                     <label for="hot"><strong class="text-dark">Sản phẩm bán chạy</strong></label>
                                     <form:select path="hot" id="hot" name="hot"
@@ -65,7 +55,7 @@
                                         <form:options items="${hotType}"/>
                                     </form:select>
                                 </div>
-<div class="col-lg-1 px-3"></div>
+                                <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
                                     <label for="isOutOfQuantity"><strong class="text-dark">Tình trạng trong kho</strong></label>
                                     <form:select path="isOutOfQuantity" id="isOutOfQuantity" name="isOutOfQuantity"
@@ -137,6 +127,34 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${productSearchResponse.totalItems % productSearchResponse.maxPageItems != 0}">
+                            <c:set var="finalPage"
+                                   value="${productSearchResponse.totalItems / productSearchResponse.maxPageItems + 1}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="finalPage"
+                                   value="${productSearchResponse.totalItems / productSearchResponse.maxPageItems}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="col-lg-12 mx-3 my-3">
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3 py-3">
+                                <label style="color: black; font-size: 16px;"><strong>Trang:</strong></label>&nbsp;
+                                <span style="max-height: 70px; overflow-y: auto;">
+                                    <select id="pageSelect">
+                                        <c:forEach var="singlePage" begin="1" end="${finalPage}" step="1">
+                                            <option value="${singlePage}">${singlePage}</option>
+                                        </c:forEach>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
 
@@ -151,9 +169,9 @@
                                        class="table align-items-center table-striped table-bordered table-hover mb-0"
                                        style="margin: 0 1.5em;">
                             <display:column
-                                    title="<fieldset class='input-group'> <input type='checkbox' id='checkAll'> </fieldset>"
+                                    title="<fieldset class='input-group justify-content-xxl-center align-items-xxl-center'> <input type='checkbox' id='checkAll'> </fieldset>"
                                     class="center select-cell"
-                                    headerClass="center select-cell">
+                                    headerClass="justify-content-xxl-center align-items-xxl-center">
                                 <fieldset>
                                     <input type="checkbox" name="checkList"
                                            value="${tableList.id}"
@@ -179,7 +197,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="name"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="name"
                                     title="Tên sản phẩm">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.name}</span>
@@ -187,7 +206,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="quantity"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="quantity"
                                     title="Số lượng còn">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.quantity}</span>
@@ -195,7 +215,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="price"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="price"
                                     title="Giá bán">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">
@@ -205,7 +226,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="createdAt"
                                     title="Ngày tạo">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
@@ -213,7 +235,8 @@
                             </display:column>
 
                             <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="modifiedAt"
                                     title="Ngày sửa">
                                 <div class="align-middle text-center">
                                     <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>
@@ -265,13 +288,17 @@
         </div>
     </div>
 
+
 </div>
 
 <script>
+    let currentURL = window.location.href;
+    let currentPageString = "", page = 1;
+
     $(document).ready(function () {
-        setTimeout(function () {
-            $('#alertResult').hide();
-        }, 2000);
+        getPageOnURL();
+
+        $('#pageSelect').val(page);
     });
 
     function openImage(input, imageView) {
@@ -284,16 +311,52 @@
         }
     }
 
+    function getPageOnURL() {
+        // Set page for page choosing select
+        let startPageIdxString;
+
+        let endPageIdxString = currentURL.indexOf("p=");
+        if (endPageIdxString !== -1) {
+            startPageIdxString = endPageIdxString;
+            page = "";
+
+            // find page's value (a string)
+            for (endPageIdxString = endPageIdxString + 2; endPageIdxString < currentURL.length; endPageIdxString++) {
+                let currentChar = currentURL[endPageIdxString];
+
+                if (currentChar >= "0" && currentChar <= "9") page += currentChar;
+                else break;
+            }
+
+            page = parseInt(page);
+            currentPageString = currentURL.substring(startPageIdxString, endPageIdxString);
+        }
+    }
+
+    //----------------------------- Direct to page selected with page choosen in #pageSelect
+    $('#pageSelect').change(function () {
+        // When deleting, back to previous page if this isn't page 1
+        let pageToDirect = parseInt(this.value);
+
+        // Get current page
+        if (currentPageString !== "") {
+            currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
+        } else {
+            currentURL += "?${tableId}=" +pageToDirect;
+        }
+
+        window.location.href = currentURL;
+    });
+
     // Check or uncheck all
-    $('#checkAll').change(function (){
+    $('#checkAll').change(function () {
         let userIds = document.querySelectorAll('#id');
 
-        if(this.checked){
+        if (this.checked) {
             userIds.forEach(item => {
                 item.setAttribute('checked', 'checked');
             });
-        }
-        else{
+        } else {
             userIds.forEach(item => {
                 item.removeAttribute('checked');
             });
@@ -313,7 +376,7 @@
     //----------------------------- Delete single product
     function deleteSingle(id) {
         if (confirm("Bạn chắc chắn muốn XÓA SẢN PHẨM này?")) {
-            deleteProducts(id);
+            deleteProducts([id]);
         }
     }
 
@@ -335,19 +398,28 @@
     }
 
     function deleteProducts(ids) {
+        // Find last page
+        let totalItems = ${productSearchResponse.totalItems};
+        let maxPageItems = ${productSearchResponse.maxPageItems};
+        let finalPage = Math.ceil(totalItems / maxPageItems);
+
         $.ajax({
             url: "${formAPI}/" + ids,
             method: "PATCH",
             contentType: "application/json; charset=UTF-8",
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
+                // When deleting, back to previous page if this isn't page 1
+                if (currentPageString !== "") {
+                    // If current page is final; and you delete all record in this page, create an URL with previous page of this page
+                    if (page !== 1 && page === finalPage && (ids.length) === (document.querySelectorAll('#id').length)) {
+                        page--;
+                        currentURL = currentURL.replace(currentPageString, "p=" + page); // replace old page string
+                    }
+                }
 
-                // if (result.data === "delete_success") {
-                //     window.location.href = "/admin/product-list?message=delete_success";
-                // }
                 alert(result.message);
-                location.reload();
+                window.location.href = currentURL;
             },
             error: function (result) {
                 console.log(result);

@@ -11,6 +11,8 @@ import com.javaweb.util.MessageUtils;
 import com.javaweb.util.ProductInventoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.tags.TableTagParameters;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -45,6 +47,7 @@ public class ProductInventoryController {
         mav.addObject("productInventorySearchResponse", productInventorySearchResponse);
         mav.addObject("productInventoryStatus", ProductInventoryStatus.getStatus());
         mav.addObject("categories", categoryService.findAllNotPaging());
+        mav.addObject("tableId", new ParamEncoder(productInventorySearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
 
         return mav;
     }

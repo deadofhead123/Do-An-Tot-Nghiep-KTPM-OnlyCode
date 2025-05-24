@@ -82,8 +82,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         StringBuilder sql = new StringBuilder(buildSelectQuery());
         StringBuilder join = new StringBuilder(" ");
         StringBuilder where = new StringBuilder(SystemConstant.ONE_EQUAL_ONE);
-        Integer realSize;
-        StringBuilder sqlFix;
 
         queryJoin(productSearchRequest, join);
         queryWhereNormal(productSearchRequest, where);
@@ -99,20 +97,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .append(" GROUP BY p.id ")
                 .append(" ORDER BY p." + sortName.toLowerCase() + " " + sortOrder + " ");
 
-        sqlFix = new StringBuilder(sql);
-
 //        sql.append(" LIMIT " + pageable.getPageSize()).append(" OFFSET " + pageable.getOffset());
 
         Query query = entityManager.createNativeQuery(sql.toString(), ProductEntity.class);
-
-        realSize = query.getResultList().size();
-
-        if(realSize == 0 && pageable.getOffset() > 0){
-//            Query queryFix = entityManager.createNativeQuery(sqlFix.append(" LIMIT " + pageable.getPageSize())
-//                                                                    .append(" OFFSET " + (pageable.getOffset() - pageable.getPageSize())).toString(), ProductEntity.class);
-            Query queryFix = entityManager.createNativeQuery(sqlFix.toString(), ProductEntity.class);
-            return queryFix.getResultList();
-        }
 
         return query.getResultList();
     }

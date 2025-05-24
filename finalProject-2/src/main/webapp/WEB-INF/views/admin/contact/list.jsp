@@ -90,6 +90,34 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${contactResponseList.totalItems % contactResponseList.maxPageItems != 0}">
+                            <c:set var="finalPage"
+                                   value="${contactResponseList.totalItems / contactResponseList.maxPageItems + 1}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="finalPage"
+                                   value="${contactResponseList.totalItems / contactResponseList.maxPageItems}"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="col-lg-12 mx-3 my-3">
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3 py-3">
+                                <label style="color: black; font-size: 16px;"><strong>Trang:</strong></label>&nbsp;
+                                <span style="max-height: 70px; overflow-y: auto;">
+                                    <select id="pageSelect">
+                                        <c:forEach var="singlePage" begin="1" end="${finalPage}" step="1">
+                                            <option value="${singlePage}">${singlePage}</option>
+                                        </c:forEach>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
 
@@ -194,6 +222,52 @@
 </div>
 
 <script>
+    let currentURL = window.location.href;
+    let currentPageString = "", page = 1;
+
+    $(document).ready(function () {
+        getPageOnURL();
+
+        $('#pageSelect').val(page);
+    });
+
+    function getPageOnURL() {
+        // Set page for page choosing select
+        let startPageIdxString;
+
+        let endPageIdxString = currentURL.indexOf("p=");
+        if (endPageIdxString !== -1) {
+            startPageIdxString = endPageIdxString;
+            page = "";
+
+            // find page's value (a string)
+            for (endPageIdxString = endPageIdxString + 2; endPageIdxString < currentURL.length; endPageIdxString++) {
+                let currentChar = currentURL[endPageIdxString];
+
+                if (currentChar >= "0" && currentChar <= "9") page += currentChar;
+                else break;
+            }
+
+            page = parseInt(page);
+            currentPageString = currentURL.substring(startPageIdxString, endPageIdxString);
+        }
+    }
+
+    //----------------------------- Direct to page selected with page choosen in #pageSelect
+    $('#pageSelect').change(function () {
+        // When deleting, back to previous page if this isn't page 1
+        let pageToDirect = parseInt(this.value);
+
+        // Get current page
+        if (currentPageString !== "") {
+            currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
+        } else {
+            currentURL += "?${tableId}=" +pageToDirect;
+        }
+
+        window.location.href = currentURL;
+    });
+
     //----------------------------- Search contact
     $('#btnSearchContact').click(function () {
         $('#form-search').submit();

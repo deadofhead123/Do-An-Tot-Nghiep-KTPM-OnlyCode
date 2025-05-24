@@ -10,6 +10,8 @@ import com.javaweb.util.DisplayTagUtils;
 import com.javaweb.util.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.tags.TableTagParameters;
+import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,7 @@ public class ContactController {
 
         mav.addObject("listType", ContactStatus.typeContact());
         mav.addObject("contactResponseList", contactResponseList);
+        mav.addObject("tableId", new ParamEncoder(contactResponseList.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE));
 
         return mav;
     }
