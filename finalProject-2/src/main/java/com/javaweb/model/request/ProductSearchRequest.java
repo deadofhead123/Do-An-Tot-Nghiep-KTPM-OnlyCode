@@ -16,4 +16,5 @@ public class ProductSearchRequest {
     String sortBy;
     String hot;
     String isOutOfQuantity;
+    String isDiscount;
 }

@@ -23,7 +23,7 @@
             <div class="col-md-4">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Vegefoods</h2>
-                    <p>Với mạng lưới giao hàng từ Bắc vào Nam, chúng tôi đảm bảo phân phối nhanh chóng những mặt hàng chất lượng nhất tới các bạn.</p>
+                    <p>Với mạng lưới giao hàng từ Bắc vào Nam, chúng tôi đảm bảo phân phối nhanh chóng những sản phẩm chất lượng nhất tới các bạn.</p>
                 </div>
             </div>
 

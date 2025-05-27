@@ -35,11 +35,11 @@
                 <div class="col-auto my-auto">
                     <div class="h-100 align-items-center">
                         <c:if test="${categoryEdit.id == null}">
-                            <h5 class="mb-1">Thêm danh mục</h5>
+                            <h4 class="mb-1">Thêm danh mục</h4>
                         </c:if>
 
                         <c:if test="${categoryEdit.id != null}">
-                            <h5 class="mb-1">Sửa thông tin danh mục</h5>
+                            <h4 class="mb-1">Sửa thông tin danh mục</h4>
                         </c:if>
                     </div>
                 </div>

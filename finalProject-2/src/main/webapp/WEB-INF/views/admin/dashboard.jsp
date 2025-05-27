@@ -121,7 +121,7 @@
 
                     <div class="pe-2">
                         <div class="chart">
-                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="400"></canvas>
+                            <canvas id="chart-line-revenueByMonth" class="chart-canvas" height="600"></canvas>
                         </div>
 
                         <div id="sumOfChart" class="text-dark pt-4">
@@ -572,6 +572,8 @@
         monthToCompare["revenueComparing"] = 0;
         monthToCompare["importTotalComparing"] = 0;
 
+        let highestRevenueArr = [];
+        let highestImportTotalArr = [];
         let highestMoney = {};
         highestMoney["revenue"] = -1;
         highestMoney["importTotal"] = -1;
@@ -589,45 +591,82 @@
                         if (it.date != null) {
                             moneyStatisticDays.push(it.date.toLocaleString());
 
-                            if (highestMoney["revenue"] < parseInt(it.revenue)) {
-                                highestMoney["revenue"] = parseInt(it.revenue);
-                                highestMoney["revenueDate"] = it.date;
+                            let revenue = parseInt(it.revenue), importTotal = parseInt(it.importTotal);
+
+                            if (highestMoney["revenue"] < revenue) {
+                                highestMoney["revenue"] = revenue;
                             }
-                            if (highestMoney["importTotal"] < parseInt(it.importTotal)) {
-                                highestMoney["importTotal"] = parseInt(it.importTotal);
-                                highestMoney["importTotalDate"] = it.date;
+                            if (highestMoney["importTotal"] < importTotal) {
+                                highestMoney["importTotal"] = importTotal;
                             }
 
-                            revenueValues.push(it.revenue);
-                            monthToCompare["revenueComparing"] += parseInt(it.revenue);
+                            revenueValues.push(revenue);
+                            monthToCompare["revenueComparing"] += revenue;
 
-                            importTotalValues.push(it.importTotal);
-                            monthToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                            importTotalValues.push(importTotal);
+                            monthToCompare["importTotalComparing"] += importTotal;
                         }
                     });
 
-                    monthToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
-                } else { // Profit
                     $.each(result.data, function (idx, it) {
-                        let profit = parseInt(it.revenue) - parseInt(it.importTotal);
+                        let revenue = parseInt(it.revenue), importTotal = parseInt(it.importTotal);
+
+                        if (it.date != null) {
+                            if(revenue === highestMoney["revenue"]){
+                                highestRevenueArr.push({
+                                   revenue: highestMoney["revenue"],
+                                   date: it.date
+                                });
+                            }
+
+                            if(importTotal === highestMoney["importTotal"]){
+                                highestImportTotalArr.push({
+                                    importTotal: highestMoney["importTotal"],
+                                    date: it.date
+                                });
+                            }
+                        }
+                    });
+
+                    monthToCompare["revenue"] = parseInt(result.data[result.data.length - 1].revenue);
+                    monthToCompare["importTotal"] = parseInt(result.data[result.data.length - 1].importTotal);
+                } else { // Profit
+                    let tmpRevenue, tmpImportTotal;
+
+                    $.each(result.data, function (idx, it) {
+                        tmpRevenue = parseInt(it.revenue);
+                        tmpImportTotal = parseInt(it.importTotal);
+                        let profit = tmpRevenue - tmpImportTotal;
 
                         if (it.date != null) {
                             moneyStatisticDays.push(it.date.toLocaleString());
 
                             if (highestMoney["revenue"] < profit) {
-                                highestMoney["revenue"] = parseInt(it.revenue);
-                                highestMoney["revenueDate"] = it.date;
+                                highestMoney["revenue"] = profit;
                             }
 
                             revenueValues.push(profit);
                             monthToCompare["revenueComparing"] += profit;
                         }
                     });
+
+                    $.each(result.data, function (idx, it) {
+                        let revenue = parseInt(it.revenue);
+
+                        if (it.date != null) {
+                            if(revenue === highestMoney["revenue"]){
+                                highestRevenueArr.push({
+                                    revenue: highestMoney["revenue"],
+                                    date: it.date
+                                });
+                            }
+                        }
+                    });
+
+                    monthToCompare["revenue"] = parseInt(tmpRevenue - tmpImportTotal);
                 }
 
-                monthToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
-
-                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompare, highestMoney);
+                drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompare, highestRevenueArr, highestImportTotalArr);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -641,7 +680,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompareObject, highestMoney) {
+    function drawChartLine_MoneyStatisticByMonth(moneyStatisticDays, revenueValues, importTotalValues, monthToCompareObject, highestRevenueArr, highestImportTotalArr) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByMonth');
@@ -660,17 +699,6 @@
         if (option === 1) { // Compare income, importTotal
             chartDatasets = [
                 {
-                    type: "bar",
-                    label: "Doanh thu",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "#43A047",
-                    data: revenueValues, // data from database
-                    barThickness: 'flex',
-                },
-                {
                     label: "Chi tiêu",
                     tension: 0,
                     borderWidth: 2,
@@ -682,6 +710,17 @@
                     fill: true,
                     data: importTotalValues, // data from database
                     maxBarThickness: 6,
+                },
+                {
+                    type: "bar",
+                    label: "Doanh thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#43A047",
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
                 },
             ];
 
@@ -768,9 +807,28 @@
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với tháng trước)";
                 }
             }
-            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>doanh thu</strong> cao nhất: &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>" +
-                "&nbsp;&nbsp;Ngày có <strong>chi tiêu</strong> cao nhất: &nbsp;" + highestMoney.importTotalDate + "&nbsp; (" + (highestMoney.importTotal).toLocaleString() + " đ).<br>";
-        } else {
+
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>doanh thu</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestRevenueArr.length ; i++){
+                sumOfChartHTMLCode += highestRevenueArr[i].date;
+
+                if(i !== highestRevenueArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+            sumOfChartHTMLCode += "&nbsp; (" + (highestRevenueArr[0].revenue).toLocaleString() + " đ).<br>";
+
+            sumOfChartHTMLCode += "&nbsp;&nbsp;Ngày có <strong>chi tiêu</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestImportTotalArr.length ; i++){
+                sumOfChartHTMLCode += highestImportTotalArr[i].date;
+
+                if(i !== highestImportTotalArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+            sumOfChartHTMLCode += "&nbsp; (" + (highestImportTotalArr[0].importTotal).toLocaleString() + " đ).<br>";
+        }
+        else {
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -784,7 +842,15 @@
             } else {
                 sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
             }
-            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>lợi nhuận</strong> cao nhất: &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>";
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Ngày có <strong>lợi nhuận</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestRevenueArr.length ; i++){
+                sumOfChartHTMLCode += highestRevenueArr[i].date;
+
+                if(i !== highestRevenueArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+            sumOfChartHTMLCode += "&nbsp; (" + (highestRevenueArr[0].revenue).toLocaleString() + " đ).<br>";
 
             chartDatasets = [{
                 label: statisticLabel,
@@ -973,6 +1039,8 @@
         yearToCompare["revenueComparing"] = 0;
         yearToCompare["importTotalComparing"] = 0;
 
+        let highestRevenueArr = [];
+        let highestImportTotalArr = [];
         let highestMoney = {};
         highestMoney["revenue"] = -1;
         highestMoney["importTotal"] = -1;
@@ -990,33 +1058,57 @@
                         if (it.date != null) {
                             moneyStatisticMonths.push(it.date.toLocaleString());
 
-                            if (highestMoney["revenue"] < parseInt(it.revenue)) {
-                                highestMoney["revenue"] = parseInt(it.revenue);
-                                highestMoney["revenueDate"] = it.date;
+                            let revenue = parseInt(it.revenue), importTotal = parseInt(it.importTotal);
+
+                            if (highestMoney["revenue"] < revenue) {
+                                highestMoney["revenue"] = revenue;
                             }
-                            if (highestMoney["importTotal"] < parseInt(it.importTotal)) {
-                                highestMoney["importTotal"] = parseInt(it.importTotal);
-                                highestMoney["importTotalDate"] = it.date;
+                            if (highestMoney["importTotal"] < importTotal) {
+                                highestMoney["importTotal"] = importTotal;
                             }
 
-                            revenueValues.push(it.revenue);
-                            yearToCompare["revenueComparing"] += parseInt(it.revenue);
+                            revenueValues.push(revenue);
+                            yearToCompare["revenueComparing"] += revenue;
 
-                            importTotalValues.push(it.importTotal);
-                            yearToCompare["importTotalComparing"] += parseInt(it.importTotal);
+                            importTotalValues.push(importTotal);
+                            yearToCompare["importTotalComparing"] += importTotal;
                         }
                     });
 
-                    yearToCompare["importTotal"] = parseInt(importTotalValues[importTotalValues.length - 1]);
-                } else { // Profit
                     $.each(result.data, function (idx, it) {
-                        let profit = parseInt(it.revenue) - parseInt(it.importTotal);
+                        if (it.date != null) {
+                            let revenue = parseInt(it.revenue), importTotal = parseInt(it.importTotal);
+
+                            if(revenue === highestMoney["revenue"]){
+                                highestRevenueArr.push({
+                                   revenue: highestMoney["revenue"],
+                                   date: it.date
+                                });
+                            }
+                            if(importTotal === highestMoney["importTotal"]){
+                                highestImportTotalArr.push({
+                                    importTotal: highestMoney["importTotal"],
+                                    date: it.date
+                                });
+                            }
+                        }
+                    });
+
+                    yearToCompare["revenue"] = parseInt(result.data[result.data.length - 1].revenue);
+                    yearToCompare["importTotal"] = parseInt(result.data[result.data.length - 1].importTotal);
+                } else { // Profit
+                    let tmpRevenue, tmpImportTotal;
+
+                    $.each(result.data, function (idx, it) {
+                        tmpRevenue = parseInt(it.revenue);
+                        tmpImportTotal = parseInt(it.importTotal);
+                        let profit = tmpRevenue - tmpImportTotal;
 
                         if (it.date != null) {
                             moneyStatisticMonths.push(it.date.toLocaleString());
 
                             if (highestMoney["revenue"] < profit) {
-                                highestMoney["revenue"] = parseInt(it.revenue);
+                                highestMoney["revenue"] = profit;
                                 highestMoney["revenueDate"] = it.date;
                             }
 
@@ -1024,11 +1116,11 @@
                             yearToCompare["revenueComparing"] += profit;
                         }
                     });
+
+                    yearToCompare["revenue"] = parseInt(tmpRevenue - tmpImportTotal);
                 }
 
-                yearToCompare["revenue"] = parseInt(revenueValues[revenueValues.length - 1]);
-
-                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompare, highestMoney);
+                drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompare, highestRevenueArr, highestImportTotalArr);
             },
             error: function (result) {
                 let message = result.responseJSON.message;
@@ -1042,7 +1134,7 @@
         });
     }
 
-    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompareObject, highestMoney) {
+    function drawChartLine_MoneyStatisticByYear(moneyStatisticMonths, revenueValues, importTotalValues, yearToCompareObject, highestRevenueArr, highestImportTotalArr) {
         // Destroy existing chart
         try {
             const existed_chart = Chart.getChart('chart-line-revenueByYear');
@@ -1060,17 +1152,6 @@
         if (option === 1) { // Compare income, importTotal
             chartDatasets = [
                 {
-                    type: "bar",
-                    label: "Doanh thu",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    borderRadius: 4,
-                    borderSkipped: false,
-                    backgroundColor: "#43A047",
-                    data: revenueValues, // data from database
-                    barThickness: 'flex',
-                },
-                {
                     label: "Chi tiêu",
                     tension: 0,
                     borderWidth: 2,
@@ -1082,6 +1163,17 @@
                     fill: true,
                     data: importTotalValues, // data from database
                     maxBarThickness: 6,
+                },
+                {
+                    type: "bar",
+                    label: "Doanh thu",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "#43A047",
+                    data: revenueValues, // data from database
+                    barThickness: 'flex',
                 },
             ];
 
@@ -1166,9 +1258,29 @@
                     sumOfChartHTMLCode += "&nbsp;(<span style='color: red'>tăng</span>&nbsp;" + (-percentOfImportTotal) + "% so với năm trước)";
                 }
             }
-            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>doanh thu</strong> cao nhất: &nbsp;tháng&nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>" +
-                "&nbsp;&nbsp;Tháng có <strong>chi tiêu</strong> cao nhất: &nbsp;tháng&nbsp;" + highestMoney.importTotalDate + "&nbsp; (" + (highestMoney.importTotal).toLocaleString() + " đ).<br>";
-        } else { // Profit
+
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>doanh thu</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestRevenueArr.length ; i++){
+                sumOfChartHTMLCode += "tháng&nbsp;" + highestRevenueArr[i].date;
+
+                if(i !== highestRevenueArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+            sumOfChartHTMLCode += "&nbsp; (" + (highestRevenueArr[0].revenue).toLocaleString() + " đ).<br>";
+
+            sumOfChartHTMLCode += "&nbsp;&nbsp;Tháng có <strong>chi tiêu</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestImportTotalArr.length ; i++){
+                sumOfChartHTMLCode += "tháng&nbsp;" + highestImportTotalArr[i].date;
+
+                if(i !== highestImportTotalArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+
+            sumOfChartHTMLCode += "&nbsp; (" + (highestImportTotalArr[0].importTotal).toLocaleString() + " đ).<br>";
+        }
+        else { // Profit
             let sumOfMoney = 0;
             $.each(revenueValues, function (idx, it) {
                 sumOfMoney += it;
@@ -1182,7 +1294,16 @@
             } else {
                 sumOfChartHTMLCode = "&nbsp;&nbsp;<strong>Tổng lợi nhuận: </strong>" + sumOfMoney.toLocaleString() + " đ\n";
             }
-            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>lợi nhuận</strong> cao nhất: &nbsp; tháng &nbsp;" + highestMoney.revenueDate + "&nbsp; (" + (highestMoney.revenue).toLocaleString() + " đ).<br>";
+
+            sumOfChartHTMLCode += "<br><br>&nbsp;&nbsp;Tháng có <strong>lợi nhuận</strong> cao nhất: &nbsp;";
+            for(let i = 0 ; i < highestImportTotalArr.length ; i++){
+                sumOfChartHTMLCode += "tháng&nbsp;" + highestImportTotalArr[i].date;
+
+                if(i !== highestImportTotalArr.length - 1){
+                    sumOfChartHTMLCode += ", ";
+                }
+            }
+            sumOfChartHTMLCode += "&nbsp; (" + (highestRevenueArr[0].revenue).toLocaleString() + " đ).<br>";
 
             chartDatasets = [{
                 label: statisticLabel,

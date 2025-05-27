@@ -41,4 +41,26 @@ public class ProductAPI_User {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
         }
     }
+
+//    @GetMapping(value = "/bought")
+//    public ResponseEntity<?> getProductBought(@RequestParam("name") String name) {
+//        ResponseDTO responseDTO = new ResponseDTO();
+//
+//        try{
+//            List<ProductDTO> products = productService.findByNameContaining(name);
+//
+//            if(products.isEmpty()){
+//                responseDTO.setMessage("Không tìm thấy sản phẩm");
+//            }
+//
+//            responseDTO.setData(products);
+//
+//            return ResponseEntity.ok(responseDTO);
+//        }
+//        catch (Exception ex){
+//            responseDTO.setData(SystemConstant.ERROR_SYSTEM);
+//            responseDTO.setMessage(ex.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
+//        }
+//    }
 }

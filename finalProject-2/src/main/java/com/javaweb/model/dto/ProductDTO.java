@@ -12,6 +12,7 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
     String description;
     Long expiration;
     Long quantity;
+    Long sold;
     Long discount;
 
     String image;

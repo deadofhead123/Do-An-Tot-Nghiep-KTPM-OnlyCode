@@ -33,6 +33,12 @@
                         </svg>
                         <span>Đơn hàng</span>
                     </a>
+
+                    <a href="/my-product-bought" class="sidebar__link ftco-animate">
+                        <img width="16" height="16" src="https://img.icons8.com/forma-thin/24/product.png"
+                             alt="product"/>
+                        <span>Sản phẩm đã mua</span>
+                    </a>
                 </div>
             </div>
         </div>

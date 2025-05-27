@@ -29,9 +29,18 @@ public class NewsController_Web {
 
     @GetMapping(value = "/news")
     public ModelAndView newsPage(@ModelAttribute("newsSearch")NewsSearchRequest newsSearchRequest, HttpServletRequest request,
-                                 @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "5") int size){
+                                 @RequestParam(defaultValue = "0") int page){
         ModelAndView mav = new ModelAndView("/web/news-files/news");
+        Integer size = 5;
+        String name = request.getParameter("name");
+        String type = request.getParameter("type");
+
+        if(name != null && !name.isEmpty()){
+            newsSearchRequest.setName(name);
+        }
+        if(type != null && !type.isEmpty()){
+            newsSearchRequest.setType(type);
+        }
 
         Page<NewsSearchResponse> newsList = newsService.findAll_Web(newsSearchRequest, PageRequest.of(page, size));
         mav.addObject("newsList", newsList);

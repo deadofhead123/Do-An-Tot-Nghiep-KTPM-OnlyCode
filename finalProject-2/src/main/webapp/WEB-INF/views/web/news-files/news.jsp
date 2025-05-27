@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<c:set var="pageURL" value="/news"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +13,34 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs" style="font-size: 14px"><span class="mr-2"><a href="/home">Trang chủ</a></span></p>
+                <p class="breadcrumbs" style="font-size: 14px"><span class="mr-2"><a href="/home">Trang chủ</a></span>
+                </p>
                 <h1 class="mb-0 bread">Tin tức</h1>
             </div>
         </div>
     </div>
 </div>
+
+<c:set var="newsName" value="${param.name}"/>
+<c:choose>
+    <c:when test="${not empty newsName}">
+        <c:set var="name" value="${'&name='}${newsName}"/>
+    </c:when>
+
+    <c:otherwise>
+        <c:set var="name" value="${''}"/>
+    </c:otherwise>
+</c:choose>
+
+<c:set var="newsCode" value="${param.type}"/>
+<c:choose>
+    <c:when test="${not empty newsCode}">
+        <c:set var="type" value="${'&type='}${newsCode}"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="type" value=""/>
+    </c:otherwise>
+</c:choose>
 
 <section class="ftco-section ftco-degree-bg">
     <div class="container">
@@ -25,95 +48,97 @@
             <!-- Hiển thị các bài viết-->
             <div class="col-lg-8 ftco-animate">
                 <div class="row">
-                    <!-- Testing area -->
-                    <c:forEach var="newsSingle" items="${newsList.content}">
-                        <div class="col-md-12 d-flex ftco-animate">
-                            <div class="blog-entry align-self-stretch d-md-flex">
-                                <a href="/news-single-${newsSingle.id}" class="block-20"
-                                   style="background-image: url('/repository${newsSingle.image}');">
-                                </a>
-                                <div class="text d-block pl-md-4">
-                                    <div class="meta mb-3">
-                                        <div><a href="#"><span class="icon-calendar"></span>
-                                            <fmt:formatDate value="${newsSingle.createdAt}"
-                                                            pattern="dd/MM/yyyy, HH:mm"/>
-                                        </a></div>
-                                        <div><span class="icon-eye"></span>${newsSingle.view}</div>
+                    <c:choose>
+                        <c:when test="${newsList.content.size() == 0}">
+                            <h3>Không có tin tức nào.</h3>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- Testing area -->
+                            <c:forEach var="newsSingle" items="${newsList.content}">
+                                <div class="col-md-12 d-flex ftco-animate">
+                                    <div class="blog-entry align-self-stretch d-md-flex">
+                                        <a href="/news-single-${newsSingle.id}" class="block-20"
+                                           style="background-image: url('/repository${newsSingle.image}');">
+                                        </a>
+                                        <div class="text d-block pl-md-4">
+                                            <div class="meta mb-3">
+                                                <div><a href="#"><span class="icon-calendar"></span>
+                                                    <fmt:formatDate value="${newsSingle.createdAt}" pattern="dd/MM/yyyy, HH:mm"/>
+                                                </a></div>
+                                                <div><span class="icon-eye"></span>${newsSingle.view}</div>
+                                            </div>
+                                            <h3 class="heading"><a href="/news-single-${newsSingle.id}">${newsSingle.name}</a></h3>
+                                            <p>${newsSingle.description}</p>
+                                            <p><a href="/news-single-${newsSingle.id}" class="btn btn-primary py-2 px-3">Chi tiết</a></p>
+                                        </div>
                                     </div>
-                                    <h3 class="heading"><a href="#">${newsSingle.name}</a></h3>
-                                    <p>${newsSingle.description}</p>
-                                    <p><a href="/news-single-${newsSingle.id}" class="btn btn-primary py-2 px-3">Chi
-                                        tiết</a></p>
+                                </div>
+                            </c:forEach>
+
+                            <!-- Index of pagination -->
+                            <div class="col text-center">
+                                <div class="block-27">
+                                    <div class="pagination">
+                                        <ul>
+                                            <c:if test="${newsList.hasPrevious()}">
+                                                <li>
+                                                    <a href="${pageURL}?page=0${name}${type}">&lt;&lt;</a>
+                                                </li>
+                                            </c:if>
+                                            <c:if test="${newsList.hasPrevious()}">
+                                                <li>
+                                                    <a href="${pageURL}?page=${newsList.number - 1}${name}${type}">&lt;</a>
+                                                </li>
+                                            </c:if>
+
+                                            <c:forEach var="i" begin="0" end="${newsList.totalPages - 1}">
+                                                <c:choose>
+                                                    <c:when test="${i == newsList.number}">
+                                                        <li class="active"><span>${i + 1}</span></li>
+                                                    </c:when>
+                                                    <%-- Hiển thị các trang lân cận và trang đầu/cuối --%>
+                                                    <c:when test="${i == 0 || i == newsList.totalPages - 1 || (i >= newsList.number - 1 && i <= newsList.number + 1)}">
+                                                        <li>
+                                                            <a href="${pageURL}?page=${i}${name}${type}">${i + 1}</a>
+                                                        </li>
+                                                    </c:when>
+                                                    <%-- Hiển thị dấu "..." --%>
+                                                    <c:when test="${(newsList.number > 2 && i == newsList.number - 2) || (i == newsList.number + 2 && newsList.number < newsList.totalPages - 3)}">
+                                                        <li><span>...</span></li>
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:forEach>
+
+                                            <c:if test="${newsList.hasNext()}">
+                                                <li>
+                                                    <a href="${pageURL}?page=${newsList.number + 1}${name}${type}">&gt;</a>
+                                                </li>
+                                            </c:if>
+                                            <c:if test="${newsList.hasNext()}">
+                                                <li>
+                                                    <a href="${pageURL}?page=${newsList.totalPages - 1}${name}${type}">&gt;&gt;</a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
-
-                    <!-- Index of pagination -->
-                    <div class="col text-center">
-                        <div class="block-27">
-                            <div class="pagination">
-                                <ul>
-
-                                    <c:if test="${newsList.hasPrevious()}">
-                                        <li>
-                                            <a href="/news?page=0&size=${newsList.size}&name=${newsSearch.name}&type=${newsSearch.type}">&lt;&lt;</a>
-                                        </li>
-                                    </c:if>
-                                    <c:if test="${newsList.hasPrevious()}">
-                                        <li>
-                                            <a href="/news?page=${newsList.number - 1}&size=${newsList.size}&name=${newsSearch.name}&type=${newsSearch.type}">&lt;</a>
-                                        </li>
-                                    </c:if>
-
-                                    <c:forEach var="i" begin="0" end="${newsList.totalPages - 1}">
-                                        <c:choose>
-                                            <c:when test="${i == newsList.number}">
-                                                <li class="active"><span>${i + 1}</span></li>
-                                            </c:when>
-                                            <%-- Hiển thị các trang lân cận và trang đầu/cuối --%>
-                                            <c:when test="${i == 0 || i == newsList.totalPages - 1 || (i >= newsList.number - 1 && i <= newsList.number + 1)}">
-                                                <li>
-                                                    <a href="/news?page=${i}&size=${newsList.size}&name=${newsSearch.name}&type=${newsSearch.type}">${i + 1}</a>
-                                                </li>
-                                            </c:when>
-                                            <%-- Hiển thị dấu "..." --%>
-                                            <c:when test="${(newsList.number > 2 && i == newsList.number - 2) || (i == newsList.number + 2 && newsList.number < newsList.totalPages - 3)}">
-                                                <li><span>...</span></li>
-                                            </c:when>
-                                        </c:choose>
-                                    </c:forEach>
-
-                                    <c:if test="${newsList.hasNext()}">
-                                        <li>
-                                            <a href="/news?page=${newsList.number + 1}&size=${newsList.size}&name=${newsSearch.name}&type=${newsSearch.type}">&gt;</a>
-                                        </li>
-                                    </c:if>
-                                    <c:if test="${newsList.hasNext()}">
-                                        <li>
-                                            <a href="/news?page=${newsList.totalPages - 1}&size=${newsList.size}&name=${newsSearch.name}&type=${newsSearch.type}">&gt;&gt;</a>
-                                        </li>
-                                    </c:if>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div> <!-- .col-md-8 -->
 
             <!-- Right menu -->
             <div class="col-lg-4 sidebar ftco-animate">
                 <!-- Search bar -->
-                <form:form method="get" name="form-search" id="form-search" modelAttribute="newsSearch"
-                           class="search-form">
-                    <div class="sidebar-box">
+                <div class="sidebar-box">
+                    <div class="search-form">
                         <div class="form-group">
                             <span class="icon ion-ios-search"></span>
-                            <form:input path="name" type="text" class="form-control rounded"
-                                        placeholder="Tìm bài viết" style="border: 1px solid black"/>
+                            <input id="newsNameSearch" type="text" class="form-control border border-dark rounded" style="font-size: 14px;" placeholder="Tìm bài viết...">
                         </div>
                     </div>
-                </form:form>
+                </div>
 
                 <!-- News type -->
                 <div class="sidebar-box ftco-animate">
@@ -121,7 +146,8 @@
                     <ul class="categories">
                         <c:forEach var="newsType" items="${newsTypeList}">
                             <li>
-                                <a href="/news?name=${newsSearch.name}&type=${newsType.code}">${newsType.name}<span>(${newsType.total})</span></a>
+                                <input id="newsCodeSingle" type="hidden" value="${newsType.code}"/>
+                                <a id="newsTypeSingle" href="#">${newsType.name}<span>(${newsType.total})</span></a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -155,6 +181,26 @@
 </section> <!-- .section -->
 
 <script>
+    $(document).ready(function(){
+        $('#newsNameSearch').val("${param.name}");
+    });
+
+    const newsTypes = document.querySelectorAll('#newsTypeSingle');
+    newsTypes.forEach(item => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const parentItem = this.parentElement;
+            window.location.href = "${pageURL}?${name}&type=" + parentItem.querySelector('#newsCodeSingle').value;
+        });
+    });
+
+    $('#newsNameSearch').keyup(function (event) {
+        event.preventDefault();
+        if (event.key === 'Enter') {
+            window.location.href = "${pageURL}?name=" + ($('#newsNameSearch').val().trim()) + "${type}";
+        }
+    });
 </script>
 </body>
 </html>

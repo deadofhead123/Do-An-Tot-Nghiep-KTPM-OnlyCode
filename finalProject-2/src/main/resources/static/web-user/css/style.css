@@ -10174,3 +10174,43 @@ textarea.form-control {
   color: white;
 }
 
+
+/****** Scroll table *****/
+.table-container {
+  width: 100%; /* Chiều rộng của vùng chứa bảng */
+  max-height: 600px; /* Chiều cao tối đa của vùng chứa bảng để kích hoạt thanh cuộn */
+  overflow-y: auto; /* Kích hoạt thanh cuộn dọc khi nội dung vượt quá chiều cao */
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse; /* Gộp các đường viền của ô */
+}
+
+.table-container table th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd; /* Đường viền dưới của mỗi ô */
+}
+
+.table-container table thead th {
+  background-color: #70ad47;
+  color: white;
+  text-align: center;
+  /* Các thuộc tính quan trọng để giữ tiêu đề cố định */
+  position: sticky; /* Đặt vị trí "sticky" */
+  top: 0; /* Khi cuộn, nó sẽ dính vào vị trí 0px từ trên cùng của phần tử cha cuộn (ở đây là .table-container) */
+  z-index: 1; /* Đảm bảo tiêu đề nằm trên các hàng nội dung khi cuộn */
+  /* Bạn có thể thêm các thuộc tính khác như border-top, box-shadow nếu muốn tạo hiệu ứng đẹp hơn cho tiêu đề */
+}
+
+.table-container table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Tô màu xen kẽ các hàng */
+}
+
+.table-container table tbody tr:hover {
+  background-color: #e9e9e9; /* Đổi màu khi di chuột qua hàng */
+}

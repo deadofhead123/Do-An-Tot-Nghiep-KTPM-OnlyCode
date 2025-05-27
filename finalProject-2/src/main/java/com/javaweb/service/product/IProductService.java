@@ -16,13 +16,15 @@ public interface IProductService {
     List<ProductDTO> findByNameContaining(String name);
     ProductDTO findOneByName(String name);
     ProductDTO findOneById(Long id);
-    List<ProductDTO> findAllbyId(List<Long> ids);
+    List<ProductDTO> findAllById(List<Long> ids);
     List<ProductDTO> findAllNearOutOfQuantity();
     List<ProductDTO> findRelatedProducts(Long productId, Long categoryId);
     Long findQuantitySold(Long productId);
     List<ProductDTO> findAllHotProduct();
+    List<ProductDTO> findAllByUser();
 
     int countTotalItems(ProductSearchRequest request);
     void editProduct(ProductDTO productDTO);
     void deleteProducts(List<Long> ids, HttpServletRequest request);
+    void applyDiscount(List<Long> ids, Long discount);
 }

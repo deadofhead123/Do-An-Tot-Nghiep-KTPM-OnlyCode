@@ -36,6 +36,9 @@ public class UserEntity extends BaseEntity {
     @Column(name = "isactive")
     Integer isActive;
 
+    @Column(name = "productbought")
+    String productBought;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userid", nullable = false),

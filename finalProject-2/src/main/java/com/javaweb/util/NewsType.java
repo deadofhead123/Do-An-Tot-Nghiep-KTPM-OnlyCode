@@ -7,7 +7,7 @@ public enum NewsType {
     RAU_CU("Rau củ"),
     TRAI_CAY("Trái cây"),
     NUOC_EP("Nước ép"),
-    HAT_KHO("Hạt khô"),
+    DO_KHO("Đồ khô"),
     KHAC("Khác");
 
     private final String name;

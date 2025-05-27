@@ -36,11 +36,11 @@
                 <div class="col-auto my-auto">
                     <div class="h-100 align-items-center">
                         <c:if test="${productEdit.id == null}">
-                            <h5 class="mb-1">Thêm sản phẩm</h5>
+                            <h4 class="mb-1">Thêm sản phẩm</h4>
                         </c:if>
 
                         <c:if test="${productEdit.id != null}">
-                            <h5 class="mb-1">Sửa thông tin sản phẩm</h5>
+                            <h4 class="mb-1">Sửa thông tin sản phẩm</h4>
                         </c:if>
                     </div>
                 </div>
@@ -97,9 +97,19 @@
                                 </div>
                             </c:if>
 
+                            <c:if test="${productEdit.id != null}">
+                                <br>
+                                <div class="form-group py-1">
+                                    <label for="sold"><strong class="text-dark">Số lượng đã bán</strong></label>
+                                    <form:input path="sold" name="sold" id="sold"
+                                                class="form-control px-2"
+                                                style="border: 1px solid black" readonly="true"/>
+                                </div>
+                            </c:if>
+
                             <br>
                             <div class="form-group py-1">
-                                <label for="price"><strong class="text-dark">Giá bán</strong>&nbsp;(VND)</label>
+                                <label for="price"><strong class="text-dark">Giá bán (phải lớn hơn hoặc bằng 1000đ)</strong>&nbsp;</label>
                                 <form:input path="price" name="price" id="price" type="number"
                                             class="form-control px-2"
                                             style="border: 1px solid black"/>
@@ -107,7 +117,7 @@
 
                             <c:if test="${productEdit.id != null}">
                                 <div class="form-group py-1">
-                                    <label for="price"><strong class="text-dark">Giảm giá (%)</strong>&nbsp;</label>
+                                    <label for="price"><strong class="text-dark">Giảm giá (nằm trong khoảng 0-100%)</strong>&nbsp;</label>
                                     <form:input path="discount" name="discount" id="discount" type="discount"
                                                 class="form-control px-2"
                                                 style="border: 1px solid black"/>

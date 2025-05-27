@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
+<c:url var="productSingleURL" value="/product-single"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,46 +43,63 @@
                     </div>
 
                     <div class="cart-list">
-                        <table id="productTable" class="table">
-                            <thead class="thead-primary">
-                            <tr class="text-center">
-                                <th><input type="checkbox" id="checkAllInCart"/></th>
-                                <th>Ảnh đại diện</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Giá bán</th>
-                                <th>Số lượng mua</th>
-                                <th>Thành tiền</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                            </thead>
+                        <div class="table-container">
+                            <table id="productTable" class="table">
+                                <thead class="thead-primary">
+                                <tr class="text-center">
+                                    <th><input type="checkbox" id="checkAllInCart"/></th>
+                                    <th>Ảnh đại diện</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá bán</th>
+                                    <th>Số lượng mua</th>
+                                    <th>Thành tiền</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
 
-                            <tbody>
-                            <c:forEach var="cartSingle" items="${carts}">
-                                <tr id="product-info" class="text-center">
-                                    <td>
-                                        <fieldset class='input-group'>
-                                            <input type="checkbox" id="productId" value="${cartSingle.productDTO.id}"/>
-                                        </fieldset>
-                                    </td>
+                                <tbody>
+                                <c:forEach var="cartSingle" items="${carts}">
+                                    <tr id="product-info" class="text-center">
+                                        <td>
+                                            <fieldset class='input-group'>
+                                                <input type="checkbox" id="productId"
+                                                       value="${cartSingle.productDTO.id}"/>
+                                            </fieldset>
+                                        </td>
 
-                                    <td class="image-prod">
-                                        <div class="img"
-                                             style="background-image:url('/repository${cartSingle.productDTO.image}');"></div>
-                                    </td>
+                                        <td class="image-prod">
+                                            <div class="img">
+                                                <c:if test="${not empty cartSingle.productDTO.image}">
+                                                    <c:set var="imagePath"
+                                                           value="/repository${cartSingle.productDTO.image}"/>
+                                                    <a href="${productSingleURL}-${cartSingle.productDTO.id}">
+                                                        <img src="${imagePath}" id="viewImage" width="100"
+                                                             height="100"
+                                                             style="margin-top: 5px; margin-bottom: 5px"
+                                                             alt="Không tìm thấy ảnh"></a>
+                                                </c:if>
 
-                                    <td class="product-name">
-                                        <h3>${cartSingle.productDTO.name}</h3>
-                                    </td>
+                                                <c:if test="${empty cartSingle.productDTO.image}">
+                                                    <img src="/admin/image/default.png" id="viewImage"
+                                                         width="100" height="100"
+                                                         alt="Chưa có ảnh">
+                                                </c:if>
+                                            </div>
+                                        </td>
 
-                                    <td class="price">
-                                        <c:set var="priceWithDiscount"
-                                               value="${cartSingle.productDTO.price - cartSingle.productDTO.price * cartSingle.productDTO.discount / 100}"/>
-                                        <input type="hidden" id="price" value="${priceWithDiscount}"/>
-                                        <fmt:formatNumber value="${priceWithDiscount}" pattern="#,###"/>₫
-                                    </td>
+                                        <td class="product-name">
+                                            <h3>${cartSingle.productDTO.name}</h3>
+                                        </td>
 
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
+                                        <td class="price">
+                                            <c:set var="priceWithDiscount"
+                                                   value="${cartSingle.productDTO.price - cartSingle.productDTO.price * cartSingle.productDTO.discount / 100}"/>
+                                            <input type="hidden" id="price" value="${priceWithDiscount}"/>
+                                            <fmt:formatNumber value="${priceWithDiscount}" pattern="#,###"/>₫
+                                        </td>
+
+                                        <td class="quantity">
+                                            <div class="input-group mb-3">
                                             <span class="input-group-btn mr-2">
                                                     <button type="button" id="quantity-left-minus"
                                                             class="quantity-left-minus btn" data-type="minus"
@@ -90,33 +108,34 @@
                                                     </button>
                                             </span>
 
-                                            <input type="number" id="quantity" name="quantity"
-                                                   class="quantity form-control input-number"
-                                                   value="${cartSingle.quantity}" min="1">
+                                                <input type="number" id="quantity" name="quantity"
+                                                       class="quantity form-control input-number"
+                                                       value="${cartSingle.quantity}" min="1">
 
-                                            <span class="input-group-btn ml-2">
+                                                <span class="input-group-btn ml-2">
                                                 <button type="button" id="quantity-right-plus"
                                                         class="quantity-right-plus btn" data-type="plus"
                                                         data-field="">
                                                     <i class="ion-ios-add"></i>
                                                 </button>
                                             </span>
-                                        </div>
-                                    </td>
+                                            </div>
+                                        </td>
 
-                                    <td id="subTotal" class="total"><fmt:formatNumber
-                                            value="${priceWithDiscount * cartSingle.quantity}"
-                                            pattern="#,###"/>₫
-                                    </td>
+                                        <td id="subTotal" class="total"><fmt:formatNumber
+                                                value="${priceWithDiscount * cartSingle.quantity}"
+                                                pattern="#,###"/>₫
+                                        </td>
 
-                                    <td class="product-remove"><a href="#" title="Xóa sản phẩm khỏi giỏ"
-                                                                  onclick="deleteSingle(${cartSingle.productDTO.id})"><span
-                                            class="ion-ios-close"></span></a></td>
-                                </tr>
-                                <!-- END TR-->
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                                        <td class="product-remove"><a href="#" title="Xóa sản phẩm khỏi giỏ"
+                                                                      onclick="deleteSingle(${cartSingle.productDTO.id})"><span
+                                                class="ion-ios-close"></span></a></td>
+                                    </tr>
+                                    <!-- END TR-->
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </c:if>
             </div>
@@ -193,13 +212,22 @@
 <script>
     <c:set var="cartAPI" value="/api/carts"/>
 
-    $('#checkAllInCart').change(function(){
-        if(this.checked){
+    function openImage(input, imageView) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' + imageView).attr('src', reader.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $('#checkAllInCart').change(function () {
+        if (this.checked) {
             document.querySelectorAll('#productId').forEach(item => {
                 item.setAttribute('checked', 'checked');
             });
-        }
-        else{
+        } else {
             document.querySelectorAll('#productId').forEach(item => {
                 item.removeAttribute('checked');
             });

@@ -23,7 +23,7 @@
 
                     <div class="col-md-12 ftco-animate text-center">
                         <h1 class="mb-2">Rau củ quả hữu cơ</h1>
-                        <h2 class="subheading mb-4">Được phân phối tới mọi nhà</h2>
+                        <h2 class="subheading mb-4" style="font-size: 14px;">Được phân phối tới mọi nhà</h2>
                         <p><a href="/shop" class="btn btn-primary">Xem chi tiết</a></p>
                     </div>
 
@@ -37,7 +37,7 @@
                 <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
                     <div class="col-sm-12 ftco-animate text-center">
                         <h1 class="mb-2">100% sạch</h1>
-                        <h2 class="subheading mb-4">Đã được kiểm chứng bởi hàng trăm khách hàng</h2>
+                        <h2 class="subheading mb-4" style="font-size: 14px;">Đã được kiểm chứng bởi hàng trăm khách hàng</h2>
                         <p><a href="#" class="btn btn-primary">Xem chi tiết</a></p>
                     </div>
 

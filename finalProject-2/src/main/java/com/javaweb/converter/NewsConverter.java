@@ -16,7 +16,7 @@ public class NewsConverter {
     public NewsEntity convertToEntity(NewsDTO newsDTO, NewsEntity oldNewsEntity){
         NewsEntity latestNewsEntity = modelMapper.map(newsDTO, NewsEntity.class);
 
-        if(oldNewsEntity == null){
+        if(oldNewsEntity.getId() == null){
             latestNewsEntity.setView(0L);
             latestNewsEntity.setHot(HotType.NO.toString());
         }

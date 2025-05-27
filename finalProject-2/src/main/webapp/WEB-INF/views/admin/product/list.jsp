@@ -82,48 +82,76 @@
                                                 class="form-control px-2"
                                                 style="border: 1px solid black"/>
                                 </div>
-                            </div>
-
-                            <div class="input-group py-3">
-                                <div class="col-lg-3 px-4">
-                                    <button type="button" class="btn btn-primary" id="btnSeach">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                        </svg>
-                                        Tìm kiếm
-                                    </button>
-                                    &nbsp;
-                                    <button type="reset" class="btn btn-warning" id="btnDeleteParams">Xóa</button>
-                                </div>
-                            </div>
-
-                            <div class="input-group py-3">
-                                <div class="col-lg-3 px-4"></div>
-                                <div class="col-lg-3 px-4"></div>
-                                <div class="col-lg-3 px-4"></div>
-                                <div class="col-lg-3 px-4">
-                                    <button type="button" class="btn btn-facebook" id="btnAddUser"
-                                            title="Thêm sản phẩm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                        </svg>
-                                        <a href="${productEditURL}" class="text-white">Thêm mới</a>
-                                    </button>
-                                    &nbsp; &nbsp;
-                                    <button type="reset" class="btn btn-danger" onclick="btnDeleteGroup()"
-                                            title="Xóa những sản phẩm được chọn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
-                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
-                                        </svg>
-                                        Xóa hết
-                                    </button>
+                                <div class="col-lg-2 px-3"></div>
+                                <div class="col-lg-2 px-3">
+                                        <label for="isDiscount"><strong class="text-dark">Đang giảm giá</strong></label>
+                                        <form:select path="isDiscount" id="isDiscount" name="isDiscount"
+                                                 class="form-select px-2"
+                                                 style="border: 1px solid black">
+                                        <form:option value="" label="--------------Chọn tình trạng--------------"/>
+                                        <form:options items="${productDiscountStatus}"/>
+                                    </form:select>
                                 </div>
                             </div>
                         </form:form>
+
+                        <div class="input-group py-3">
+                            <div class="col-lg-3 px-4">
+                                <button type="button" class="btn btn-primary" id="btnSeach">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                    Tìm kiếm
+                                </button>
+                                &nbsp;
+                                <button type="reset" class="btn btn-warning" id="btnDeleteParams">Xóa</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="col-lg-3 px-3">
+                                <label for="discount"><strong class="text-dark">Giảm giá cho các sản phẩm được chọn
+                                    (0-100%)</strong></label>
+                                <input type="number" name="discount" id="discount"
+                                       class="rounded px-2"
+                                       style="border: 1px solid black" value="0"/>
+                            </div>
+                        </div>
+
+                        <div class="input-group py-3">
+                            <div class="col-lg-3 px-4">
+                                <button type="button" class="btn btn-primary" id="btnApplyDiscount">
+                                    Áp dụng
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="input-group py-3">
+                            <div class="col-lg-3 px-4"></div>
+                            <div class="col-lg-3 px-4"></div>
+                            <div class="col-lg-3 px-4"></div>
+                            <div class="col-lg-3 px-4">
+                                <button type="button" class="btn btn-facebook" id="btnAddUser"
+                                        title="Thêm sản phẩm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                    <a href="${productEditURL}" class="text-white">Thêm mới</a>
+                                </button>
+                                &nbsp; &nbsp;
+                                <button type="reset" class="btn btn-danger" onclick="btnDeleteGroup()"
+                                        title="Xóa những sản phẩm được chọn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"/>
+                                    </svg>
+                                    Xóa hết
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -227,19 +255,28 @@
 
                             <display:column
                                     headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
-                                    sortable="true" sortName="createdAt"
-                                    title="Ngày tạo">
+                                    sortable="true" sortName="sold"
+                                    title="Số lượng đã bán">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold">${tableList.sold}</span>
+                                </div>
+                            </display:column>
+
+                            <display:column
+                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
+                                    sortable="true" sortName="createdAt"
+                                    title="Thời gian tạo">
+                                <div class="align-middle text-center">
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.createdAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 
                             <display:column
                                     headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
                                     sortable="true" sortName="modifiedAt"
-                                    title="Ngày sửa">
+                                    title="Thời gian sửa">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.modifiedAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 
@@ -342,7 +379,7 @@
         if (currentPageString !== "") {
             currentURL = currentURL.replace(currentPageString, "p=" + parseInt(this.value)); // replace old page string
         } else {
-            currentURL += "?${tableId}=" +pageToDirect;
+            currentURL += "?${tableId}=" + pageToDirect;
         }
 
         window.location.href = currentURL;
@@ -359,6 +396,42 @@
         } else {
             userIds.forEach(item => {
                 item.removeAttribute('checked');
+            });
+        }
+    });
+
+    //----------------------------- Apply discount
+    $('#btnApplyDiscount').click(function () {
+        let ids = $('#tableList').find('tbody input[type=checkbox]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        let discountValue = parseInt($('#discount').val().trim());
+
+        if (ids.length === 0) {
+            alert('Bạn chưa chọn sản phẩm nào để áp dụng giảm giá !');
+        } else if (discountValue < 0 || discountValue > 100) {
+            alert('Mức giảm giá phải nằm trong khoảng 0-100% !');
+        } else if (confirm('Bạn chắc chắn muốn áp dụng giảm giá cho các sản phẩm đã chọn ?')) {
+            $.ajax({
+                url: '${formAPI}' + '/discount?ids=' + ids + "&discountValue=" + discountValue,
+                method: "PATCH",
+                contentType: "application/json; charset=UTF-8",
+                dataType: "JSON",
+                success: function (result) {
+                    alert(result.message);
+                    location.reload();
+                },
+                error: function (result) {
+                    console.log(result);
+
+                    let message = result.responseJSON.message;
+
+                    $.each(result.responseJSON.details, function (idx, it) {
+                        message += it + '\n';
+                    });
+
+                    alert(message);
+                }
             });
         }
     });

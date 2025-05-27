@@ -1,11 +1,12 @@
 package com.javaweb.service.feedback;
 
 import com.javaweb.converter.FeedbackConverter;
-import com.javaweb.entity.*;
+import com.javaweb.entity.FeedbackEntity;
+import com.javaweb.entity.ProductEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.FeedbackDTO;
 import com.javaweb.repository.*;
 import com.javaweb.security.utils.SecurityUtils;
-import com.javaweb.util.OrderStatusCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,30 +51,25 @@ public class FeedbackService implements IFeedbackService{
     public FeedbackDTO createFeedback(FeedbackDTO feedbackDTO) {
         UserEntity userEntity = userRepository.getOne(SecurityUtils.getPrincipal().getId());
         ProductEntity productEntity = productRepository.getOne(feedbackDTO.getProductId());
-        List<OrderDetailsEntity> orderDetailsEntitiesOfProduct = orderDetailsRepository.findAllByProductEntity(productEntity);
 
-        if(orderDetailsEntitiesOfProduct.isEmpty()) return null;
+        String productBought = userEntity.getProductBought();
 
-        List<OrderEntity> orderEntities = orderRepository.findAllByUserEntityAndStatus(userEntity, OrderStatusCode.DELIVERED.toString());
+        if(productBought != null){
+            String[] productBoughtSplit = productBought.split(",");
+            String productIdString = productEntity.getId().toString();
 
-        // Check if this user bought that product
-        for(OrderEntity item : orderEntities){
-            String orderId = item.getId().toString();
+            for(String item : productBoughtSplit){
+                if(item.equals(productIdString)){
+                    // Create feedback
+                    FeedbackEntity feedbackEntity = new FeedbackEntity();
 
-            List<OrderDetailsEntity> checkOrderDetails = orderDetailsEntitiesOfProduct.stream().
-                    filter(x -> passwordEncoder.matches(orderId, x.getOrderId())).
-                    collect(Collectors.toList());
+                    feedbackEntity.setUserEntity(userEntity);
+                    feedbackEntity.setProductEntity(productEntity);
+                    feedbackEntity.setContent(feedbackDTO.getContent());
+                    feedbackEntity.setRating(feedbackDTO.getRating());
 
-            if(!checkOrderDetails.isEmpty()){
-                // Create feedback
-                FeedbackEntity feedbackEntity = new FeedbackEntity();
-
-                feedbackEntity.setUserEntity(userEntity);
-                feedbackEntity.setProductEntity(productEntity);
-                feedbackEntity.setContent(feedbackDTO.getContent());
-                feedbackEntity.setRating(feedbackDTO.getRating());
-
-                return feedbackConverter.convertToDTO(feedbackRepository.save(feedbackEntity));
+                    return feedbackConverter.convertToDTO(feedbackRepository.save(feedbackEntity));
+                }
             }
         }
 

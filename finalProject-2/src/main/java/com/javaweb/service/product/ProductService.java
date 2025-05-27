@@ -13,6 +13,7 @@ import com.javaweb.model.dto.ProductImport;
 import com.javaweb.model.request.ProductSearchRequest;
 import com.javaweb.model.response.ProductSearchResponse;
 import com.javaweb.repository.*;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.util.OrderStatusCode;
 import com.javaweb.util.UploadFileUtils;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class ProductService implements IProductService{
     private final ProductConverter productConverter;
     private final PasswordEncoder passwordEncoder;
     private final UploadFileUtils uploadFileUtils;
+    private final UserRepository userRepository;
 
     @Override
     public List<ProductSearchResponse> findAll(ProductSearchRequest request, Pageable pageable) {
@@ -83,7 +85,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<ProductDTO> findAllbyId(List<Long> ids) {
+    public List<ProductDTO> findAllById(List<Long> ids) {
         List<ProductEntity> productEntities = productRepository.findAllById(ids).stream().filter(x -> x.getIsActive() == 1).collect(Collectors.toList());
         return productEntities.stream().map(productConverter::convertToDTO).collect(Collectors.toList());
     }
@@ -138,6 +140,24 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public List<ProductDTO> findAllByUser() {
+        String productBought = userRepository.getOne(SecurityUtils.getPrincipal().getId()).getProductBought();
+        List<ProductEntity> productEntities = new ArrayList<>();
+
+        if(productBought != null){
+            String[] productBoughtSplit = productBought.split(",");
+
+            for(String item : productBoughtSplit){
+                Long id = Long.parseLong(item);
+
+                productEntities.add(productRepository.getOne(id));
+            }
+        }
+
+        return productEntities.stream().filter(x -> x.getIsActive() == 1).map(productConverter::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public int countTotalItems(ProductSearchRequest request) {
         return productRepository.countTotalItems(request);
     }
@@ -187,6 +207,17 @@ public class ProductService implements IProductService{
 
             productInventoryRepository.lockAllByProductId(productEntity.getId());
         });
+
+        productRepository.saveAll(productEntities);
+    }
+
+    @Override
+    public void applyDiscount(List<Long> ids, Long discount) {
+        List<ProductEntity> productEntities = productRepository.findAllById(ids);
+
+        for(int i = 0 ; i < productEntities.size() ; i++){
+            productEntities.get(i).setDiscount(discount);
+        }
 
         productRepository.saveAll(productEntities);
     }

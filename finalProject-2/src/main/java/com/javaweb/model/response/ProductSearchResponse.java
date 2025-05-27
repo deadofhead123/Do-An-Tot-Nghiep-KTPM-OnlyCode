@@ -9,8 +9,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductSearchResponse extends AbstractDTO<ProductSearchResponse> {
     String name;
+    String image;
     Long price;
     Long quantity;
+    Long sold;
     Long discount;
-    String image;
 }

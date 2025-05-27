@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.javaweb.util.SortType"%>
+<%@ page import="com.javaweb.util.SortType" %>
 <%@include file="/common/taglib.jsp" %>
 <c:set var="pageURL" value="/shop"/>
 <!DOCTYPE html>
@@ -78,16 +78,30 @@
             <h3>${categoryName}</h3>
             <hr>
             <!-- Sort -->
-            <div class="justify-content-lg-end">
+            <div class="justify-content-lg-end mb-3">
                 <label for="sortBy" class="text-dark">Sắp xếp: </label>
                 <select id="sortBy" style="border-radius: 4px;">
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.DEFAULT.getName()%>">Mặc định</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.NAME.getName()%>">A -> Z</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.NAME_DESC.getName()%>">Z -> A</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.PRICE.getName()%>">Giá tăng dần</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.PRICE_DESC.getName()%>">Giá giảm dần</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.LATEST.getName()%>">Hàng mới nhất</option>
-                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.OLDEST.getName()%>">Hàng cũ nhất</option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.DEFAULT.getName()%>">
+                        Mặc định
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.NAME.getName()%>">
+                        A -> Z
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.NAME_DESC.getName()%>">
+                        Z -> A
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.PRICE.getName()%>">
+                        Giá tăng dần
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.PRICE_DESC.getName()%>">
+                        Giá giảm dần
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.LATEST.getName()%>">
+                        Hàng mới nhất
+                    </option>
+                    <option value="${pageURL}?${category}${productNameSearchString}${sortParam}=<%=SortType.OLDEST.getName()%>">
+                        Hàng cũ nhất
+                    </option>
                 </select>
             </div>
 
@@ -101,7 +115,7 @@
                                     <a href="/product-single-${productSingle.id}" class="img-prod"><img
                                             class="img-fluid"
                                             src="/repository${productSingle.image}"
-                                            alt="Colorlib Template">
+                                            alt="${productSingle.name}">
                                         <c:if test="${productSingle.discount != 0}">
                                         <span class="status"><fmt:formatNumber value="${productSingle.discount}"
                                                                                pattern="#0"/> %</span>
@@ -114,7 +128,8 @@
                                             <div class="pricing">
                                                 <p class="price">
                                                     <c:if test="${productSingle.discount != 0}">
-                                                        <span class="mr-2 price-dc"><fmt:formatNumber value="${productSingle.price}" pattern="#,###"/>₫</span>
+                                                        <span class="mr-2 price-dc"><fmt:formatNumber
+                                                                value="${productSingle.price}" pattern="#,###"/>₫</span>
                                                         <span class="price-sale">
                                                             <fmt:formatNumber
                                                                     value="${productSingle.price - productSingle.discount / 100 * productSingle.price}"
@@ -123,7 +138,8 @@
                                                     </c:if>
 
                                                     <c:if test="${productSingle.discount == 0}">
-                                                        <span class="price-sale"><fmt:formatNumber value="${productSingle.price}" pattern="#,###"/>₫</span>
+                                                        <span class="price-sale"><fmt:formatNumber
+                                                                value="${productSingle.price}" pattern="#,###"/>₫</span>
                                                     </c:if>
                                                 </p>
                                             </div>
@@ -215,16 +231,16 @@
 <script>
     <c:set var="cartAPI" value="/api/carts"/>
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         fillSortBy();
     });
 
-    function fillSortBy(){
+    function fillSortBy() {
         let sortTypes = $('#sortBy option');
         let sortName = "${sortName}";
         console.log(sortName);
-        $.each(sortTypes, function (idx, it){
-            if(it.textContent === sortName){
+        $.each(sortTypes, function (idx, it) {
+            if (it.textContent === sortName) {
                 it.setAttribute('selected', 'selected');
                 return true;
             }
@@ -259,7 +275,7 @@
     }
 
     let sort = document.getElementById('sortBy');
-    sort.addEventListener('change', function(){
+    sort.addEventListener('change', function () {
         window.location.href = this.value;
     });
 </script>

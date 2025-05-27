@@ -30,6 +30,7 @@ public class SystemConstant {
     public static final Integer RESET_TOKEN_EXPIRED = 3; // days
     public static final Integer NEAR_OUT_OF_QUANTITY = 10; // days
 
+
     public static final String DEFAULT_ORDER_STATUS = "IN_PROGRESS";
 
     public static final String IMAGE_SAVE_PATH = "D://ImageRepository";

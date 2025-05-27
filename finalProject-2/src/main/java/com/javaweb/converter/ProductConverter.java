@@ -24,6 +24,7 @@ public class ProductConverter {
 
         if(oldProductEntity == null){
             latestProductEntity.setQuantity(0L);
+            latestProductEntity.setSold(0L);
             latestProductEntity.setDiscount(0L);
             latestProductEntity.setHot(HotType.NO.toString());
         }

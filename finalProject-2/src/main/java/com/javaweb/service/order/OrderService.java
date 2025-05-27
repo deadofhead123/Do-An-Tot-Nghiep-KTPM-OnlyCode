@@ -28,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -297,8 +298,8 @@ public class OrderService implements IOrderService{
         if(orderDTO.getStatus().equals(OrderStatusCode.DELIVERING.toString()) && !orderEntity.getStatus().equals(OrderStatusCode.DELIVERING.toString())){
             List<OrderDetailsEntity> orderDetailsMatches = filterOrderDetails(orderEntity);
 
+            // Export sub product from inventory
             for(OrderDetailsEntity item : orderDetailsMatches) {
-                item.getProductEntity().setQuantity(item.getProductEntity().getQuantity() - item.getQuantity());
                 productInventoryRepository.deliverWithLimit(item.getProductEntity().getId(), item.getQuantity(), orderId);
             }
 
@@ -306,8 +307,37 @@ public class OrderService implements IOrderService{
         }
 
         // Must complete delivery to update to "DELIVERED"
-        if(orderDTO.getStatus().equals(OrderStatusCode.DELIVERED.toString()) && !orderEntity.getStatus().equals(OrderStatusCode.DELIVERING.toString())){
-            return null;
+        if( orderDTO.getStatus().equals(OrderStatusCode.DELIVERED.toString()) ){
+            if(!orderEntity.getStatus().equals(OrderStatusCode.DELIVERING.toString())){
+                return null;
+            }
+            else{
+                List<OrderDetailsEntity> orderDetailsMatches = filterOrderDetails(orderEntity);
+
+                for(OrderDetailsEntity item : orderDetailsMatches) {
+                    // Save to product bought of user
+                    String productBought = orderEntity.getUserEntity().getProductBought();
+
+                    if(productBought != null){
+                        StringBuilder builderProductBought = new StringBuilder(productBought);
+                        String productIdInString = item.getProductEntity().getId().toString();
+
+                        List<String> checkProductBought = Stream.of(productBought.split(",")).filter(x -> x.equals(productIdInString)).collect(Collectors.toList());
+
+                        if(checkProductBought.isEmpty()){
+                            builderProductBought.append("," + productIdInString);
+                        }
+
+                        orderEntity.getUserEntity().setProductBought(builderProductBought.toString());
+                    }
+
+                    // Increase quantity sold, decrease quantity remaining
+                    item.getProductEntity().setQuantity(item.getProductEntity().getQuantity() - item.getQuantity());
+                    item.getProductEntity().setSold(item.getProductEntity().getSold() + item.getQuantity());
+                }
+
+                orderDetailsRepository.saveAll(orderDetailsMatches);
+            }
         }
 
         orderEntity.setStatus(orderDTO.getStatus());

@@ -111,6 +111,8 @@
     $(document).ready(function () {
         findParentCategory();
         resultsContainer.style.display = 'none';
+
+        $('#productName').val("${param.productName}");
     });
 
     //---------- Show product categories
@@ -123,8 +125,6 @@
             success: function (result) {
                 let categories = result.data;
                 let row = "";
-
-                console.log(categories);
 
                 $.each(categories, function (idx, it) {
                     if (it.parentId == null) row += "<a class='dropdown-item' href='${shopURL}?${categoryId}=" + it.id + "'><strong>" + it.name + "</strong></a>\n";
@@ -159,12 +159,12 @@
                     contentType: "application/json; charset=UTF-8",
                     dataType: "JSON",
                     success: function (result) {
-                        var data = result.data;
+                        let data = result.data;
 
                         if (data.length > 0) {
                             // Show all product's name
                             $.each(data, function (idx, it) {
-                                var resultsItem = document.createElement("div");
+                                let resultsItem = document.createElement("div");
 
                                 let row = "<div class='row autocompleteProductSub'>\n";
                                 row += "<div class='col-lg-12'>\n"

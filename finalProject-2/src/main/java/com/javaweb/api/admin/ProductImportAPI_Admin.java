@@ -72,7 +72,7 @@ public class ProductImportAPI_Admin {
         ResponseDTO responseDTO = new ResponseDTO();
         List<ProductImport> productImportList;
 
-        List<ProductDTO> productDTOList = productService.findAllbyId(ids);
+        List<ProductDTO> productDTOList = productService.findAllById(ids);
 
         HttpSession session = request.getSession();
 

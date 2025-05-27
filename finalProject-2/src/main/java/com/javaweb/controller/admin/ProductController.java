@@ -48,6 +48,7 @@ public class ProductController {
         mav.addObject("categories", categoryService.findAllNotPaging());
         mav.addObject("hotType", HotType.getType());
         mav.addObject("isOutOfQuantity", IsOutOfQuantity.getType());
+        mav.addObject("productDiscountStatus", ProductDiscountStatus.getType());
         mav.addObject("tableId", new ParamEncoder(productSearchResponse.getTableId()).encodeParameterName(TableTagParameters.PARAMETER_PAGE)); // Ex: d-(id encoded)-p-(number of page if exists)
 
         return mav;

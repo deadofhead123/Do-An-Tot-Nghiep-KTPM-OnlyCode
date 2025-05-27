@@ -74,6 +74,7 @@ public class UserService implements IUserService {
         userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity.setFullName(userDTO.getEmail().split("@")[0]);
+        userEntity.setDiscount(0L);
         userEntity.setIsActive(1);
 
         return userConverter.convertToDTO(userRepository.save(userEntity));

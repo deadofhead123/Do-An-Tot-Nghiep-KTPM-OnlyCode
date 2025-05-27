@@ -1,9 +1,13 @@
 package com.javaweb.controller.web;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.javaweb.model.dto.OrderDTO;
+import com.javaweb.model.dto.ProductDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.order.IOrderService;
+import com.javaweb.service.product.ProductService;
 import com.javaweb.service.user.IUserService;
 import com.javaweb.util.OrderStatusCode;
 import com.javaweb.util.PaymentMethodCode;
@@ -17,11 +21,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @Controller(value="userControllerOfWeb")
 @RequiredArgsConstructor
 public class UserController_Web {
     private final IUserService IUserService;
     private final IOrderService orderService;
+    private final ProductService productService;
 
     // Account details
     @GetMapping(value = "/my-account")
@@ -84,6 +92,22 @@ public class UserController_Web {
         mav.addObject("orderInfo", orderResult);
         mav.addObject("productsOfOrder", orderService.findAllDetailsByOrderId(orderId));
         mav.addObject("paymentMethod", PaymentMethodCode.getType());
+
+        return mav;
+    }
+
+    @GetMapping(value = "/my-product-bought")
+    public ModelAndView myProductBought(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("web/user/my-account/product-bought");
+
+        List<ProductDTO> productDTOList = productService.findAllByUser();
+
+        mav.addObject("productsBought", productDTOList);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(productDTOList);
+
+        mav.addObject("productsBoughtJson", json);
 
         return mav;
     }

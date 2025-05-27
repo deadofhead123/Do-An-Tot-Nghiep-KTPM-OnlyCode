@@ -45,7 +45,7 @@
         <div class="row gx-4 mb-2">
             <div class="col-auto my-auto">
                 <div class="h-100 align-items-center">
-                    <h5 class="mb-1">Chi tiết liên hệ</h5>
+                    <h4 class="mb-1">Chi tiết liên hệ</h4>
                 </div>
             </div>
         </div>

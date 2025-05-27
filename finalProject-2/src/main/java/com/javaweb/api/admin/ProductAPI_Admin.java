@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(value = "/api/admin/products")
@@ -54,7 +55,7 @@ public class ProductAPI_Admin {
         }
         catch (Exception ex){
             responseDTO.setData(SystemConstant.ERROR_SYSTEM);
-            responseDTO.setMessage(ex.getMessage());
+            responseDTO.setMessage(SystemConstant.SYSTEM_ERROR_MESSAGE);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
         }
     }
@@ -70,7 +71,7 @@ public class ProductAPI_Admin {
                 products = productService.findByNameContaining(params.get("name").toString());
             }
             else if(params.get("ids") != null){
-                products = productService.findAllbyId(Arrays.stream(params.get("ids").toString().split(",")).map(Long::parseLong).collect(Collectors.toList()));
+                products = productService.findAllById(Arrays.stream(params.get("ids").toString().split(",")).map(Long::parseLong).collect(Collectors.toList()));
             }
             else if(params.get("isOutOfQuantity") != null){
                 products = productService.findAllNearOutOfQuantity();
@@ -89,19 +90,37 @@ public class ProductAPI_Admin {
         }
         catch (Exception ex){
             responseDTO.setData(SystemConstant.ERROR_SYSTEM);
-            responseDTO.setMessage(ex.getMessage());
+            responseDTO.setMessage(SystemConstant.SYSTEM_ERROR_MESSAGE);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
         }
     }
 
     @PatchMapping(value = "/{ids}")
-    public ResponseEntity<?> deleteProducts(@PathVariable("ids") List<Long> ids, HttpServletRequest request) {
+    public ResponseEntity<?> deleteProducts(@PathVariable(name = "ids") List<Long> ids, HttpServletRequest request) {
         ResponseDTO responseDTO = new ResponseDTO();
 
         try{
             productService.deleteProducts(ids, request);
 
             responseDTO.setMessage("Xóa sản phẩm thành công!");
+            responseDTO.setData(SystemConstant.DELETE_SUCCESS);
+            return ResponseEntity.ok(responseDTO);
+        }
+        catch (Exception ex){
+            responseDTO.setData(SystemConstant.ERROR_SYSTEM);
+            responseDTO.setMessage(SystemConstant.SYSTEM_ERROR_MESSAGE);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
+        }
+    }
+
+    @PatchMapping(value = "/discount")
+    public ResponseEntity<?> applyDiscount(@RequestParam(name = "ids") String ids, @RequestParam(name = "discountValue") Long discount) {
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        try{
+            productService.applyDiscount(Stream.of(ids.split(",")).map(Long::parseLong).collect(Collectors.toList()), discount);
+
+            responseDTO.setMessage("Áp dụng giảm giá thành công!");
             responseDTO.setData(SystemConstant.DELETE_SUCCESS);
             return ResponseEntity.ok(responseDTO);
         }

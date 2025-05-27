@@ -68,7 +68,7 @@
 
                         <p class="text-left">
                             <a href="#" class="mr-2" style="color: #000;">
-                                <span style="color: black"><strong>${quantitySold}</strong>&nbsp;đã bán </span>
+                                <span style="color: black"><strong>${productSingle.sold}</strong>&nbsp;đã bán </span>
                             </a>
                         </p>
                     </div>
@@ -76,7 +76,8 @@
                     <!-- Discount -->
                     <c:if test="${productSingle.discount != 0}">
                         <p>
-                            <span style="text-decoration: line-through; color: #b3b3b3; font-size: 18px;"><fmt:formatNumber value="${productSingle.price}" pattern="#,###"/>₫</span>
+                            <span style="text-decoration: line-through; color: #b3b3b3; font-size: 18px;"><fmt:formatNumber
+                                    value="${productSingle.price}" pattern="#,###"/>₫</span>
                         </p>
                     </c:if>
 
@@ -92,7 +93,7 @@
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <p style="color: #000;">
-                                <input type="hidden" id="quantityAvailable" value ="${productSingle.quantity}"/>
+                                <input type="hidden" id="quantityAvailable" value="${productSingle.quantity}"/>
                                 <c:if test="${productSingle.quantity == 0}">
                                     Tình trạng: <span style="color: red">Hết hàng</span>
                                 </c:if>
@@ -147,7 +148,8 @@
                                                                                                    src="/repository${relatedProductSingle.image}"
                                                                                                    alt="Colorlib Template">
                             <c:if test="${relatedProductSingle.discount != 0}">
-                                <span class="status"><fmt:formatNumber value="${relatedProductSingle.discount}" pattern="#0"/> %</span>
+                                <span class="status"><fmt:formatNumber value="${relatedProductSingle.discount}"
+                                                                       pattern="#0"/> %</span>
                             </c:if>
                             <div class="overlay"></div>
                         </a>
@@ -224,41 +226,52 @@
             <div class="comment-form-wrap pt-5">
                 <security:authorize access="isAuthenticated()">
                     <c:set var="roleName" value="<%=SecurityUtils.getAuthorities().get(0)%>"/>
-                    <c:if test="${roleName == 'ROLE_USER'}">
-                        <form id="form-feedback" name="form-feedback" class="p-5 bg-light">
-                            <!-- Choose number of star -->
-                            <div class="form-group">
-                                <div class="rating-container">
-                                    <label><span class="text-dark" style="font-size: 18px;">Điểm đánh giá: &nbsp;</span></label>
+                    <c:choose>
+                        <c:when test="${roleName == 'ROLE_USER'}">
+                            <form id="form-feedback" name="form-feedback" class="p-5 bg-light">
+                                <!-- Choose number of star -->
+                                <div class="form-group">
+                                    <div class="rating-container">
+                                        <label><span class="text-dark"
+                                                     style="font-size: 18px;">Điểm đánh giá: &nbsp;</span></label>
 
-                                    <c:forEach var="i" begin="1" end="5">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             fill="currentColor"
-                                             class="bi bi-star star" viewBox="0 0 16 16" data-value="${i}"
-                                             id="starFeedback">
-                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
-                                        </svg>
-                                    </c:forEach>
-                                    <input id="rating" name="rating" type="number"
-                                           style="width: 35px;">&nbsp;&nbsp;<span class="text-dark">sao</span>
+                                        <c:forEach var="i" begin="1" end="5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor"
+                                                 class="bi bi-star star" viewBox="0 0 16 16" data-value="${i}"
+                                                 id="starFeedback">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                                            </svg>
+                                        </c:forEach>
+                                        <input id="rating" name="rating" type="number"
+                                               style="width: 35px;">&nbsp;&nbsp;<span class="text-dark">sao</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Content -->
-                            <div class="form-group">
-                                <label for="content"><span class="text-dark"
-                                                           style="font-size: 18px;">Nội dung: </span></label>
-                                <textarea id="content" name="content" cols="30" rows="10" class="form-control text-dark"
-                                          placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
-                            </div>
+                                <!-- Content -->
+                                <div class="form-group">
+                                    <label for="content"><span class="text-dark"
+                                                               style="font-size: 18px;">Nội dung: </span></label>
+                                    <textarea id="content" name="content" cols="30" rows="10"
+                                              class="form-control text-dark"
+                                              placeholder="Vui lòng nhập tiếng Việt có dấu"></textarea>
+                                </div>
 
-                            <div class="form-group">
-                                <input id="btnSendFeedback" type="button" value="Gửi đánh giá"
-                                       class="btn btn-primary py-3 px-4">
-                            </div>
-                        </form>
+                                <div class="form-group">
+                                    <input id="btnSendFeedback" type="button" value="Gửi đánh giá"
+                                           class="btn btn-primary py-3 px-4">
+                                </div>
+                            </form>
+                        </c:when>
 
-                    </c:if>
+                        <c:otherwise>
+                            <h4 class="text-dark">Bạn cần đăng nhập với tài khoản của người dùng thường để bình
+                                luận</h4>
+                        </c:otherwise>
+                    </c:choose>
+                </security:authorize>
+                <security:authorize access="isAnonymous()">
+                    <h4 class="text-dark">Bạn cần đăng nhập với tài khoản của người dùng thường để bình luận</h4>
                 </security:authorize>
             </div>
         </div>
@@ -319,11 +332,9 @@
 
         if (quantityAvailable < 1) {
             alert('Sản phẩm này đã hết hàng !');
-        }
-        else if(quantityAdd < 1){
+        } else if (quantityAdd < 1) {
             alert('Số lượng thêm vào giỏ phải lớn hơn 0 !');
-        }
-        else{
+        } else {
             addToCart(productId, quantityAdd);
         }
     }

@@ -9,7 +9,6 @@
 </head>
 
 <body>
-<h2>Đơn hàng đã đặt</h2>
 
 <div class="myaccount__body">
     <%--    <div class="row block-27">--%>
@@ -17,6 +16,7 @@
     <%--        <div class="col-md-12 order-md-last d-flex ftco-animate">--%>
     <c:choose>
         <c:when test="${not empty orders.content}">
+            <h3>Đơn hàng đã đặt</h3>
             <table class="table table-bordered table-striped table-hover text-dark">
                 <tr>
                     <th>Mã đơn hàng</th>

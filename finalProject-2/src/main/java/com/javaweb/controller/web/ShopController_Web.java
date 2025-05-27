@@ -54,6 +54,10 @@ public class ShopController_Web {
 
             productSearchRequest.setCategoryId(categoryId);
         }
+        else{
+            categoryName = "Tất cả sản phẩm";
+        }
+
         if(productName != null){
             productSearchRequest.setName(productName);
         }
@@ -93,7 +97,6 @@ public class ShopController_Web {
 
         mav.addObject("productSingle", productReturn);
         mav.addObject("relatedProducts", productService.findRelatedProducts(productReturn.getId(), productReturn.getCategoryId()));
-        mav.addObject("quantitySold", productService.findQuantitySold(id));
 
         Double finalRating = 0D;
         if(!numberOfFeedback_Web.isEmpty()){

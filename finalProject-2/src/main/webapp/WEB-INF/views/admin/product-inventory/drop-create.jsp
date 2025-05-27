@@ -88,7 +88,7 @@
                                     <thead>
                                     <tr>
                                         <th>
-                                            <fieldset class='input-group'><input id="checkAllAvailable" type="checkbox">
+                                            <fieldset class='input-group justify-content-xxl-center'><input id="checkAllAvailable" type="checkbox">
                                             </fieldset>
                                         </th>
                                         <th>Mã sản phẩm con</th>

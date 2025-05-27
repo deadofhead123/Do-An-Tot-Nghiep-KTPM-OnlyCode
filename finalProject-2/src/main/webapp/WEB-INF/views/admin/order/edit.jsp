@@ -1,8 +1,9 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.javaweb.util.OrderStatusCode"%>
+<%@ page import="com.javaweb.util.OrderStatusCode" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="productAPI" value="/api/admin/products"/>
 <c:url var="orderAPI" value="/api/admin/orders"/>
+<c:url var="orderListURL" value="/admin/order-list"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,7 @@
             <div class="row gx-4 mb-2">
                 <div class="col-auto my-auto">
                     <div class="h-100 align-items-center">
-                        <h3 class="mb-1">Chi tiết đơn hàng</h3>
+                        <h4 class="mb-1">Chi tiết đơn hàng</h4>
                     </div>
                 </div>
             </div>
@@ -79,85 +80,95 @@
                 <!-- Products -->
                 <div class="row pt-xxl-3">
                     <div class="col-12 col-xl-4 align-items-xxl-end">
-                        <h5 class="mb-0">Danh sách sản phẩm mua</h5>
+                        <h5 class="mb-3">Danh sách sản phẩm mua</h5>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-xl-12">
-                        <table class="table table-bordered table-striped table-hover text-dark">
-                            <tr align="center">
-                                <th></th>
-                                <th>Ảnh đại diện</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Số lượng mua</th>
-                                <c:if test="${orderEdit.status == 'IN_PROGRESS'}">
-                                    <th>Số lượng còn</th>
-                                </c:if>
-                                <th>Giá mua</th>
-                                <th>Thành tiền</th>
-                            </tr>
-
-                            <c:forEach var="productOfOrder" items="${productsOfOrder}">
-                                <tr id="productOfOrderInfo">
-                                    <td class="text-center align-content-xxl-center">
-                                        <c:if test="${productOfOrder.productDTO.isActive == 0}">
-                                            <span class="text-danger">Đã ngừng bán</span>
+                        <div class="table-container" style="height: 600px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Ảnh đại diện</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng mua</th>
+                                        <c:if test="${orderEdit.status == 'IN_PROGRESS'}">
+                                            <th>Số lượng còn</th>
                                         </c:if>
-                                    </td>
+                                        <th>Giá mua</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
 
-                                    <td class="text-center">
-                                        <c:if test="${not empty productOfOrder.productDTO.image}">
-                                            <c:set var="imagePath"
-                                                   value="/repository${productOfOrder.productDTO.image}"/>
-                                            <img src="${imagePath}" id="viewImage" width="100" height="100"
-                                                 style="margin-top: 5px; margin-bottom: 5px" alt="Không tìm thấy ảnh">
-                                        </c:if>
-
-                                        <c:if test="${empty productOfOrder.productDTO.image}">
-                                            <img src="/admin/image/default.png" id="viewImage" width="100" height="100"
-                                                 alt="Chưa có ảnh">
-                                        </c:if>
-                                    </td>
-
-                                    <td class="text-dark align-content-xxl-center">
-                                            ${productOfOrder.productDTO.name}
-                                    </td>
-
-                                    <td class="text-dark align-content-xxl-center">
-                                        <input type="hidden" value="${productOfOrder.quantity}"
-                                               id="quantityOfProductInOrder"/>
-                                            ${productOfOrder.quantity}
-                                    </td>
-
-                                    <input type="hidden" value="${productOfOrder.productDTO.quantity}" id="quantityOfProduct"/>
-                                    <c:if test="${orderEdit.status == 'IN_PROGRESS'}">
-                                        <td class="text-dark align-content-xxl-center">
-                                            <c:if test="${productOfOrder.productDTO.quantity < productOfOrder.quantity}">
-                                                <span style="color: red">${productOfOrder.productDTO.quantity} (không đủ giao hàng)</span>
-                                            </c:if>
-                                            <c:if test="${productOfOrder.productDTO.quantity >= productOfOrder.quantity}">
-                                                <span style="color: blue">${productOfOrder.productDTO.quantity}</span>
+                                <tbody>
+                                    <c:forEach var="productOfOrder" items="${productsOfOrder}">
+                                    <tr id="productOfOrderInfo">
+                                        <td class="text-center align-content-xxl-center">
+                                            <c:if test="${productOfOrder.productDTO.isActive == 0}">
+                                                <span class="text-danger">Đã ngừng bán</span>
                                             </c:if>
                                         </td>
-                                    </c:if>
 
-                                    <td class="price text-dark align-content-xxl-center">
-                                        <fmt:formatNumber value="${productOfOrder.priceInPurchase}" pattern="#,###"/>₫
-                                    </td>
+                                        <td class="text-center">
+                                            <c:if test="${not empty productOfOrder.productDTO.image}">
+                                                <c:set var="imagePath"
+                                                       value="/repository${productOfOrder.productDTO.image}"/>
+                                                <img src="${imagePath}" id="viewImage" width="100" height="100"
+                                                     style="margin-top: 5px; margin-bottom: 5px"
+                                                     alt="Không tìm thấy ảnh">
+                                            </c:if>
 
-                                    <td class="price text-dark align-content-xxl-center">
-                                        <fmt:formatNumber
-                                                value="${productOfOrder.priceInPurchase * productOfOrder.quantity}"
-                                                pattern="#,###"/>₫
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
+                                            <c:if test="${empty productOfOrder.productDTO.image}">
+                                                <img src="/admin/image/default.png" id="viewImage" width="100"
+                                                     height="100"
+                                                     alt="Chưa có ảnh">
+                                            </c:if>
+                                        </td>
+
+                                        <td class="text-dark align-content-xxl-center">
+                                                ${productOfOrder.productDTO.name}
+                                        </td>
+
+                                        <td class="text-dark align-content-xxl-center">
+                                            <input type="hidden" value="${productOfOrder.quantity}"
+                                                   id="quantityOfProductInOrder"/>
+                                                ${productOfOrder.quantity}
+                                        </td>
+
+                                        <input type="hidden" value="${productOfOrder.productDTO.quantity}"
+                                               id="quantityOfProduct"/>
+                                        <c:if test="${orderEdit.status == 'IN_PROGRESS'}">
+                                            <td class="text-dark align-content-xxl-center">
+                                                <c:if test="${productOfOrder.productDTO.quantity < productOfOrder.quantity}">
+                                                    <span style="color: red">${productOfOrder.productDTO.quantity} (không đủ giao hàng)</span>
+                                                </c:if>
+                                                <c:if test="${productOfOrder.productDTO.quantity >= productOfOrder.quantity}">
+                                                    <span style="color: blue">${productOfOrder.productDTO.quantity}</span>
+                                                </c:if>
+                                            </td>
+                                        </c:if>
+
+                                        <td class="price text-dark align-content-xxl-center">
+                                            <fmt:formatNumber value="${productOfOrder.priceInPurchase}"
+                                                              pattern="#,###"/>₫
+                                        </td>
+
+                                        <td class="price text-dark align-content-xxl-center">
+                                            <fmt:formatNumber
+                                                    value="${productOfOrder.priceInPurchase * productOfOrder.quantity}"
+                                                    pattern="#,###"/>₫
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row justify-content-xxl-end">
+                <div class="row justify-content-xxl-end mt-3">
                     <div class="col-12 col-xl-3">
                         <div class="cart-detail cart-total p-3 p-md-4 text-dark">
                             <h5>Tổng chi phí</h5>
@@ -193,10 +204,20 @@
                     <div class="col-12 col-xl-4">
                         <div class="form-group">
                             <label for="status"><span class="text-dark"><strong>Trạng thái:</strong></span></label>
-                            <form:select path="status" name="parentId" id="parentId" class="form-select px-2"
-                                         style="border: 1px solid black">
-                                <form:options items="${statusType}"/>
-                            </form:select>
+                            <c:choose>
+                                <c:when test="${orderEdit.status == OrderStatusCode.CANCELED.toString() || orderEdit.status == OrderStatusCode.DELIVERED.toString()}">
+                                    <form:select path="status" name="status" id="status" class="form-select px-2"
+                                                 style="border: 1px solid black" disabled="true">
+                                        <form:options items="${statusType}"/>
+                                    </form:select>
+                                </c:when>
+                                <c:otherwise>
+                                    <form:select path="status" name="status" id="status" class="form-select px-2"
+                                                 style="border: 1px solid black">
+                                        <form:options items="${statusType}"/>
+                                    </form:select>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
                         <div class="form-group py-1">
@@ -212,13 +233,17 @@
                 <div class="row py-3">
                     <div class="col-12 col-xl-5 align-items-xxl-end"></div>
                     <div class="col-12 col-xl-4 align-items-xxl-end">
-                        <button type="button" class="btn btn-facebook px-3 py-2 ms-3 align-items-xxl-end"
-                                id="btnUpdate">
-                            <a class="text-white" href="#">Cập nhật</a>
-                        </button>
+                        <c:choose>
+                            <c:when test="${orderEdit.status != OrderStatusCode.CANCELED.toString() && orderEdit.status != OrderStatusCode.DELIVERED.toString()}">
+                                <button type="button" class="btn btn-facebook px-3 py-2 ms-3 align-items-xxl-end"
+                                        id="btnUpdate">
+                                    <a class="text-white" href="#">Cập nhật</a>
+                                </button>
+                            </c:when>
+                        </c:choose>
 
                         <button type="button" class="btn bg-gradient-faded-dark px-3 py-2 ms-3 align-items-xxl-end">
-                            <a class="text-white" href="/admin/order-list">Quay lại</a>
+                            <a class="text-white" href="${orderListURL}">Quay lại</a>
                         </button>
                     </div>
                 </div>
@@ -229,6 +254,8 @@
 </div>
 
 <script>
+    let oldOrderStatus = "${orderEdit.status}";
+
     $(document).ready(function () {
         // Hide alert on head of page
         setTimeout(function () {
@@ -263,6 +290,8 @@
             alert('Có sản phẩm không đủ số lượng để bán, không thể giao hàng !');
         } else if (json["status"] === '${OrderStatusCode.CANCELED.toString()}' && json["note"] === '') {
             alert('Bạn phải nhập lý do hủy đơn !');
+        } else if (oldOrderStatus === "${OrderStatusCode.IN_PROGRESS.toString()}" && json["status"] === "${OrderStatusCode.IN_PROGRESS.toString()}") {
+            alert("Bạn không thể thay đổi trạng thái về 'Chờ xử lý' !");
         } else if (confirm('Bạn chắc chắn muốn cập nhật đơn hàng ?')) {
             updateOrder(json);
         }

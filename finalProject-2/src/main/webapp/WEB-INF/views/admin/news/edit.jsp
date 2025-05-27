@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tin tức</title>
+    <title>Tùy chỉnh tin tức</title>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -34,11 +34,11 @@
                 <div class="col-auto my-auto">
                     <div class="h-100 align-items-center">
                         <c:if test="${newsEdit.id == null}">
-                            <h5 class="mb-1">Thêm tin tức</h5>
+                            <h4 class="mb-1">Thêm tin tức</h4>
                         </c:if>
 
                         <c:if test="${newsEdit.id != null}">
-                            <h5 class="mb-1">Sửa chi tiết tin tức</h5>
+                            <h4 class="mb-1">Sửa chi tiết tin tức</h4>
                         </c:if>
                     </div>
                 </div>
@@ -138,9 +138,9 @@
                     <form:textarea path="content" name="content" id="content"
                                    class="form-control px-2" style="border: 1px solid black"
                                    rows="5"/>
-
                 </div>
-                <div class="row">
+
+                <div class="row mt-3">
                     <div class="col-12 col-xl-5"></div>
                     <div class="col-12 col-xl-4 align-items-xxl-end">
                         <c:if test="${empty newsEdit.id}">

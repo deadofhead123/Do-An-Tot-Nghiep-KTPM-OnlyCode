@@ -30,6 +30,9 @@ public class ProductEntity extends BaseEntity {
     @Column(name = "quantity")
     Long quantity;
 
+    @Column(name = "sold")
+    Long sold;
+
     @Column(name = "discount")
     Long discount;
 

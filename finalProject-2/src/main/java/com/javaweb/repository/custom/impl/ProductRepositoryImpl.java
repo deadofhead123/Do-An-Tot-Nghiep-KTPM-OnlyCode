@@ -5,6 +5,7 @@ import com.javaweb.entity.ProductEntity;
 import com.javaweb.model.request.ProductSearchRequest;
 import com.javaweb.repository.custom.ProductRepositoryCustom;
 import com.javaweb.util.IsOutOfQuantity;
+import com.javaweb.util.ProductDiscountStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -39,7 +40,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
                 String key = field.getName();
 
-                if(!key.startsWith("category") && !key.startsWith("price") && !key.startsWith("sort") && !key.startsWith("isOut")){
+                if(!key.startsWith("category") && !key.startsWith("price") && !key.startsWith("sort") && !key.startsWith("isOut") && !key.startsWith("isDis")){
                     Object value = field.get(productSearchRequest);
 
                     if(value != null && value != ""){
@@ -72,8 +73,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
         String isOutOfQuantity = productSearchRequest.getIsOutOfQuantity();
-        if(isOutOfQuantity != null){
+        if(isOutOfQuantity != null && !isOutOfQuantity.equals("")){
             if(isOutOfQuantity.equals(IsOutOfQuantity.YES.toString())) where.append(" AND p.quantity <= " + SystemConstant.NEAR_OUT_OF_QUANTITY + " ");
+        }
+
+        String isDiscount = productSearchRequest.getIsDiscount();
+        if(isDiscount != null && !isDiscount.equals("")){
+            if(isDiscount.equals(ProductDiscountStatus.NO.toString())) where.append(" AND p.discount = 0 ");
+            else where.append(" AND p.discount != 0 ");
         }
     }
 
@@ -133,10 +140,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             }
             else{
                 if(!sortField.contains("-")){
-                    sql.append(" ORDER BY (p.price - p.price * p.discount) ");
+                    sql.append(" ORDER BY (p.price - p.price * p.discount / 100) ");
                 }
                 else{
-                    sql.append(" ORDER BY (p.price - p.price * p.discount) DESC ");
+                    sql.append(" ORDER BY (p.price - p.price * p.discount / 100) DESC ");
                 }
             }
         }

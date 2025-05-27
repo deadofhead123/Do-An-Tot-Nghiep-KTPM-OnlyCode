@@ -28,5 +28,6 @@
         <pattern>/change-password*</pattern>
         <pattern>/my-orders*</pattern>
         <pattern>/my-order-details*</pattern>
+        <pattern>/my-product-bought*</pattern>
     </decorator>
 </decorators>

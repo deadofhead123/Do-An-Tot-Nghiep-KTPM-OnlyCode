@@ -199,13 +199,13 @@
                                 </div>
                             </display:column>
 
-                            <display:column
-                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8"
-                                    title="Mô tả tin tức">
-                                <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.description}</span>
-                                </div>
-                            </display:column>
+<%--                            <display:column--%>
+<%--                                    headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" style="height: 200px;"--%>
+<%--                                    title="Mô tả tin tức">--%>
+<%--                                <div class="align-middle text-center">--%>
+<%--                                    <span class="text-secondary text-md font-weight-bold">${tableList.description}</span>--%>
+<%--                                </div>--%>
+<%--                            </display:column>--%>
 
                             <display:column
                                     headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="views"
@@ -217,17 +217,17 @@
 
                             <display:column
                                     headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="createdAt"
-                                    title="Ngày tạo">
+                                    title="Thời gian tạo">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.createdAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.createdAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 
                             <display:column
                                     headerClass="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-8" sortable="true" sortName="modifiedAt"
-                                    title="Ngày sửa">
+                                    title="Thời gian sửa">
                                 <div class="align-middle text-center">
-                                    <span class="text-secondary text-md font-weight-bold">${tableList.modifiedAt}</span>
+                                    <span class="text-secondary text-md font-weight-bold"><fmt:formatDate value="${tableList.modifiedAt}" pattern="HH:mm:ss, dd/MM/yyyy"/></span>
                                 </div>
                             </display:column>
 

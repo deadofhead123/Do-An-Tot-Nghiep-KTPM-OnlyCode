@@ -1,5 +1,6 @@
 package com.javaweb.service.statistic;
 
+import com.javaweb.constant.StatisticConstant;
 import com.javaweb.entity.OrderDetailsEntity;
 import com.javaweb.entity.OrderEntity;
 import com.javaweb.entity.ProductEntity;
@@ -56,12 +57,13 @@ public class StatisticService implements IStatisticService {
                 newHotProductStatistic.setName(orderDetailsEntity.getProductEntity().getName());
 
                 hotProductStatisticList.add(newHotProductStatistic);
+
                 idx++;
+                hotProductStatistic = hotProductStatisticList.get(idx);
             }
             else{ // existed, plus
-                HotProductStatistic hotProductStatisticSub = hotProductStatisticList.get(idx);
-                hotProductStatisticList.get(idx).setQuantitySold(hotProductStatisticSub.getQuantitySold() + orderDetailsEntity.getQuantity());
-                hotProductStatisticList.get(idx).setRevenue(hotProductStatisticSub.getRevenue() + orderDetailsEntity.getQuantity() * orderDetailsEntity.getPriceInPurchase());
+                hotProductStatisticList.get(idx).setQuantitySold(hotProductStatistic.getQuantitySold() + orderDetailsEntity.getQuantity());
+                hotProductStatisticList.get(idx).setRevenue(hotProductStatistic.getRevenue() + orderDetailsEntity.getQuantity() * orderDetailsEntity.getPriceInPurchase());
             }
         }
 
@@ -133,12 +135,13 @@ public class StatisticService implements IStatisticService {
                 newExcessProductStatistic.setName(orderDetailsEntity.getProductEntity().getName());
 
                 excessProductStatisticList.add(newExcessProductStatistic);
+
                 idx++;
+                excessProductStatistic = excessProductStatisticList.get(idx);
             }
             else{ // existed, plus
-                ExcessProductStatistic excessProductStatisticSub = excessProductStatisticList.get(idx);
-                excessProductStatisticList.get(idx).setQuantitySold(excessProductStatisticSub.getQuantitySold() + orderDetailsEntity.getQuantity());
-                excessProductStatisticList.get(idx).setRevenue(excessProductStatisticSub.getRevenue() + orderDetailsEntity.getQuantity() * orderDetailsEntity.getPriceInPurchase());
+                excessProductStatisticList.get(idx).setQuantitySold(excessProductStatistic.getQuantitySold() + orderDetailsEntity.getQuantity());
+                excessProductStatisticList.get(idx).setRevenue(excessProductStatistic.getRevenue() + orderDetailsEntity.getQuantity() * orderDetailsEntity.getPriceInPurchase());
             }
         }
 
@@ -166,31 +169,14 @@ public class StatisticService implements IStatisticService {
         excessProductStatisticList.sort(Comparator.comparing(ExcessProductStatistic::getQuantitySold));
 
         if(!excessProductStatisticList.isEmpty()){
-            Integer idxMin = 0;
-            Long quantityMin = excessProductStatisticList.get(idxMin).getQuantitySold();
+            // Find all product with EXCESS_PRODUCT_QUANTITY (In StatisticConstant class)
+            for(Integer i = 0 ; i < excessProductStatisticList.size() ; i ++){
+                ExcessProductStatistic item = excessProductStatisticList.get(i);
 
-            // Find all product with Max quantity 1st
-            for( ; idxMin < excessProductStatisticList.size() ; idxMin++){
-                ExcessProductStatistic item = excessProductStatisticList.get(idxMin);
-
-                if(item.getQuantitySold().equals(quantityMin)){
+                if(item.getQuantitySold() <= StatisticConstant.EXCESS_PRODUCT_QUANTITY){
                     finalExcessProductStatisticList.add(item);
                 }
                 else break;
-            }
-
-            if(idxMin != excessProductStatisticList.size()){
-                quantityMin = excessProductStatisticList.get(idxMin).getQuantitySold();
-
-                // Find all product with Max quantity 2nd
-                for( ; idxMin < excessProductStatisticList.size() ; idxMin++){
-                    ExcessProductStatistic item = excessProductStatisticList.get(idxMin);
-
-                    if(item.getQuantitySold().equals(quantityMin)){
-                        finalExcessProductStatisticList.add(item);
-                    }
-                    else break;
-                }
             }
         }
 
