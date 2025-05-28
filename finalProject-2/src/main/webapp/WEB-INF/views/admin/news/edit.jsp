@@ -52,34 +52,34 @@
                 <div class="col-12 col-xl-4">
                     <div class="card card-plain h-100">
                         <div class="card-body">
-                            <div class="form-group py-1">
-                                <label for="type"><strong class="text-dark">Loại tin tức</strong></label>
+                            <div class="form-group py-2">
+                                <label for="type"><strong class="text-dark" style="font-size: 15px;">Loại tin tức</strong></label>
                                 <form:select path="type" id="type" name="type" class="form-select px-2"
-                                             style="border: 1px solid black">
-                                    <form:option value="" label="------------------------------Chọn loại------------------------------"/>
+                                             style="border: 1px solid black; font-size: 17px;">
+                                    <form:option value="" label="------------------------Chọn loại------------------------------"/>
                                     <form:options items="${typeList}"/>
                                 </form:select>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="name"><strong class="text-dark">Tên tin tức</strong></label>
+                            <div class="form-group py-2">
+                                <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên tin tức</strong></label>
                                 <form:input path="name" name="name" id="name"
                                             class="form-control px-2"
-                                            style="border: 1px solid black"/>
+                                            style="border: 1px solid black; font-size: 17px;"/>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="description"><strong class="text-dark">Mô tả tin tức</strong></label>
+                            <div class="form-group py-2">
+                                <label for="description"><strong class="text-dark" style="font-size: 15px;">Mô tả tin tức</strong></label>
                                 <form:input path="description" name="description" id="description"
                                             class="form-control px-2"
-                                            style="border: 1px solid black"/>
+                                            style="border: 1px solid black; font-size: 17px;"/>
                             </div>
 
                             <c:if test="${newsEdit.id != null}">
-                                <div class="form-group py-1">
-                                    <label for="hot"><strong class="text-dark">Tin tức nổi bật</strong></label>
+                                <div class="form-group py-2">
+                                    <label for="hot"><strong class="text-dark" style="font-size: 15px;">Tin tức nổi bật</strong></label>
                                     <form:select path="hot" id="hot" name="hot" class="form-select px-2"
-                                                 style="border: 1px solid black">
+                                                 style="border: 1px solid black; font-size: 17px;">
                                         <form:options items="${hotType}"/>
                                     </form:select>
                                 </div>
@@ -122,10 +122,10 @@
                         <div class="card card-plain h-100">
                             <div class="card-body">
                                 <div class="form-group py-1">
-                                    <label for="view"><strong class="text-dark">Lượt xem</strong></label>
+                                    <label for="view"><strong class="text-dark" style="font-size: 15px;">Lượt xem</strong></label>
                                     <form:input path="view" name="view" id="view"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black" readonly="true"/>
+                                                style="border: 1px solid black; font-size: 17px;" readonly="true"/>
                                 </div>
 
                             </div>
@@ -134,9 +134,9 @@
                 </c:if>
 
                 <div class="form-group py-1">
-                    <label for="content"><strong class="text-dark">Nội dung</strong></label>
+                    <label for="content"><strong class="text-dark" style="font-size: 15px;">Nội dung</strong></label>
                     <form:textarea path="content" name="content" id="content"
-                                   class="form-control px-2" style="border: 1px solid black"
+                                   class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                    rows="5"/>
                 </div>
 

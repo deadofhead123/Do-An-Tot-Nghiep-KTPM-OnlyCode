@@ -100,7 +100,7 @@ public class ExcelHssfView implements BinaryExportView {
 
                     String columnHeader = headerCell.getTitle();
 
-                    if (columnHeader == null)
+                    if (columnHeader == null || columnHeader.contains(ExportConstant.WORD_EXCEPT_IN_EXPORT_1) || columnHeader.contains(ExportConstant.WORD_EXCEPT_IN_EXPORT_2))
                     {
                         columnHeader = StringUtils.capitalize(headerCell.getBeanPropertyName());
                     }
@@ -135,24 +135,25 @@ public class ExcelHssfView implements BinaryExportView {
                     HSSFCell cell = xlsRow.createCell((short) colNum++);
                     //cell.setEncoding(HSSFCell.ENCODING_UTF_16);
 
-                    if (value instanceof Number)
-                    {
-                        Number num = (Number) value;
-                        cell.setCellValue(num.doubleValue());
+                    if(!value.toString().contains(ExportConstant.WORD_EXCEPT_BUTTON)){
+                        if (value instanceof Number)
+                        {
+                            Number num = (Number) value;
+                            cell.setCellValue(num.doubleValue());
+                        }
+                        else if (value instanceof Date)
+                        {
+                            cell.setCellValue((Date) value);
+                        }
+                        else if (value instanceof Calendar)
+                        {
+                            cell.setCellValue((Calendar) value);
+                        }
+                        else
+                        {
+                            cell.setCellValue(escapeColumnValue(value));
+                        }
                     }
-                    else if (value instanceof Date)
-                    {
-                        cell.setCellValue((Date) value);
-                    }
-                    else if (value instanceof Calendar)
-                    {
-                        cell.setCellValue((Calendar) value);
-                    }
-                    else
-                    {
-                        cell.setCellValue(escapeColumnValue(value));
-                    }
-
                 }
             }
             wb.write(out);
@@ -180,14 +181,11 @@ public class ExcelHssfView implements BinaryExportView {
         // escape the String to get the tabs, returns, newline explicit as \t \r \n
         //------------------------------------- My config
         // remove the HTML code in excel
-        if(returnString.contains(ExportConstant.WORD_EXCEPT_IN_EXPORT_1)){
-            return null;
-        }
-
         returnString = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>")
                 .matcher(returnString)
                 .replaceAll("");
         //------------------------------------- End of my config
+
         returnString = StringEscapeUtils.escapeJava(StringUtils.trimToEmpty(returnString));
         // remove tabs, insert four whitespaces instead
         returnString = StringUtils.replace(StringUtils.trim(returnString), "\\t", "    ");

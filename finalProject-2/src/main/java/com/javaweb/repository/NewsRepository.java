@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface NewsRepository extends JpaRepository<NewsEntity, Long>, NewsRepositoryCustom {
+    NewsEntity findOneByIdAndIsActive(Long id, Integer isActive);
+
     @Query(value = "SELECT n.* FROM news n WHERE n.isactive = 1 AND n.hot = 'YES' ORDER BY n.createdat DESC LIMIT 3 ", nativeQuery = true)
     List<NewsEntity> findHotWithLimit();
 

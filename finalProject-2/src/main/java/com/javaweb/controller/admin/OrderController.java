@@ -16,7 +16,6 @@ import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +55,7 @@ public class OrderController {
 
         OrderDTO orderResult = orderService.findOneById(id);
 
-        if(ObjectUtils.isEmpty(orderResult)){
+        if(orderResult == null){
             return new ModelAndView("redirect:/not-found");
         }
 

@@ -52,8 +52,8 @@
                         <div class="col-12 col-xl-4">
                             <div class="card card-plain h-100"> <!-- -->
                                 <div class="form-group py-1">
-                                    <label for="email"><strong class="text-dark">Email</strong></label>
-                                    <input id="email" name="email" type="email" class="form-control px-2" style="border: 1px solid black" />
+                                    <label for="email"><strong class="text-dark" style="font-size: 15px;">Email</strong></label>
+                                    <input id="email" name="email" type="email" class="form-control px-2" style="border: 1px solid black; font-size: 17px;" />
                                 </div>
 
 <%--                                <div class="form-group py-1">--%>

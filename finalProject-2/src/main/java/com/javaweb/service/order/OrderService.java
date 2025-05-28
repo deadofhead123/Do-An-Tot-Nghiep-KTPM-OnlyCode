@@ -70,7 +70,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public OrderDTO findOneById(Long orderId) {
-        return orderConverter.convertToDTO(orderRepository.getOne(orderId));
+        return orderConverter.convertToDTO(orderRepository.findOneById(orderId));
     }
 
     @Override

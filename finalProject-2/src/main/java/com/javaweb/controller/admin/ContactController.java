@@ -15,7 +15,6 @@ import org.displaytag.util.ParamEncoder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,7 +53,7 @@ public class ContactController {
 
         ContactDTO contactReturn = IContactService.findOneById(contactDTO.getId());
 
-        if(ObjectUtils.isEmpty(contactReturn)){
+        if(contactReturn == null){
             return new ModelAndView("redirect:/not-found");
         }
 

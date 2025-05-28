@@ -80,27 +80,27 @@
                                 <!-- Update information tab -->
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="myaccount" role="tabpanel" aria-labelledby="myaccount-tab">
-                                        <h6>Thông tin tài khoản</h6>
+                                        <h5>Thông tin tài khoản</h5>
 
                                         <form:form method="get" id="form-edit" modelAttribute="userEdit">
                                             <div class="form-group py-1">
-                                                <label for="email">Email</label>
-                                                <form:input path="email" id="email" name="email" class="form-control px-2" style="border: 1px solid black" disabled="disabled"/>
+                                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Email</strong></label>
+                                                <form:input path="email" id="email" name="email" class="form-control px-2" style="border: 1px solid black; font-size: 17px;" disabled="disabled"/>
                                             </div>
 
-                                            <div class="form-group py-1">
-                                                <label for="fullName">Họ tên</label>
-                                                <form:input path="fullName" id="fullName" name="fullName" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="fullName"><strong class="text-dark" style="font-size: 15px;">Họ tên</strong></label>
+                                                <form:input path="fullName" id="fullName" name="fullName" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
-                                            <div class="form-group py-1">
-                                                <label for="phoneNumber">Số điện thoại</label>
-                                                <form:input path="phoneNumber" id="phoneNumber" name="phoneNumber" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="phoneNumber"><strong class="text-dark" style="font-size: 15px;">Số điện thoại</strong></label>
+                                                <form:input path="phoneNumber" id="phoneNumber" name="phoneNumber" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
-                                            <div class="form-group py-1">
-                                                <label for="address">Địa chỉ</label>
-                                                <form:input path="address" id="address" name="address" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="address"><strong class="text-dark" style="font-size: 15px;">Địa chỉ</strong></label>
+                                                <form:input path="address" id="address" name="address" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
                                             <div class="form-group py-2">
@@ -112,21 +112,21 @@
 
                                     <!-- Change password tab-->
                                     <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                                        <h6>Đổi mật khẩu</h6>
+                                        <h5>Đổi mật khẩu</h5>
                                         <form method="get" id="form-change-password">
-                                            <div class="form-group py-1">
-                                                <label for="email">Mật khẩu cũ</label>
-                                                <input type="password" id="oldPassword" name="oldPassword" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Mật khẩu cũ</strong></label>
+                                                <input type="password" id="oldPassword" name="oldPassword" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
-                                            <div class="form-group py-1">
-                                                <label for="email">Mật khẩu mới</label>
-                                                <input type="password" id="newPassword" name="newPassword" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Mật khẩu mới</strong></label>
+                                                <input type="password" id="newPassword" name="newPassword" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
-                                            <div class="form-group py-1">
-                                                <label for="email">Xác nhận mật khẩu mới</label>
-                                                <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="form-control px-2" style="border: 1px solid black"/>
+                                            <div class="form-group py-2">
+                                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Xác nhận mật khẩu mới</strong></label>
+                                                <input type="password" id="confirmNewPassword" name="confirmNewPassword" class="form-control px-2" style="border: 1px solid black; font-size: 17px;"/>
                                             </div>
 
                                             <div class="form-group py-2">

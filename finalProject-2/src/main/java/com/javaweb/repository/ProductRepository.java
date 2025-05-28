@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long>, ProductRepositoryCustom {
     ProductEntity findByNameAndIsActive(String name, Integer isActive);
+    ProductEntity findByIdAndIsActive(Long id, Integer isActive);
     List<ProductEntity> findByIsActive(Integer isActive);
     List<ProductEntity> findByNameContainingAndIsActive(String name, Integer isActive);
 

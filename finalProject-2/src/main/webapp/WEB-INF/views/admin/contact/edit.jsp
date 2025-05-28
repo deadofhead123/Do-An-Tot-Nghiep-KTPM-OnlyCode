@@ -64,32 +64,32 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group py-1">
-                                <label for="email"><strong class="text-dark">Email</strong></label>
+                            <div class="form-group py-2">
+                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Email</strong></label>
                                 <form:input path="email" id="email" name="email"
-                                            class="form-control px-2" style="border: 1px solid black"
+                                            class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                             readonly="true"/>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="fullName"><strong class="text-dark">Họ tên</strong></label>
+                            <div class="form-group py-2">
+                                <label for="fullName"><strong class="text-dark" style="font-size: 15px;">Họ tên</strong></label>
                                 <form:input path="fullName" id="fullName" name="fullName"
-                                            class="form-control px-2" style="border: 1px solid black"
+                                            class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                             readonly="true"/>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="phoneNumber"><strong class="text-dark">Số điện
+                            <div class="form-group py-2">
+                                <label for="phoneNumber"><strong class="text-dark" style="font-size: 15px;">Số điện
                                     thoại</strong></label>
                                 <form:input path="phoneNumber" id="phoneNumber" name="phoneNumber"
-                                            class="form-control px-2" style="border: 1px solid black"
+                                            class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                             readonly="true"/>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="description"><strong class="text-dark">Nội dung</strong></label>
+                            <div class="form-group py-2">
+                                <label for="description"><strong class="text-dark" style="font-size: 15px;">Nội dung</strong></label>
                                 <form:textarea path="description" id="description" name="description"
-                                               class="form-control px-2" style="border: 1px solid black"
+                                               class="form-control px-2" style="border: 1px solid black; font-size: 15px;"
                                                rows="5"
                                                readonly="true"/>
                             </div>
@@ -110,21 +110,17 @@
                         <div class="card-body">
                             <div class="form-group py-1">
                                 <label for="description">
-                                    <strong class="text-dark">Nội dung phản hồi
-                                        <c:if test="${contactDetail.reply != null}">
-                                            (từ ${contactDetail.modifiedBy})
-                                        </c:if>
-                                    </strong>
+                                    <strong class="text-dark" style="font-size: 15px;">Nội dung phản hồi</strong>
                                 </label>
                                 <c:if test="${contactDetail.reply != null}">
                                     <form:textarea path="reply" id="reply" name="reply"
-                                                   class="form-control px-2" style="border: 1px solid black"
+                                                   class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                                    rows="5" readonly="true"/>
                                 </c:if>
 
                                 <c:if test="${contactDetail.reply == null}">
                                     <form:textarea path="reply" id="reply" name="reply"
-                                                   class="form-control px-2" style="border: 1px solid black"
+                                                   class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                                    rows="5"/>
                                 </c:if>
                             </div>

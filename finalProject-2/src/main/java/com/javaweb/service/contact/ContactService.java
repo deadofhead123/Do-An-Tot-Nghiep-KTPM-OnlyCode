@@ -37,7 +37,7 @@ public class ContactService implements IContactService {
 
     @Override
     public ContactDTO findOneById(Long id) {
-        return contactConverter.convertToDTO(contactRepository.findById(id).get());
+        return contactConverter.convertToDTO(contactRepository.findOneById(id));
     }
 
     @Override

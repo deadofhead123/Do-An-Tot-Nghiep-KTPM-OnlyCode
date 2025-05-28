@@ -43,31 +43,31 @@
                             <!-- Row 1 -->
                             <div class="input-group">
                                 <div class="col-lg-2 px-2">
-                                    <label for="email"><strong>Email</strong></label>
+                                    <label for="email"><strong class="text-dark" style="font-size: 15px;">Email</strong></label>
                                     <form:input path="email" type="text" name="email" id="email"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-2">
-                                    <label for="fullName"><strong>Họ tên</strong></label>
+                                    <label for="fullName"><strong class="text-dark" style="font-size: 15px;">Họ tên</strong></label>
                                     <form:input path="fullName" type="text" name="fullName" id="fullName"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-2">
-                                    <label for="phoneNumber"><strong>Số điện thoại</strong></label>
+                                    <label for="phoneNumber"><strong class="text-dark" style="font-size: 15px;">Số điện thoại</strong></label>
                                     <form:input path="phoneNumber" type="text" name="phoneNumber" id="phoneNumber"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-2">
-                                    <label for="status"><strong>Tình trạng</strong></label>
+                                    <label for="status"><strong class="text-dark" style="font-size: 15px;">Tình trạng</strong></label>
                                     <form:select path="status" name="status" id="status"
                                                  class="form-control px-2"
-                                                 style="border: 1px solid black">
+                                                 style="border: 1px solid black; font-size: 17px;">
                                         <form:options items="${listType}"/>
                                     </form:select>
                                 </div>

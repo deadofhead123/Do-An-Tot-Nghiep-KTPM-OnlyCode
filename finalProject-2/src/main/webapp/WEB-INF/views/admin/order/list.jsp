@@ -29,16 +29,16 @@
                         <form:form method="get" modelAttribute="orderSearch" id="form-search">
                             <div class="input-group">
                                 <div class="col-lg-2 px-3">
-                                    <label for="id"><strong class="text-dark">Mã đơn hàng</strong></label>
+                                    <label for="id"><strong class="text-dark" style="font-size: 15px;">Mã đơn hàng</strong></label>
                                     <form:input path="id" type="number" name="id" id="id"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
 
                                 </div>
                                 <div class="col-lg-2 px-3">
-                                    <label for="status"><strong class="text-dark">Trạng thái</strong></label>
+                                    <label for="status"><strong class="text-dark" style="font-size: 15px;">Trạng thái</strong></label>
                                     <form:select path="status" name="status" id="status" class="form-select px-2"
-                                                 style="border: 1px solid black">
+                                                 style="border: 1px solid black; font-size: 17px;">
                                         <form:option value="" label="----------Chọn trạng thái----------"/>
                                         <form:options items="${statusType}"/>
                                     </form:select>
@@ -47,19 +47,19 @@
                             <br>
                             <div class="input-group">
                                 <div class="col-lg-2 px-3">
-                                    <label for="createdAtFrom"><strong class="text-dark">Thời gian đặt
+                                    <label for="createdAtFrom"><strong class="text-dark" style="font-size: 15px;">Thời gian đặt
                                         từ</strong></label>
                                     <form:input path="createdAtFrom" type="date" name="createdAtFrom" id="createdAtFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="createdAtTo"><strong class="text-dark">Thời gian đặt
+                                    <label for="createdAtTo"><strong class="text-dark" style="font-size: 15px;">Thời gian đặt
                                         đến</strong></label>
                                     <form:input path="createdAtTo" type="date" name="createdAtTo" id="createdAtTo"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
 

@@ -146,7 +146,7 @@
                                 row += "<div class='input-group'>\n"
                                 row += "<div class='col-lg-3' align='center'><img src='/repository" + it.image + "' width='40' height='40' alt='Ảnh sản phẩm'></div>\n"
                                 row += "<div class='col-lg-6'>" + it.name + "</div>\n";
-                                row += "<div class='col-lg-3 text-danger'>" + (it.price - it.price * it.discount).toLocaleString() + "₫" + "</div>\n";
+                                row += "<div class='col-lg-3 text-danger'>" + (it.price - it.price * it.discount / 100).toLocaleString() + "₫" + "</div>\n";
                                 row += "</div>\n";
                                 row += "</div>\n";
                                 row += "</div>\n";

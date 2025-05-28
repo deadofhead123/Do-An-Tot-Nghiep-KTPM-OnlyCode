@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Tin tức</title>
+    <title>Chi tiết tin tức</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
@@ -24,30 +24,32 @@
 <section class="ftco-section ftco-degree-bg">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 ftco-animate">
-                <form:form method="get" modelAttribute="newsSingle">
+            <form:form method="get" modelAttribute="newsSingle">
+                <div class="col-lg-12 ftco-animate">
                     <span class="text-dark"><fmt:formatDate value="${newsSingle.createdAt}" pattern="EEEE, dd/MM/yyyy, HH:mm, 'GMT('X')'"/></span>
-
                     <h2 class="mt-3 mb-1">${newsSingle.name}</h2>
 
-                    <div class="justify-content-lg-center">
-                      <c:if test="${not empty newsSingle.image}">
-                          <img src="/repository${newsSingle.image}" id="viewImage" width="600px" height="300px"
-                               style="margin-top: 50px;" alt="Không tìm thấy ảnh">
-                      </c:if>
+                    <div align="center">
+                        <c:if test="${not empty newsSingle.image}">
+                            <img src="/repository${newsSingle.image}" id="viewImage"
+                                 style="margin-top: 50px;" alt="Không tìm thấy ảnh">
+                        </c:if>
 
-                      <!--Hiện ảnh đại diện mặc định-->
-                      <c:if test="${empty newsSingle.image}">
-                          <img src="/admin/image/default.png" id="viewImage" width="600px" height="300px"
-                               alt="Chưa có ảnh" class="justify-content-lg-center">
-                      </c:if>
+                        <!--Hiện ảnh đại diện mặc định-->
+                        <c:if test="${empty newsSingle.image}">
+                            <img src="/admin/image/default.png" id="viewImage" width="600px" height="300px"
+                                 alt="Chưa có ảnh">
+                        </c:if>
                     </div>
-                  <br>
+                </div>
+                <!-- .col-md-8 -->
+                <br>
+                <div class="col-lg-12 ftco-animate">
                     <div class="text-dark">
-                      ${newsSingle.content}
+                            ${newsSingle.content}
                     </div>
-                </form:form>
-            </div> <!-- .col-md-8 -->
+                </div>
+            </form:form>
 
         </div>
     </div>

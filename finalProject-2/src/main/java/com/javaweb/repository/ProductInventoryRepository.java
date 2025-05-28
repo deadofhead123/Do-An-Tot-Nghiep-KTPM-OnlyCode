@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductInventoryRepository extends JpaRepository<ProductInventoryEntity, Long>, ProductInventoryRepositoryCustom {
+    ProductInventoryEntity findOneById(Long id);
+
     List<ProductInventoryEntity> findAllByStatus(String status);
 
     @Query(value = "SELECT pi.* FROM product_inventory pi WHERE TIMESTAMP(pi.expiredat) < TIMESTAMP(NOW()) AND STATUS='UNUSED' ", nativeQuery = true)

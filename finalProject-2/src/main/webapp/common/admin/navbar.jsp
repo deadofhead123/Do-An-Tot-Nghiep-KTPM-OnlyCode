@@ -18,51 +18,51 @@
 
                 <!-- Sửa đổi cỡ chữ bằng text-lg (large), text-sm (small) ... -->
                 <c:if test="${fn:contains(currentURL, '/admin/home')}">
-                    <li class="breadcrumb-item text-sm text-dark active">Trang chủ</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;">Trang chủ</li>
                 </c:if>
 
                 <c:if test="${!fn:contains(currentURL, '/admin/home')}">
-                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="/admin/home">Trang chủ</a></li>
+                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="/admin/home" style="font-size: 14px;">Trang chủ</a></li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/dashboard')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Thống kê</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Thống kê</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/user')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Người dùng</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Người dùng</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/my-account')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tài khoản</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Tài khoản</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/contact')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Liên hệ</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Liên hệ</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/category')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Danh mục sản phẩm</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Danh mục sản phẩm</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/product-')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Sản phẩm</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Sản phẩm</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/order')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Đơn hàng</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Đơn hàng</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/import')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Nhập hàng</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Nhập hàng</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/productInventory')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Kho hàng</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Kho hàng</li>
                 </c:if>
 
                 <c:if test="${fn:contains(currentURL, '/admin/new')}">
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tin tức</li>
+                    <li class="breadcrumb-item text-sm text-dark active" style="font-size: 14px;" aria-current="page">Tin tức</li>
                 </c:if>
             </ol>
         </nav>
@@ -173,14 +173,14 @@
                 </li>
 
                 <li class="nav-item dropdown pe-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link p-0" style="color: black;" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="javascript:;" class="nav-link p-0" style="color: black;" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 14px;">
                         Xin chào, <%=SecurityUtils.getPrincipal().getFullName()%>
                     </a>
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                         aria-labelledby="dropdownMenu2">
                         <li class="mb-2">
-                            <a class="dropdown-item" style="color: black;" href="/admin/my-account">Tài khoản</a>
-                            <a class="dropdown-item" style="color: black;" href="/logout">Đăng xuất</a>
+                            <a class="dropdown-item" style="color: black; font-size: 14px;" href="/admin/my-account">Tài khoản</a>
+                            <a class="dropdown-item" style="color: black; font-size: 14px;" href="/logout">Đăng xuất</a>
                         </li>
                     </ul>
                 </li>

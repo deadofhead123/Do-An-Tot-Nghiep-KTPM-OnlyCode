@@ -78,7 +78,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO findOneById(Long id) {
-        return categoryConverter.convertToDTO(categoryRepository.findById(id).get());
+        return categoryConverter.convertToDTO(categoryRepository.findByIdAndIsActive(id, 1));
     }
 
     @Override

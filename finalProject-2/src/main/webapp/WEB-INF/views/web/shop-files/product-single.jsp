@@ -63,12 +63,12 @@
                                 </c:choose>
                             </c:forEach>
                             &nbsp;
-                            <span style="color: black"> (${numberOfFeedback} lượt đánh giá)</span>
+                            <span style="color: black"> (<strong>${numberOfFeedback}</strong> lượt đánh giá)</span>
                         </p>
 
                         <p class="text-left">
                             <a href="#" class="mr-2" style="color: #000;">
-                                <span style="color: black"><strong>${productSingle.sold}</strong>&nbsp;đã bán </span>
+                                <span style="color: red"><strong>${productSingle.sold}</strong>&nbsp;</span>đã bán
                             </a>
                         </p>
                     </div>
@@ -83,23 +83,22 @@
 
                     <!-- Price -->
                     <p class="price">
-                        <span><fmt:formatNumber
-                                value="${productSingle.price - productSingle.discount / 100 * productSingle.price}"
-                                pattern="#,###"/>₫</span>
+                        <span class="text-success"><strong><fmt:formatNumber value="${productSingle.price - productSingle.discount / 100 * productSingle.price}" pattern="#,###"/>₫</strong></span>
                     </p>
 
-                    <p class="text-justify" style="font-size: 16px; color: black">${productSingle.description}</p>
+                    <p class="text-justify text-dark" style="font-size: 16px; color: black">${productSingle.description}</p>
 
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <p style="color: #000;">
                                 <input type="hidden" id="quantityAvailable" value="${productSingle.quantity}"/>
+                                <strong>Tình trạng:</strong>
                                 <c:if test="${productSingle.quantity == 0}">
-                                    Tình trạng: <span style="color: red">Hết hàng</span>
+                                     <span style="color: red">Hết hàng</span>
                                 </c:if>
 
                                 <c:if test="${productSingle.quantity != 0}">
-                                    Tình trạng: <span style="color: red">Còn hàng</span>
+                                     <span style="color: red">Còn hàng</span>
                                 </c:if>
                             </p>
                         </div>

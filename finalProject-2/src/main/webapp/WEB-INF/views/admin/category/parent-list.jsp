@@ -30,10 +30,10 @@
                             <!-- Row 1 -->
                             <div class="input-group">
                                 <div class="col-lg-3 px-3">
-                                    <label for="name"><strong class="text-dark">Tên danh mục</strong></label>
+                                    <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên danh mục</strong></label>
                                     <form:input path="name" type="text" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
 

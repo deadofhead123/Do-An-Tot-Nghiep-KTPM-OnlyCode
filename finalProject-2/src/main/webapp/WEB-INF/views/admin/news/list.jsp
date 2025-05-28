@@ -29,33 +29,33 @@
                             <!-- Row 1 -->
                             <div class="input-group">
                                 <div class="col-lg-3 px-3">
-                                    <label for="name"><strong class="text-dark">Tên tin tức</strong></label>
+                                    <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên tin tức</strong></label>
                                     <form:input path="name" type="text" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
-                                    <label for="description"><strong class="text-dark">Mô tả</strong></label>
+                                    <label for="description"><strong class="text-dark" style="font-size: 15px;">Mô tả</strong></label>
                                     <form:input path="description" type="text" name="description" id="description"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="description"><strong class="text-dark">Loại tin tức</strong></label>
-                                    <form:select path="type" name="type" id="type" class="form-select px-2" style="border: 1px solid black">
-                                        <form:option value="" label="--------------Chọn loại--------------"/>
+                                    <label for="description"><strong class="text-dark" style="font-size: 15px;">Loại tin tức</strong></label>
+                                    <form:select path="type" name="type" id="type" class="form-select px-2" style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="----------Chọn loại--------------"/>
                                         <form:options items="${typeList}"/>
                                     </form:select>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="hot"><strong class="text-dark">Tin tức nổi bật</strong></label>
+                                    <label for="hot"><strong class="text-dark" style="font-size: 15px;">Tin tức nổi bật</strong></label>
                                     <form:select path="hot" id="hot" name="hot"
                                                  class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="--------------Chọn kiểu--------------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="----------Chọn kiểu--------------"/>
                                         <form:options items="${hotType}"/>
                                     </form:select>
                                 </div>
@@ -63,17 +63,17 @@
                             <br>
                             <div class="input-group">
                                 <div class="col-lg-3 px-3">
-                                    <label for="viewFrom"><strong class="text-dark">Lượt xem từ</strong></label>
+                                    <label for="viewFrom"><strong class="text-dark" style="font-size: 15px;">Lượt xem từ</strong></label>
                                     <form:input path="viewFrom" type="number" name="viewFrom" id="viewFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
-                                    <label for="viewTo"><strong class="text-dark">Lượt xem đến</strong></label>
+                                    <label for="viewTo"><strong class="text-dark" style="font-size: 15px;">Lượt xem đến</strong></label>
                                     <form:input path="viewTo" type="number" name="viewTo" id="viewTo"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
 

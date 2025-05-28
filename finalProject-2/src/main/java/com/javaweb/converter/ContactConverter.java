@@ -17,6 +17,7 @@ public class ContactConverter {
     }
 
     public ContactDTO convertToDTO(ContactEntity contactEntity){
+        if(contactEntity == null) return null;
         return modelMapper.map(contactEntity, ContactDTO.class);
     }
 

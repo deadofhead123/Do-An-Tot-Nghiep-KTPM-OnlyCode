@@ -22,6 +22,8 @@ public class ProductInventoryConverter {
     }
 
     public ProductInventoryDTO convertToDTO(ProductInventoryEntity productInventoryEntity){
+        if(productInventoryEntity == null) return null;
+
         ProductInventoryDTO productInventoryDTO = modelMapper.map(productInventoryEntity, ProductInventoryDTO.class);
 
         productInventoryDTO.setName(productInventoryEntity.getProductEntity().getName());

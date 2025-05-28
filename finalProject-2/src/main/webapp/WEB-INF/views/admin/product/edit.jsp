@@ -54,82 +54,82 @@
                 <div class="col-12 col-xl-4">
                     <div class="card card-plain h-100">
                         <div class="card-body">
-                            <div class="form-group py-1">
-                                <label for="name"><strong class="text-dark">Tên sản phẩm</strong></label>
+                            <div class="form-group py-2">
+                                <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên sản phẩm</strong></label>
                                 <c:if test="${productEdit.id == null}">
                                     <form:input path="name" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </c:if>
                                 <c:if test="${productEdit.id != null}">
                                     <form:input path="name" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black" readonly="true"/>
+                                                style="border: 1px solid black; font-size: 17px;" readonly="true"/>
                                 </c:if>
                             </div>
 
                             <br>
-                            <div class="form-group py-1">
-                                <label for="categoryId"><strong class="text-dark">Danh mục sản phẩm</strong></label>
+                            <div class="form-group py-2">
+                                <label for="categoryId"><strong class="text-dark" style="font-size: 15px;">Danh mục sản phẩm</strong></label>
                                 <form:select path="categoryId" id="categoryId" name="categoryId"
                                              class="form-select px-2"
-                                             style="border: 1px solid black">
+                                             style="border: 1px solid black; font-size: 17px;">
                                     <form:option value=""
                                                  label="------------------Chọn danh mục------------------"/>
                                     <form:options items="${categoryList}"/>
                                 </form:select>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="expiration"><strong class="text-dark">Thời gian sử dụng (ngày)</strong></label>
+                            <div class="form-group py-2">
+                                <label for="expiration"><strong class="text-dark" style="font-size: 15px;">Thời gian sử dụng (ngày)</strong></label>
                                 <form:input path="expiration" name="expiration" id="expiration"
                                             class="form-control px-2"
-                                            style="border: 1px solid black"/>
+                                            style="border: 1px solid black; font-size: 17px;"/>
                             </div>
 
                             <c:if test="${productEdit.id != null}">
                                 <br>
-                                <div class="form-group py-1">
-                                    <label for="quantity"><strong class="text-dark">Số lượng còn</strong></label>
+                                <div class="form-group py-2">
+                                    <label for="quantity"><strong class="text-dark" style="font-size: 15px;">Số lượng còn</strong></label>
                                     <form:input path="quantity" name="quantity" id="quantity"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black" readonly="true"/>
+                                                style="border: 1px solid black; font-size: 17px;" readonly="true"/>
                                 </div>
                             </c:if>
 
                             <c:if test="${productEdit.id != null}">
                                 <br>
-                                <div class="form-group py-1">
-                                    <label for="sold"><strong class="text-dark">Số lượng đã bán</strong></label>
+                                <div class="form-group py-2">
+                                    <label for="sold"><strong class="text-dark" style="font-size: 15px;">Số lượng đã bán</strong></label>
                                     <form:input path="sold" name="sold" id="sold"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black" readonly="true"/>
+                                                style="border: 1px solid black; font-size: 17px;" readonly="true"/>
                                 </div>
                             </c:if>
 
                             <br>
-                            <div class="form-group py-1">
-                                <label for="price"><strong class="text-dark">Giá bán (phải lớn hơn hoặc bằng 1000đ)</strong>&nbsp;</label>
+                            <div class="form-group py-2">
+                                <label for="price"><strong class="text-dark" style="font-size: 15px;">Giá bán (phải lớn hơn hoặc bằng 1000đ)</strong>&nbsp;</label>
                                 <form:input path="price" name="price" id="price" type="number"
                                             class="form-control px-2"
-                                            style="border: 1px solid black"/>
+                                            style="border: 1px solid black; font-size: 17px;"/>
                             </div>
 
                             <c:if test="${productEdit.id != null}">
-                                <div class="form-group py-1">
-                                    <label for="price"><strong class="text-dark">Giảm giá (nằm trong khoảng 0-100%)</strong>&nbsp;</label>
+                                <div class="form-group py-2">
+                                    <label for="price"><strong class="text-dark" style="font-size: 15px;">Giảm giá (nằm trong khoảng 0-100%)</strong>&nbsp;</label>
                                     <form:input path="discount" name="discount" id="discount" type="discount"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </c:if>
 
                             <br>
                             <c:if test="${productEdit.id != null}">
-                                <label for="hot"><strong class="text-dark">Sản phẩm bán chạy</strong></label>
+                                <label for="hot"><strong class="text-dark" style="font-size: 15px;">Sản phẩm bán chạy</strong></label>
                                 <form:select path="hot" id="hot" name="hot"
                                              class="form-select px-2"
-                                             style="border: 1px solid black">
+                                             style="border: 1px solid black; font-size: 17px;">
                                     <form:options items="${hotType}"/>
                                 </form:select>
                             </c:if>
@@ -140,7 +140,7 @@
                 <div class="col-12 col-xl-8">
                     <div class="card card-plain h-100">
                         <div class="card-body">
-                            <div class="form-group py-1">
+                            <div class="form-group py-2">
                                 <label><strong class="text-dark">Ảnh đại diện</strong>&nbsp;(tên ảnh không có dấu hoặc
                                     khoảng trắng, ví dụ: a-b-c.png)</label>
                                 <br>
@@ -160,12 +160,12 @@
                                 </div>
                             </div>
                             <br>
-                            <div class="form-group py-1">
-                                <label for="description"><strong class="text-dark">Mô tả</strong></label>
+                            <div class="form-group py-2">
+                                <label for="description"><strong class="text-dark" style="font-size: 15px;">Mô tả</strong></label>
                                 <form:textarea path="description" name="description" id="description" type="description"
                                                class="form-control px-2"
                                                rows="8"
-                                               style="border: 1px solid black"/>
+                                               style="border: 1px solid black; font-size: 17px;"/>
                             </div>
                         </div>
                     </div>
@@ -210,7 +210,6 @@
                 <div class="col-auto my-auto">
                     <div class="h-100 align-items-center">
                         <h5 class="mb-1">Đánh giá sản phẩm</h5>
-                        <h6>${numberOfFeedback} lượt đánh giá</h6>
                     </div>
                 </div>
             </div>

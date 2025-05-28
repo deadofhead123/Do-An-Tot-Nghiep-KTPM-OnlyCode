@@ -87,7 +87,6 @@ public class ProductController {
         feedbackResult.setListResult(feedbackService.findAllFeedback(id, PageRequest.of(feedbackResult.getPage() - 1, feedbackResult.getMaxPageItems())));
         feedbackResult.setTotalItems(feedbackService.countTotalItems(id));
         mav.addObject("allFeedback", feedbackResult);
-        mav.addObject("numberOfFeedback", feedbackService.findAllFeedback_Web(id, 0).size());
 
         return mav;
     }

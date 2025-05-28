@@ -38,32 +38,32 @@
                 <div class="col-12 col-xl-4">
                     <div class="card card-plain h-100">
                         <div class="card-body">
-                            <div class="form-group py-1">
-                                <label for="name"><strong class="text-dark">Tên nhà cung cấp</strong></label>
+                            <div class="form-group py-2">
+                                <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên nhà cung cấp</strong></label>
                                 <form:input path="name" name="name" id="name"
                                             class="form-control px-2"
-                                            style="border: 1px solid black; color: black" readonly="true"/>
+                                            style="border: 1px solid black; color: black; font-size: 17px;" readonly="true"/>
                             </div>
 
                             <div class="form-group py-2">
-                                <label for="address"><strong class="text-dark">Địa chỉ</strong></label>
+                                <label for="address"><strong class="text-dark" style="font-size: 15px;">Địa chỉ</strong></label>
                                 <form:input path="address" name="address" id="address"
                                             class="form-control px-2"
-                                            style="border: 1px solid black; color: black" readonly="true"/>
+                                            style="border: 1px solid black; color: black; font-size: 17px;" readonly="true"/>
                             </div>
 
                             <div class="form-group py-2">
-                                <label for="email"><strong class="text-dark">Email</strong></label>
+                                <label for="email"><strong class="text-dark" style="font-size: 15px;">Email</strong></label>
                                 <form:input path="email" name="email" id="email"
                                             class="form-control px-2"
-                                            style="border: 1px solid black; color: black" readonly="true"/>
+                                            style="border: 1px solid black; color: black; font-size: 17px;" readonly="true"/>
                             </div>
 
                             <div class="form-group py-2">
-                                <label for="phoneNumber"><strong class="text-dark">Số điện thoại</strong></label>
+                                <label for="phoneNumber"><strong class="text-dark" style="font-size: 15px;">Số điện thoại</strong></label>
                                 <form:input path="phoneNumber" name="phoneNumber" id="phoneNumber"
                                             class="form-control px-2"
-                                            style="border: 1px solid black; color: black" readonly="true"/>
+                                            style="border: 1px solid black; color: black; font-size: 17px;" readonly="true"/>
                             </div>
 
                         </div>
@@ -78,7 +78,7 @@
                                 <form:textarea path="note" name="note" id="note"
                                                class="form-control px-2"
                                                rows="5"
-                                               style="border: 1px solid black; color: black" readonly="true"/>
+                                               style="border: 1px solid black; color: black; font-size: 17px;" readonly="true"/>
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,7 +87,7 @@ public class ShopController_Web {
 
         ProductDTO productReturn = productService.findOneById(id);
 
-        if(ObjectUtils.isEmpty(productReturn)){
+        if(productReturn == null){
             return new ModelAndView("redirect:/not-found");
         }
 

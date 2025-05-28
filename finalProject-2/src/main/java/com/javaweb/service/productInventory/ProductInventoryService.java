@@ -58,7 +58,7 @@ public class ProductInventoryService implements IProductInventoryService {
 
     @Override
     public ProductInventoryDTO findOneById(Long id) {
-        return productInventoryConverter.convertToDTO(productInventoryRepository.getOne(id));
+        return productInventoryConverter.convertToDTO(productInventoryRepository.findOneById(id));
     }
 
     @Override

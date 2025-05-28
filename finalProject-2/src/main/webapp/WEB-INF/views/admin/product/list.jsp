@@ -31,37 +31,37 @@
                             <!-- Row 1 -->
                             <div class="input-group">
                                 <div class="col-lg-2 px-3">
-                                    <label for="name"><strong class="text-dark">Tên sản phẩm</strong></label>
+                                    <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên sản phẩm</strong></label>
                                     <form:input path="name" type="text" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
-                                    <label for="type"><strong class="text-dark">Danh mục</strong></label>
+                                    <label for="type"><strong class="text-dark" style="font-size: 15px;">Danh mục</strong></label>
                                     <form:select path="categoryId" name="type" id="type" class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="----------Chọn danh mục----------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="--------Chọn danh mục----------"/>
                                         <form:options items="${categories}"/>
                                     </form:select>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
-                                    <label for="hot"><strong class="text-dark">Sản phẩm bán chạy</strong></label>
+                                    <label for="hot"><strong class="text-dark" style="font-size: 15px;">Sản phẩm bán chạy</strong></label>
                                     <form:select path="hot" id="hot" name="hot"
                                                  class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="--------------Chọn kiểu--------------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="-----------Chọn kiểu--------------"/>
                                         <form:options items="${hotType}"/>
                                     </form:select>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
-                                    <label for="isOutOfQuantity"><strong class="text-dark">Tình trạng trong kho</strong></label>
+                                    <label for="isOutOfQuantity"><strong class="text-dark" style="font-size: 15px;">Tình trạng trong kho</strong></label>
                                     <form:select path="isOutOfQuantity" id="isOutOfQuantity" name="isOutOfQuantity"
                                                  class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="--------------Chọn tình trạng--------------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="-------Chọn tình trạng--------------"/>
                                         <form:options items="${isOutOfQuantity}"/>
                                     </form:select>
                                 </div>
@@ -70,24 +70,24 @@
 
                             <div class="input-group">
                                 <div class="col-lg-2 px-3">
-                                    <label for="priceFrom"><strong class="text-dark">Giá từ</strong></label>
+                                    <label for="priceFrom"><strong class="text-dark" style="font-size: 15px;">Giá từ</strong></label>
                                     <form:input path="priceFrom" type="text" name="priceFrom" id="priceFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="priceTo"><strong class="text-dark">Giá đến</strong></label>
+                                    <label for="priceTo"><strong class="text-dark" style="font-size: 15px;">Giá đến</strong></label>
                                     <form:input path="priceTo" type="text" name="priceTo" id="priceTo"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                                 <div class="col-lg-2 px-3"></div>
-                                <div class="col-lg-2 px-3">
-                                        <label for="isDiscount"><strong class="text-dark">Đang giảm giá</strong></label>
+                                <div class="col-lg-3 px-3">
+                                        <label for="isDiscount"><strong class="text-dark" style="font-size: 15px;">Đang giảm giá</strong></label>
                                         <form:select path="isDiscount" id="isDiscount" name="isDiscount"
                                                  class="form-select px-2"
-                                                 style="border: 1px solid black">
+                                                 style="border: 1px solid black; font-size: 17px;">
                                         <form:option value="" label="--------------Chọn tình trạng--------------"/>
                                         <form:options items="${productDiscountStatus}"/>
                                     </form:select>

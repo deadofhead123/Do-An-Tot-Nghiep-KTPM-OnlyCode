@@ -47,7 +47,7 @@ public class ProductImportService implements IProductImportService{
 
     @Override
     public SupplierDTO findOneById(Long id) {
-        return supplierConverter.convertToDTO(supplierRepository.getOne(id));
+        return supplierConverter.convertToDTO(supplierRepository.findOneById(id));
     }
 
     @Override

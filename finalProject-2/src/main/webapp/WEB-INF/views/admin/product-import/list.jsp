@@ -31,31 +31,31 @@
                             <!-- Row 1 -->
                             <div class="input-group">
                                 <div class="col-lg-3 px-3">
-                                    <label for="name"><strong class="text-dark">Tên nhà cung cấp</strong></label>
+                                    <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên nhà cung cấp</strong></label>
                                     <form:input path="name" type="text" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
-                                    <label for="address"><strong class="text-dark">Địa chỉ</strong></label>
+                                    <label for="address"><strong class="text-dark" style="font-size: 15px;">Địa chỉ</strong></label>
                                     <form:input path="address" type="text" name="address" id="address"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="createdAtFrom"><strong class="text-dark">Thời gian nhập từ</strong></label>
+                                    <label for="createdAtFrom"><strong class="text-dark" style="font-size: 15px;">Thời gian nhập từ</strong></label>
                                     <form:input path="createdAtFrom" type="date" name="createdAtFrom" id="createdAtFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-3">
-                                    <label for="createdAtTo"><strong class="text-dark">Thời gian nhập đến</strong></label>
+                                    <label for="createdAtTo"><strong class="text-dark" style="font-size: 15px;">Thời gian nhập đến</strong></label>
                                     <form:input path="createdAtTo" type="date" name="createdAtFrom" id="createdAtFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
                             <br>

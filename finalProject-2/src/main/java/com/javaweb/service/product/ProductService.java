@@ -81,7 +81,7 @@ public class ProductService implements IProductService{
 
     @Override
     public ProductDTO findOneById(Long id) {
-        return productConverter.convertToDTO(productRepository.findById(id).get());
+        return productConverter.convertToDTO(productRepository.findByIdAndIsActive(id, 1));
     }
 
     @Override

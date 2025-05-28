@@ -49,28 +49,28 @@
                                     <label for="email"><strong class="text-dark">Email</strong></label>
                                     <form:input path="email" type="text" name="email" id="email"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3">
                                     <label for="fullName"><strong class="text-dark">Họ tên</strong></label>
                                     <form:input path="fullName" type="text" name="fullName" id="fullName"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3   ">
                                     <label for="phoneNumber"><strong class="text-dark">Số điện thoại</strong></label>
                                     <form:input path="phoneNumber" type="text" name="phoneNumber" id="phoneNumber"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                                 <div class="col-lg-1 px-3"></div>
                                 <div class="col-lg-2 px-3   ">
                                     <label for="address"><strong class="text-dark">Địa chỉ</strong></label>
                                     <form:input path="address" type="text" name="address" id="address"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
 
@@ -92,8 +92,8 @@
                                 <div class="col-lg-2 px-3">
                                     <label for="discount"><strong class="text-dark">Giảm giá trên mỗi đơn hàng (đ)</strong></label>
                                     <input type="number" name="discount" id="discount"
-                                                class="rounded px-2"
-                                                style="border: 1px solid black" value="${userSearchResponse.listResult.get(0).discount}"/>
+                                                class="form-control rounded px-2"
+                                                style="border: 1px solid black; height: 30px; font-size: 17px;" value="${userSearchResponse.listResult.get(0).discount}"/>
                                 </div>
                             </div>
 

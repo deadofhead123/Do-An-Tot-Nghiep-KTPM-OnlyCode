@@ -61,14 +61,14 @@
                                            style="background-image: url('/repository${newsSingle.image}');">
                                         </a>
                                         <div class="text d-block pl-md-4">
-                                            <div class="meta mb-3">
+                                            <div class="meta mb-3" style="font-size: 14px;">
                                                 <div><a href="#"><span class="icon-calendar"></span>
                                                     <fmt:formatDate value="${newsSingle.createdAt}" pattern="dd/MM/yyyy, HH:mm"/>
                                                 </a></div>
-                                                <div><span class="icon-eye"></span>${newsSingle.view}</div>
+                                                <div class="text-dark"><span class="icon-eye"></span><fmt:formatNumber value="${newsSingle.view}" pattern="#,###"/> </div>
                                             </div>
                                             <h3 class="heading"><a href="/news-single-${newsSingle.id}">${newsSingle.name}</a></h3>
-                                            <p>${newsSingle.description}</p>
+                                            <p class="text-justify text-dark">${newsSingle.description}</p>
                                             <p><a href="/news-single-${newsSingle.id}" class="btn btn-primary py-2 px-3">Chi tiết</a></p>
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@
                         <c:forEach var="newsType" items="${newsTypeList}">
                             <li>
                                 <input id="newsCodeSingle" type="hidden" value="${newsType.code}"/>
-                                <a id="newsTypeSingle" href="#">${newsType.name}<span>(${newsType.total})</span></a>
+                                <a id="newsTypeSingle" href="#">${newsType.name}<span class="text-dark">(${newsType.total})</span></a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -166,9 +166,9 @@
                                         href="/news-single-${singlePopularNews.id}">${singlePopularNews.name}</a>
                                 </h3>
                                 <div class="meta">
-                                    <div><span class="icon-calendar"></span><fmt:formatDate
+                                    <div class="text-dark"><span class="icon-calendar"></span><fmt:formatDate
                                             value="${singlePopularNews.createdAt}" pattern="dd/MM/yyyy"/></div>
-                                    <div><span class="icon-eye"></span>${singlePopularNews.view}</div>
+                                    <div class="text-dark"><span class="icon-eye"></span><fmt:formatNumber value="${singlePopularNews.view}" pattern="#,###"/></div>
                                 </div>
                             </div>
                         </div>

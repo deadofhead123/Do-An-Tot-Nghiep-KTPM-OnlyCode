@@ -44,7 +44,7 @@ public class NewsService implements INewsService{
 
     @Override
     public NewsDTO findOneById(Long id) {
-        return newsConverter.convertToDTO(newsRepository.getOne(id));
+        return newsConverter.convertToDTO(newsRepository.findOneByIdAndIsActive(id, 1));
     }
 
     // Each time you read a new, increase it's view number

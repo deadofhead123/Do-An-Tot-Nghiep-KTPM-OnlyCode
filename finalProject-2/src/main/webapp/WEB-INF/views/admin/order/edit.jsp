@@ -203,29 +203,29 @@
                     <div class="col-12 col-xl-4"></div>
                     <div class="col-12 col-xl-4">
                         <div class="form-group">
-                            <label for="status"><span class="text-dark"><strong>Trạng thái:</strong></span></label>
+                            <label for="status"><span class="text-dark"><strong style="font-size: 15px;">Trạng thái:</strong></span></label>
                             <c:choose>
                                 <c:when test="${orderEdit.status == OrderStatusCode.CANCELED.toString() || orderEdit.status == OrderStatusCode.DELIVERED.toString()}">
                                     <form:select path="status" name="status" id="status" class="form-select px-2"
-                                                 style="border: 1px solid black" disabled="true">
+                                                 style="border: 1px solid black; font-size: 17px;" disabled="true">
                                         <form:options items="${statusType}"/>
                                     </form:select>
                                 </c:when>
                                 <c:otherwise>
                                     <form:select path="status" name="status" id="status" class="form-select px-2"
-                                                 style="border: 1px solid black">
+                                                 style="border: 1px solid black; font-size: 17px;">
                                         <form:options items="${statusType}"/>
                                     </form:select>
                                 </c:otherwise>
                             </c:choose>
                         </div>
 
-                        <div class="form-group py-1">
-                            <label for="note"><strong class="text-dark">Lý do hủy đơn (nếu có)</strong></label>
+                        <div class="form-group py-2">
+                            <label for="note"><strong class="text-dark" style="font-size: 15px;">Lý do hủy đơn (nếu có)</strong></label>
                             <form:textarea path="note" name="note" id="note"
                                            class="form-control px-2"
                                            rows="8"
-                                           style="border: 1px solid black"/>
+                                           style="border: 1px solid black; font-size: 17px;"/>
                         </div>
                     </div>
                 </div>

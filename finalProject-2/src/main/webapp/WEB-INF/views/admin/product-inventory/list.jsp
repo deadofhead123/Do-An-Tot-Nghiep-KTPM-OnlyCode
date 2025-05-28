@@ -36,28 +36,28 @@
                                     <label for="id"><strong class="text-dark">Mã sản phẩm</strong></label>
                                     <form:input path="id" type="number" name="id" id="id"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
                                     <label for="name"><strong class="text-dark">Tên sản phẩm</strong></label>
                                     <form:input path="name" type="text" name="name" id="name"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
                                     <label for="supplierId"><strong class="text-dark">Mã lần nhập hàng</strong></label>
                                     <form:input path="supplierId" type="text" name="supplierId" id="supplierId"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-3 px-3">
                                     <label for="orderId"><strong class="text-dark">Mã đơn hàng</strong></label>
                                     <form:input path="orderId" type="text" name="orderId" id="orderId"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
                             <br>
@@ -66,8 +66,8 @@
                                 <div class="col-lg-2 px-3">
                                     <label for="type"><strong class="text-dark">Danh mục</strong></label>
                                     <form:select path="categoryId" name="type" id="type" class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="----------Chọn danh mục----------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="------Chọn danh mục----------"/>
                                         <form:options items="${categories}"/>
                                     </form:select>
                                 </div>
@@ -79,8 +79,8 @@
                                 <div class="col-lg-2 px-3">
                                     <label for="type"><strong class="text-dark">Tình trạng</strong></label>
                                     <form:select path="status" name="status" id="status" class="form-select px-2"
-                                                 style="border: 1px solid black">
-                                        <form:option value="" label="----------Chọn tình trạng----------"/>
+                                                 style="border: 1px solid black; font-size: 17px;">
+                                        <form:option value="" label="------Chọn tình trạng----------"/>
                                         <form:options items="${productInventoryStatus}"/>
                                     </form:select>
                                 </div>
@@ -92,14 +92,14 @@
                                     <form:input path="statusTimeFrom" type="date" name="statusTimeFrom"
                                                 id="statusTimeFrom"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
 
                                 <div class="col-lg-2 px-xxl-3">
                                     <label for="statusTimeTo"><strong class="text-dark">Thời gian đến</strong></label>
                                     <form:input path="statusTimeTo" type="date" name="statusTimeTo" id="statusTimeTo"
                                                 class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </div>
                             </div>
                             <br>

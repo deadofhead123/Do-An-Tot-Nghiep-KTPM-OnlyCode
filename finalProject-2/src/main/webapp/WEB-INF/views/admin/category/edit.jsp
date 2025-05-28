@@ -54,45 +54,45 @@
                             <div class="row">
                                 <div class="col-md-8 d-flex align-items-center">
                                     <c:if test="${categoryEdit.id == null}">
-                                        <h6 class="mb-0">Điền các thông tin cần thiết</h6>
+                                        <h5 class="mb-0">Điền các thông tin cần thiết</h5>
                                     </c:if>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group py-1">
-                                <label for="parentId"><strong class="text-dark">Danh mục cha</strong>&nbsp;(không chọn
+                            <div class="form-group py-2">
+                                <label for="parentId" class="text-dark"><strong class="text-dark" style="font-size: 15px;">Danh mục cha</strong>&nbsp;(không chọn
                                     phần này nếu bạn muốn tạo danh mục cha)</label>
                                 <form:select path="parentId" name="parentId" id="parentId" class="form-select px-2"
-                                             style="border: 1px solid black">
+                                             style="border: 1px solid black; font-size: 17px;">
                                     <c:if test="${categoryEdit.id == null}">
                                         <form:option value=""
-                                                     label="-------------------------Chọn danh mục cha------------------------"/>
+                                                     label="-------------------Chọn danh mục cha------------------------"/>
                                     </c:if>
                                     <c:if test="${categoryEdit.id != null}">
                                         <form:option value=""
-                                                     label="-------------------------Để làm danh mục cha----------------------"/>
+                                                     label="---------------------Để làm danh mục cha----------------------"/>
                                     </c:if>
                                     <form:options items="${parentCategories}"/>
                                 </form:select>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="name"><strong class="text-dark">Tên danh mục</strong></label>
+                            <div class="form-group py-2">
+                                <label for="name"><strong class="text-dark" style="font-size: 15px;">Tên danh mục</strong></label>
                                 <c:if test="${categoryEdit.id == null}">
                                     <form:input path="name" name="name" id="name" class="form-control px-2"
-                                                style="border: 1px solid black"/>
+                                                style="border: 1px solid black; font-size: 17px;"/>
                                 </c:if>
                                 <c:if test="${categoryEdit.id != null}">
                                     <form:input path="name" name="name" id="name" class="form-control px-2"
-                                                style="border: 1px solid black" readonly="true"/>
+                                                style="border: 1px solid black; font-size: 17px;" readonly="true"/>
                                 </c:if>
                             </div>
 
-                            <div class="form-group py-1">
-                                <label for="description"><strong class="text-dark">Nội dung</strong></label>
+                            <div class="form-group py-2">
+                                <label for="description"><strong class="text-dark" style="font-size: 15px;">Nội dung</strong></label>
                                 <form:textarea path="description" name="description" id="description"
-                                               class="form-control px-2" style="border: 1px solid black"
+                                               class="form-control px-2" style="border: 1px solid black; font-size: 17px;"
                                                rows="5"/>
                             </div>
                         </div>

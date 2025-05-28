@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>, CategoryRepositoryCustom {
-    public List<CategoryEntity> findAllByParentId(Long id);
-    public CategoryEntity findByNameAndIsActive(String name, Integer isActive);
+
+    List<CategoryEntity> findAllByParentId(Long id);
+    CategoryEntity findByNameAndIsActive(String name, Integer isActive);
+    CategoryEntity findByIdAndIsActive(Long id, Integer isActive);
 }

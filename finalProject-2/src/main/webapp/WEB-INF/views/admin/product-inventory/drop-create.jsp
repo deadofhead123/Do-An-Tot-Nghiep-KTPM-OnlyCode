@@ -70,7 +70,7 @@
                         <div class="col-12 col-xl-4"></div>
 
                         <div class="col-12 col-xl-4 justify-content-xxl-end align-content-xxl-end">
-                            <label for="showType"><strong class="text-dark">Hiển thị:</strong></label>
+                            <label for="showType"><strong class="text-dark" style="font-size: 15px;">Hiển thị:</strong></label>
                             <select id="showType">
                                 <option value="0">Tất cả</option>
                                 <option value="1">Đã chọn</option>
@@ -245,7 +245,7 @@
 
                                 <!-- Reason to drop -->
                                 <td class="text-dark align-content-xxl-center">
-                                        <textarea id="description" style="width: 200px" rows="3">
+                                        <textarea id="description" style="width: 200px; font-size: 17px;" rows="3">
                                                 ${productDrop.note}
                                         </textarea>
                                 </td>
